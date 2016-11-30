@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="RCaller">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/main/resources/RCaller.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

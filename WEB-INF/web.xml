@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <context-param>
+      <param-name>at.jku.ce.adaptivetesting.questionfolder</param-name>
+       <param-value>/Users/oppl/IdeaProjects/questions</param-value>
+    <!--   <param-value>D:\JKU\ce\vaadin\questions</param-value> -->
+    </context-param>
+
+    <context-param>
+        <param-name>at.jku.ce.adaptivetesting.logfilepath</param-name>
+       <param-value>/Users/oppl/IdeaProjects/AdaptiveTesting2/AdaptiveTesting.log</param-value>
+    <!--   <param-value>D:\JKU\ce\vaadin\AdaptiveTesting.log</param-value> -->
+
+    </context-param>
+</web-app>
