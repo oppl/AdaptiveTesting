@@ -1,94 +1,52 @@
-Starting to code
-================
+AdaptiveTesting
+==============
 
-1.  Download latest Eclispe for Java EE Developers [Tested with Luna]
+Template for a simple Vaadin application that only requires a Servlet 3.0 container to run.
 
-2.  Download the latest Java JDK [Version 1.8+ reqired for coding, look at the
-    Tomcat specs for run only] [If you have a x64-bit OS, please install the
-    64-bit JDK]
 
-3.  Install R[Tested with 3.1.1.] in the default install directory. [With 0.5.0
-    only Windows is supported]
+Workflow
+========
 
-4.  Download latest Tomcat [Tested with Tomcat 7]
+To compile the entire project, run "mvn install".
 
-5.  Download this repo
+To run the application, run "mvn jetty:run" and open http://localhost:8080/ .
 
-6.  Install the Eclipse Vaadin Plugin
+To produce a deployable production mode WAR:
+- change productionMode to true in the servlet class configuration (nested in the UI class)
+- run "mvn clean package"
+- test the war file with "mvn jetty:run-war"
 
-7.  Install Apache IVY to Eclipse
+Client-Side compilation
+-------------------------
 
-8.  Import the project in Eclipse
+The generated maven project is using an automatically generated widgetset by default. 
+When you add a dependency that needs client-side compilation, the maven plugin will 
+automatically generate it for you. Your own client-side customisations can be added into
+package "client".
 
-9.  Ivy is downloading the needed files for you
+Debugging client side code
+  - run "mvn vaadin:run-codeserver" on a separate console while the application is running
+  - activate Super Dev Mode in the debug window of the application
 
-10. Set up Tomcat within Eclipse
+Developing a theme using the runtime compiler
+-------------------------
 
-11. Download the rCat Library (see [issue #1](https://github.com/reisi007/AdaptiveTesting/issues/1)) and extract it to the library location (`%temp%/r_lib`)
+When developing the theme, Vaadin can be configured to compile the SASS based
+theme at runtime in the server. This way you can just modify the scss files in
+your IDE and reload the browser to see changes.
 
-12. Start :)
+To use the runtime compilation, open pom.xml and comment out the compile-theme 
+goal from vaadin-maven-plugin configuration. To remove a possibly existing 
+pre-compiled theme, run "mvn clean package" once.
 
-Configuring an installation [also needed to start coding]
-=========================================================
+When using the runtime compiler, running the application in the "run" mode 
+(rather than in "debug" mode) can speed up consecutive theme compilations
+significantly.
 
-There are 2 things, which can be specified ATM [0.5.0]. The folder with the
-question XML files and the logback log file location
+It is highly recommended to disable runtime compilation for production WAR files.
 
-Question folder
----------------
+Using Vaadin pre-releases
+-------------------------
 
-The question folder is specified in the web.xml file.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-<context-param>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  <param-name>at.reisisoft.jku.ce.adaptivelearning.questionfolder</param-name>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  <param-value>C:\test</param-value>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</context-param>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The value of the param is a String of the folderpath
-
-Log location
-------------
-
-The log location is specified in 2 seperat files, the web.xml and the
-logback.xml.
-
-(web.xml)
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-<context-param>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  <param-name>at.reisisoft.jku.ce.adaptivelearning.logfilepath</param-name>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  <param-value>C:\AdaptiveTesting.log</param-value>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</context-param>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Additionally you must specify the same​ log file location in the logback.xml
-file
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  <file>C:\AdaptiveTesting.log</file>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Having questions?
-=================
-
-open a bug report [@Github] I hope, that I will get notified...
+If Vaadin pre-releases are not enabled by default, use the Maven parameter
+"-P vaadin-prerelease" or change the activation default value of the profile in pom.xml .
