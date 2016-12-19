@@ -1,52 +1,20 @@
 AdaptiveTesting
 ==============
 
-Template for a simple Vaadin application that only requires a Servlet 3.0 container to run.
+Web-based platform for delivering computerized adaptive tests (CAT). The major design goal is maximum flexibility in item types and testing algorithms. Relies on [RCaller](https://github.com/jbytecode/rcaller) (compatible library version included as a binary) and [Vaadin](http://www.vaadin.com).
 
+The details are summarized and scientifically grounded in a [working paper](https://scawomo.wordpress.com/2016/06/01/scawomo-wp-02/), of which an updated version was accepted for publication in the [International Journal of Educational Technologies in Higher Education](https://educationaltechnologyjournal.springeropen.com). 
 
-Workflow
-========
+## Usage
 
-To compile the entire project, run "mvn install".
+The committed files contain the complete maven configuration for the project. It does not rely on any external libraries aside maven. Furthermore, the configuration files for the IntelliJ IDE are included - you might want to dismiss them, if you use something else.
 
-To run the application, run "mvn jetty:run" and open http://localhost:8080/ .
+## Branching Policy
 
-To produce a deployable production mode WAR:
-- change productionMode to true in the servlet class configuration (nested in the UI class)
-- run "mvn clean package"
-- test the war file with "mvn jetty:run-war"
+New features are developed in separate branches that are eventually merged with the master branch as soon as a stable and tested version is available. The master branch always only contains a version that can be deployed in real-world workshops.
 
-Client-Side compilation
--------------------------
+If you want to contribute, you might want to have a look at the open issues and projects specified in this repository. While [issues](https://github.com/win-ce/AdaptiveTesting2/issues) point at concrete bugs or potential enhancements that have been identified during testing and real-world deployment, the [projects](https://github.com/win-ce/AdaptiveTesting2/projects) outline the general directions of further development. Feel free to contact [me](https://github.com/oppl), if you have any questions on any of the projects, or simply comment on any of the open issues. 
 
-The generated maven project is using an automatically generated widgetset by default. 
-When you add a dependency that needs client-side compilation, the maven plugin will 
-automatically generate it for you. Your own client-side customisations can be added into
-package "client".
+## License
 
-Debugging client side code
-  - run "mvn vaadin:run-codeserver" on a separate console while the application is running
-  - activate Super Dev Mode in the debug window of the application
-
-Developing a theme using the runtime compiler
--------------------------
-
-When developing the theme, Vaadin can be configured to compile the SASS based
-theme at runtime in the server. This way you can just modify the scss files in
-your IDE and reload the browser to see changes.
-
-To use the runtime compilation, open pom.xml and comment out the compile-theme 
-goal from vaadin-maven-plugin configuration. To remove a possibly existing 
-pre-compiled theme, run "mvn clean package" once.
-
-When using the runtime compiler, running the application in the "run" mode 
-(rather than in "debug" mode) can speed up consecutive theme compilations
-significantly.
-
-It is highly recommended to disable runtime compilation for production WAR files.
-
-Using Vaadin pre-releases
--------------------------
-
-If Vaadin pre-releases are not enabled by default, use the Maven parameter
-"-P vaadin-prerelease" or change the activation default value of the profile in pom.xml .
+This software is provided under the [LGPL 3.0 license](https://github.com/win-ce/AdaptiveTesting2/blob/master/LICENSE.md).
