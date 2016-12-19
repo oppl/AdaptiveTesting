@@ -18,12 +18,11 @@
           <element id="library" level="project" name="Maven: com.vaadin.external.slf4j:vaadin-slf4j-jdk14:1.6.1" />
           <element id="library" level="project" name="Maven: com.vaadin:vaadin-client-compiled:7.7.4" />
           <element id="library" level="project" name="Maven: com.vaadin:vaadin-themes:7.7.4" />
-          <element id="library" level="project" name="com.vaadin:vaadin-client-compiled:7.7.3" />
-          <element id="library" level="project" name="guava-20.0" />
-          <element id="library" level="project" name="gwt-user" />
-          <element id="library" level="project" name="org.apache.directory.studio:org.apache.commons.io:2.4" />
-          <element id="library" level="project" name="RCaller" />
-          <element id="library" level="project" name="slf4j-simple-1.7.21" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.6.1" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-simple:1.6.1" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
+          <element id="library" level="project" name="Maven: com.google.guava:guava:20.0" />
+          <element id="library" level="project" name="Maven: rcaller:rcaller:2.4" />
         </element>
       </element>
       <element id="directory" name="META-INF">
