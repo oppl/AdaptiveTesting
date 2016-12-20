@@ -18,6 +18,7 @@ import at.jku.ce.adaptivetesting.vaadin.ui.MainUI;
 import at.jku.ce.adaptivetesting.vaadin.ui.QuestionManager;
 import at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting.AccountingQuestionManager;
 
+import at.jku.ce.adaptivetesting.vaadin.ui.topic.bpmn.BPMNQuestionManager;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -54,15 +55,15 @@ public class VaadinUI extends UI {
 		mainScreen
 				.addComponent(new HtmlLabel(HtmlUtils.center("h2",
 						"Bitte klicke den <b>" + start.getCaption()
-								+ "</b> Button um mit dem Rechnungswesentest zu beginnen!")));
+								+ "</b> Button um mit dem BPMN-Test zu beginnen!")));
 		mainScreen.addComponent(start);
 		mainScreen.setComponentAlignment(start, Alignment.MIDDLE_CENTER);
 
 		navigator.addView(Views.DEFAULT.toString(), mainScreen);
 		// Question view
 		// Change this to the questionManager you like
-		final QuestionManager manager = new AccountingQuestionManager(
-				"Rechnungswesentest");
+		final QuestionManager manager = new BPMNQuestionManager(
+				"BPMN-Test");
 		navigator.addView(Views.TEST.toString(), manager);
 		navigator.addView(Views.Log.toString(),
 				new LogView(new File(Servlet.getLogFileName())));
