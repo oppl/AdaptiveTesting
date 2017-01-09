@@ -55,7 +55,7 @@ public class AccountingDataProvider {
 		data.add(new String[] { "1350", "Vorrat Betriebsstoffe" });
 		data.add(new String[] { "1360", "Vorrat Heizöle" });
 		data.add(new String[] { "1364", "Vorrat feste Brennstoffe" });
-		data.add(new String[] { "1365", "Vorrat Schmiermittel " });
+		data.add(new String[] { "1365", "Vorrat Schmiermittel" });
 		data.add(new String[] { "1370", "Vorrat Reinigungsmaterial" });
 		data.add(new String[] { "1390", "Vorrat Büromaterial" });
 		data.add(new String[] { "1400", "Unfertige Erzeugnisse" });
@@ -134,7 +134,7 @@ public class AccountingDataProvider {
 		data.add(new String[] { "4500", "Bestandsveränderung" });
 		data.add(new String[] { "4580", "Aktivierte Eigenleistungen" });
 		data.add(new String[] { "4600", "Erlöse aus Abgang von Anlagen" });
-		data.add(new String[] { "4610", "Versicherungsentschädigung " });
+		data.add(new String[] { "4610", "Versicherungsentschädigung" });
 		data.add(new String[] { "4660", "Erträge aus Zuschreibung AV" });
 		data.add(new String[] { "4700",
 		"Erträge aus Auflösung von Rückstellungen" });
@@ -222,7 +222,7 @@ public class AccountingDataProvider {
 		data.add(new String[] { "7325", "Versicherungsaufwand Pkw und Kombis" });
 		data.add(new String[] { "7326",
 		"Parkgebühren, Straßenmaut Pkw und Kombis" });
-		data.add(new String[] { "7330", "Lkw Betriebsaufwand " });
+		data.add(new String[] { "7330", "Lkw Betriebsaufwand" });
 		data.add(new String[] { "7331", "Motorbezogene Versicherungssteuer Lkw" });
 		data.add(new String[] { "7332", "Kraftfahrzeugsteuer Lkw" });
 		data.add(new String[] { "7335", "Versicherungsaufwand Lkw" });
