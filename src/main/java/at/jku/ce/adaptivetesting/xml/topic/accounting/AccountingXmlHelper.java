@@ -7,15 +7,15 @@ import at.jku.ce.adaptivetesting.topic.accounting.AccountingQuestion;
 import at.jku.ce.adaptivetesting.topic.accounting.ProfitQuestion;
 
 public final class AccountingXmlHelper {
-	public static AccountingQuestion fromXml(XmlAccountingQuestion xml) {
+	public static AccountingQuestion fromXml(XmlAccountingQuestion xml, String id) {
 		return new AccountingQuestion(xml.getDataStorage(),
 				xml.getDifficulty(), xml.getQuestion()
-						.replace("\\n", " <br />"));
+						.replace("\\n", " <br />"), id);
 	}
 
-	public static ProfitQuestion fromXml(XmlProfitQuestion xml) {
+	public static ProfitQuestion fromXml(XmlProfitQuestion xml, String id) {
 		return new ProfitQuestion(xml.getDataStorage(), xml.getDifficulty(),
-				xml.getQuestion().replace("\\n", " <br />"));
+				xml.getQuestion().replace("\\n", " <br />"), id);
 
 	}
 }

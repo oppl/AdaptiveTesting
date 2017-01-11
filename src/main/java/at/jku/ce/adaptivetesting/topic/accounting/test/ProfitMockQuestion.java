@@ -12,11 +12,16 @@ public class ProfitMockQuestion extends
 
 	public ProfitMockQuestion(ProfitDataStorage solution,
 			ProfitDataStorage dataStorage, float difficulty, String s) {
-		super(new ProfitQuestion(solution, dataStorage, difficulty, s));
+		super(new ProfitQuestion(solution, dataStorage, difficulty, s,""));
 	}
 
 	public ProfitMockQuestion() {
-		super(new ProfitQuestion(new ProfitDataStorage(null), 0f, ""));
+		super(new ProfitQuestion(new ProfitDataStorage(null), 0f, "",""));
+	}
+
+	@Override
+	public String getQuestionID() {
+		return new String("profitMockQuestion");
 	}
 
 	private static final long serialVersionUID = -4498805944562368205L;

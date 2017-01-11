@@ -98,6 +98,9 @@ public abstract class QuestionManager extends VerticalLayout implements
 		iEngine.addQuestionToPool(question);
 	}
 
+	public IEngine getEngine() {
+		return iEngine;
+	}
 	protected final void addHelpButton(Component c) {
 		assert c != null;
 		helpComponent = c;

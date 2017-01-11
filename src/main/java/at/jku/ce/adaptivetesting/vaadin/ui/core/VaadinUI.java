@@ -13,6 +13,7 @@ import at.jku.ce.adaptivetesting.ProductData;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.html.HtmlUtils;
+import at.jku.ce.adaptivetesting.vaadin.ui.AdminView;
 import at.jku.ce.adaptivetesting.vaadin.ui.LogView;
 import at.jku.ce.adaptivetesting.vaadin.ui.MainUI;
 import at.jku.ce.adaptivetesting.vaadin.ui.QuestionManager;
@@ -30,6 +31,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
+import sun.rmi.runtime.Log;
 
 @SuppressWarnings("serial")
 @Theme("vaadin")
@@ -66,6 +68,7 @@ public class VaadinUI extends UI {
 		navigator.addView(Views.TEST.toString(), manager);
 		navigator.addView(Views.Log.toString(),
 				new LogView(new File(Servlet.getLogFileName())));
+		navigator.addView(Views.Admin.toString(), new AdminView(manager));
 		navigator.setErrorView(mainScreen);
 		LogHelper.logInfo("Startup completed");
 	}
@@ -144,6 +147,21 @@ public class VaadinUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
+		getPage().addUriFragmentChangedListener(
+				new Page.UriFragmentChangedListener() {
+					public void uriFragmentChanged(
+							Page.UriFragmentChangedEvent source) {
+						LogHelper.logInfo(source.getUriFragment());
+						if (source.getUriFragment() == null) return;
+						if (source.getUriFragment().equals("admin")) {
+							navigator.navigateTo(Views.Admin.toString());
+						}
+						if (source.getUriFragment().equals("log")) {
+							navigator.navigateTo(Views.Log.toString());
+						}
+					}
+				});
 
 	}
+
 }

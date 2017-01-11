@@ -4,12 +4,7 @@ package at.jku.ce.adaptivetesting.core.engine.engines;
  * which is licenced under LGPL v3+. You may find a copy in the source,
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 import javax.script.ScriptException;
 
@@ -99,6 +94,22 @@ public class SimpleEngine implements IEngine {
 		bags[upperBounds.length].add(question);
 	}
 
+	@Override
+	public List<IQuestion<? extends AnswerStorage>> getQuestions() {
+		List<IQuestion<? extends AnswerStorage>> questions = new LinkedList<>();
+		for (int i = 0; i < bags.length; i++) {
+			questions.addAll(bags[i]);
+		}
+		return questions;
+	}
+
+	public boolean removeQuestion(IQuestion<? extends AnswerStorage> question) {
+		for (int i = 0; i < bags.length; i++) {
+			boolean found = bags[i].remove(question);
+			if (found) return true;
+		}
+		return false;
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -259,7 +270,6 @@ public class SimpleEngine implements IEngine {
 		// Create the r_itemdiff String
 		StringBuilder sb = new StringBuilder("item_diff <- c(");
 		int bag = 0, item = 0;
-		;
 		// Get first item
 		while (bags[bag].size() == 0) {
 			bag++;

@@ -16,25 +16,33 @@ import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlAccountingQuestion;
 
 public class AccountingQuestion extends AccountingRecordInputGrid implements
 		IQuestion<AccountingDataStorage> {
+
+	private String id;
 	private static final long serialVersionUID = 5932474069705038565L;
 	private float difficulty = 0;
 	private AccountingDataStorage solution;
 	private AccountingRecordInputFields[] soll, haben;
 
 	public AccountingQuestion() {
-		this(AccountingDataStorage.getEmptyDataStorage(), 0f, "");
+		this(AccountingDataStorage.getEmptyDataStorage(), 0f, "", "");
 	}
 
 	public AccountingQuestion(AccountingDataStorage solution, float difficulty,
-			String question) {
+			String question, String id) {
 		this(solution, AccountingDataStorage.getEmptyDataStorage(), difficulty,
-				question);
+				question, id);
+	}
+
+	@Override
+	public String getQuestionID() {
+		return id;
 	}
 
 	public AccountingQuestion(AccountingDataStorage solution,
-			AccountingDataStorage prefilled, float difficulty, String question) {
+							  AccountingDataStorage prefilled, float difficulty, String question, String id) {
 		this.difficulty = difficulty;
 		this.solution = solution;
+		this.id = id;
 		setQuestionText(question);
 		// Fill grid
 		int iSoll = solution.getSoll().length, iHaben = solution.getHaben().length;

@@ -21,16 +21,19 @@ public class ProfitQuestion extends VerticalLayout implements
 	private ComboBox answerSelector;
 	private Label question;
 
+	private String id;
+
 	public ProfitQuestion(ProfitDataStorage solution, Float difficulty,
-			String questionText) {
+			String questionText, String id) {
 		this(solution, ProfitDataStorage.getEmptyDataStorage(), difficulty,
-				questionText);
+				questionText, id);
 	}
 
 	public ProfitQuestion(ProfitDataStorage solution,
-			ProfitDataStorage prefilled, float difficulty, String questionText) {
+			ProfitDataStorage prefilled, float difficulty, String questionText, String id) {
 		// super(1, 2);
 		this.difficulty = difficulty;
+		this.id = id;
 		answerSelector = new ComboBox("Wählen Sie die richtige Antwort:");
 		answerSelector.addItems((Object[]) ProfitPossibleAnswers.values());
 		answerSelector.setSizeFull();
@@ -42,6 +45,11 @@ public class ProfitQuestion extends VerticalLayout implements
 		addComponent(question);
 		addComponent(answerSelector);
 		setSpacing(true);
+	}
+
+	@Override
+	public String getQuestionID() {
+		return id;
 	}
 
 	@Override

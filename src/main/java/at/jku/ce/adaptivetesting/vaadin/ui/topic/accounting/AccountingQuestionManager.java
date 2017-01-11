@@ -222,7 +222,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		String profitRootElement = XmlProfitQuestion.class.getAnnotation(
 				XmlRootElement.class).name();
 
-		File[] questions = containingFolder.listFiles((FileFilter) f -> f
+		File[] questions = containingFolder.listFiles(f -> f
 				.isFile()
 				&& (f.canRead() || f.setReadable(true))
 				&& f.getName().endsWith(".xml"));
@@ -255,7 +255,7 @@ public class AccountingQuestionManager extends QuestionManager {
 				// Profit Question
 				XmlProfitQuestion question = (XmlProfitQuestion) profitUnmarshaller
 						.unmarshal(new StringReader(fileAsString));
-				profitList.add(AccountingXmlHelper.fromXml(question));
+				profitList.add(AccountingXmlHelper.fromXml(question, f.getName()));
 				successfullyLoaded++;
 			} else if (fileAsString.contains(accountingRootElement)) {
 				LogHelper.logInfo("Question detected as "
@@ -263,11 +263,13 @@ public class AccountingQuestionManager extends QuestionManager {
 				// Accounting Question
 				XmlAccountingQuestion question = (XmlAccountingQuestion) accountingUnmarshaller
 						.unmarshal(new StringReader(fileAsString));
-				accountingList.add(AccountingXmlHelper.fromXml(question));
+				accountingList.add(AccountingXmlHelper.fromXml(question, f.getName()));
 				successfullyLoaded++;
 			} else {
-				throw new IllegalArgumentException(
-						"Question type not supported. File: " + f);
+				LogHelper.logInfo("QuestionManager: item type not supported for "+f.getName()+", ignoring file.");
+//				throw new IllegalArgumentException(
+//						"Question type not supported. File: " + f);
+				continue;
 			}
 			LogHelper.logInfo("Loaded question with filename:" + f.getName());
 		}

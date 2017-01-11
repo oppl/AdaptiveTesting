@@ -7,6 +7,8 @@ import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.StudentData;
 
+import java.util.List;
+
 public interface IEngine {
 
 	/**
@@ -14,38 +16,38 @@ public interface IEngine {
 	 * @param question
 	 *            The question to add
 	 */
-	public void addQuestionToPool(IQuestion<? extends AnswerStorage> question);
+    void addQuestionToPool(IQuestion<? extends AnswerStorage> question);
 
 	/**
 	 *
 	 * @param questionChangeListener
 	 *            A listener, which listens to change of the question
 	 */
-	public void addQuestionChangeListener(
-			ICurrentQuestionChangeListener questionChangeListener);
+    void addQuestionChangeListener(
+            ICurrentQuestionChangeListener questionChangeListener);
 
 	/**
 	 *
 	 * @param resultFiredListener
 	 *            A listener, which listens to the result of a test run
 	 */
-	public void addResultFiredListener(IResultFiredListener resultFiredListener);
+    void addResultFiredListener(IResultFiredListener resultFiredListener);
 
 	/**
 	 *
 	 * @param questionChangeListener
 	 *            A listener, which listens to change of the question
 	 */
-	public void removeQuestionChangeListener(
-			ICurrentQuestionChangeListener questionChangeListener);
+    void removeQuestionChangeListener(
+            ICurrentQuestionChangeListener questionChangeListener);
 
 	/**
 	 *
 	 * @param resultFiredListener
 	 *            A listener, which listens to the result of a test run
 	 */
-	public void removeResultFiredListener(
-			IResultFiredListener resultFiredListener);
+    void removeResultFiredListener(
+            IResultFiredListener resultFiredListener);
 
 	/**
 	 * Signals that the user has finished his input and that the question gets
@@ -53,20 +55,23 @@ public interface IEngine {
 	 *
 	 * @throws EngineException
 	 */
-	public void requestCalculation() throws EngineException;
+    void requestCalculation() throws EngineException;
 
 	/**
 	 * Starts the test
 	 *
 	 * @throws EngineException
 	 */
-	public void start() throws EngineException;
+    void start() throws EngineException;
 
 	/**
 	 * Deletes all questions stored in the Engine
 	 */
-	public void resetQuestions();
+    void resetQuestions();
 
-	public void setStudentData(StudentData student);
+	void setStudentData(StudentData student);
 
+	List<IQuestion<? extends AnswerStorage>> getQuestions();
+
+	boolean removeQuestion(IQuestion<? extends AnswerStorage> question);
 }
