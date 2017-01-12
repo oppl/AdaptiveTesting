@@ -13,10 +13,7 @@ import at.jku.ce.adaptivetesting.ProductData;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.html.HtmlUtils;
-import at.jku.ce.adaptivetesting.vaadin.ui.AdminView;
-import at.jku.ce.adaptivetesting.vaadin.ui.LogView;
-import at.jku.ce.adaptivetesting.vaadin.ui.MainUI;
-import at.jku.ce.adaptivetesting.vaadin.ui.QuestionManager;
+import at.jku.ce.adaptivetesting.vaadin.ui.*;
 import at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting.AccountingQuestionManager;
 
 import com.vaadin.annotations.PreserveOnRefresh;
@@ -69,6 +66,7 @@ public class VaadinUI extends UI {
 		navigator.addView(Views.Log.toString(),
 				new LogView(new File(Servlet.getLogFileName())));
 		navigator.addView(Views.Admin.toString(), new AdminView(manager));
+		navigator.addView(Views.Results.toString(), new ResultView(manager));
 		navigator.setErrorView(mainScreen);
 		LogHelper.logInfo("Startup completed");
 	}
@@ -173,6 +171,9 @@ public class VaadinUI extends UI {
 						}
 						if (source.getUriFragment().equals("log")) {
 							navigator.navigateTo(Views.Log.toString());
+						}
+						if (source.getUriFragment().equals("results")) {
+							navigator.navigateTo(Views.Results.toString());
 						}
 					}
 				});
