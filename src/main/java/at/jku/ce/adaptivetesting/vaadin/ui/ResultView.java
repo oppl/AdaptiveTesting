@@ -32,18 +32,6 @@ public class ResultView extends VerticalLayout implements View {
             this.addComponent(new HtmlLabel(HtmlUtils.center("h1",
                     "Test Results")));
 
-            table = new Table("Available Results");
-            table.addContainerProperty("ResultName", String.class, null);
-            table.addContainerProperty("ResultDate", String.class, null);
-            table.addContainerProperty("ButtonDownload",  Button.class, null);
-            table.setWidth("100%");
-
-            table.setColumnWidth("ResultDate",200);
-            table.setColumnWidth("ButtonDownload",150);
-            table.setColumnHeaderMode(Table.ColumnHeaderMode.HIDDEN);
-            table.setColumnAlignment("ButtonDownload", Table.Align.CENTER);
-
-            this.addComponent(table);
             this.manager = manager;
         }
 
@@ -55,11 +43,24 @@ public class ResultView extends VerticalLayout implements View {
         private void buildTable() {
 
             List<File> resultFiles = loadResults(new File(VaadinUI.Servlet.getResultFolderName()));
+            if (table != null) this.removeComponent(table);
 
-            table.removeAllItems();
+            table = new Table("Available Results");
+            table.addContainerProperty("ResultName", String.class, null);
+            table.addContainerProperty("ResultDate", String.class, null);
+            table.addContainerProperty("ButtonDownload",  Button.class, null);
+            table.addContainerProperty("SortDate",Long.class,null);
+            table.setSortContainerPropertyId("SortDate");
+            table.setSortAscending(false);
+            table.setWidth("100%");
+
+            table.setColumnWidth("ResultDate",200);
+            table.setColumnWidth("ButtonDownload",150);
+            table.setColumnHeaderMode(Table.ColumnHeaderMode.HIDDEN);
+            table.setColumnAlignment("ButtonDownload", Table.Align.CENTER);
 
             int itemID = 0;
-            LogHelper.logInfo("Admin: "+resultFiles.size()+" questions available.");
+            LogHelper.logInfo("ResultView: "+resultFiles.size()+" results available.");
 
             for (File result: resultFiles) {
 
@@ -76,16 +77,20 @@ public class ResultView extends VerticalLayout implements View {
                 }
                 if (attr == null) continue;
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-                LocalDateTime creationTime = LocalDateTime.ofInstant(attr.creationTime().toInstant(), ZoneId.of("GMT+1"));
+                LocalDateTime creationTime = LocalDateTime.ofInstant(attr.lastModifiedTime().toInstant(), ZoneId.of("GMT+1"));
                 table.addItem(new Object[]{
                         result.getName(),
                         dtf.format(creationTime),
-                        downloadButton
+                        downloadButton,
+                        new Long(attr.lastModifiedTime().toMillis())
                 }, itemID);
+                LogHelper.logInfo("ResultView: added "+result.getName());
                 itemID++;
             }
+            table.sort();
+            table.setVisibleColumns(new String[] { "ResultName", "ResultDate", "ButtonDownload"});
             table.setPageLength(table.size());
-
+            this.addComponent(table);
         }
 
     public List<File> loadResults(File containingFolder) {

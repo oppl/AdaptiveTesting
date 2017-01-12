@@ -7,6 +7,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Constructor;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -152,7 +154,10 @@ public class VaadinResultView extends VerticalLayout implements View,
 	private void storeResults(ResultFiredArgs args) {
 		File resultFile;
 		try {
-			resultFile = File.createTempFile(args.student.getStudentIDCode(),"");
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+			LocalDateTime now = LocalDateTime.now();
+			String fileName = new String(args.student.getStudentIDCode()+ "_" + dtf.format(now) + ".csv");
+			resultFile = new File(new File(VaadinUI.Servlet.getResultFolderName()),fileName);
 			BufferedWriter writer = new BufferedWriter(new FileWriter(resultFile));
 			writer.write(args.student.toString()+"\n");
 			writer.write(Double.toString(args.skillLevel)+"\n");
@@ -164,7 +169,7 @@ public class VaadinResultView extends VerticalLayout implements View,
 			}
 			writer.close();
 		} catch (Exception var9) {
-			throw new ExecutionException("Can not create a temporary file for storing the R results: " + var9.toString());
+			throw new ExecutionException("Can not create a temporary file for storing the results: " + var9.toString());
 		}
 	}
 
