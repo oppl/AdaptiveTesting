@@ -6,11 +6,16 @@ import at.jku.ce.adaptivetesting.html.HtmlUtils;
 import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.FileResource;
 import com.vaadin.ui.*;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -58,9 +63,11 @@ public class ResultView extends VerticalLayout implements View {
 
             for (File result: resultFiles) {
 
+                FileDownloader fd = new FileDownloader(new FileResource(result));
                 Button downloadButton = new Button ("download");
-                downloadButton.addClickListener( e -> {
-                });
+
+                fd.extend(downloadButton);
+
                 BasicFileAttributes attr = null;
                 try {
                     attr = Files.readAttributes(result.toPath(), BasicFileAttributes.class);
@@ -68,9 +75,11 @@ public class ResultView extends VerticalLayout implements View {
                     e.printStackTrace();
                 }
                 if (attr == null) continue;
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+                LocalDateTime creationTime = LocalDateTime.ofInstant(attr.creationTime().toInstant(), ZoneId.of("GMT+1"));
                 table.addItem(new Object[]{
                         result.getName(),
-                        attr.creationTime().toString(),
+                        dtf.format(creationTime),
                         downloadButton
                 }, itemID);
                 itemID++;
