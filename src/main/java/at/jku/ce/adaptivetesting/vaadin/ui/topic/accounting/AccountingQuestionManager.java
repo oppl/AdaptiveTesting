@@ -21,8 +21,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import at.jku.ce.adaptivetesting.core.StudentData;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.topic.accounting.*;
+import at.jku.ce.adaptivetesting.vaadin.ui.ResultView;
 import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
-import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlMultipleChoiceQuestion;
+import at.jku.ce.adaptivetesting.xml.topic.accounting.*;
 import com.sun.source.doctree.VersionTree;
 import com.vaadin.server.FileResource;
 import com.vaadin.ui.*;
@@ -31,9 +32,6 @@ import org.apache.commons.io.input.BOMInputStream;
 
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.vaadin.ui.QuestionManager;
-import at.jku.ce.adaptivetesting.xml.topic.accounting.AccountingXmlHelper;
-import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlAccountingQuestion;
-import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlProfitQuestion;
 
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Notification.Type;
@@ -229,6 +227,8 @@ public class AccountingQuestionManager extends QuestionManager {
 		assert containingFolder.exists() && containingFolder.isDirectory();
 		JAXBContext accountingJAXB = JAXBContext.newInstance(
 				XmlAccountingQuestion.class, AccountingDataStorage.class);
+		JAXBContext multiAccountingJAXB = JAXBContext.newInstance(
+				XmlMultiAccountingQuestion.class, MultiAccountingDataStorage.class);
 		JAXBContext profitJAXB = JAXBContext.newInstance(
 				XmlProfitQuestion.class, ProfitDataStorage.class);
 		JAXBContext multipleChoiceJAXB = JAXBContext.newInstance(
@@ -236,14 +236,19 @@ public class AccountingQuestionManager extends QuestionManager {
 
 		Unmarshaller accountingUnmarshaller = accountingJAXB
 				.createUnmarshaller();
+		Unmarshaller multiAccountingUnmarshaller = multiAccountingJAXB
+				.createUnmarshaller();
 		Unmarshaller profitUnmarshaller = profitJAXB.createUnmarshaller();
 		Unmarshaller multipleChoiceUnmarshaller = multipleChoiceJAXB.createUnmarshaller();
 
 		final List<AccountingQuestion> accountingList = new ArrayList<>();
+		final List<MultiAccountingQuestion> multiAccountingList = new ArrayList<>();
 		final List<ProfitQuestion> profitList = new ArrayList<>();
 		final List<MultipleChoiceQuestion> multipleChoiceList = new ArrayList<>();
 
 		String accountingRootElement = XmlAccountingQuestion.class
+				.getAnnotation(XmlRootElement.class).name();
+		String multiAccountingRootElement = XmlMultiAccountingQuestion.class
 				.getAnnotation(XmlRootElement.class).name();
 		String profitRootElement = XmlProfitQuestion.class.getAnnotation(
 				XmlRootElement.class).name();
@@ -298,6 +303,16 @@ public class AccountingQuestionManager extends QuestionManager {
 				if (image != null) aq.setQuestionImage(new Image("", new FileResource(image)));
 				accountingList.add(aq);
 				successfullyLoaded++;
+			} else if (fileAsString.contains(multiAccountingRootElement)) {
+				LogHelper.logInfo("Question detected as "
+						+ MultiAccountingQuestion.class.getName());
+				// Accounting Question
+				XmlMultiAccountingQuestion question = (XmlMultiAccountingQuestion) multiAccountingUnmarshaller
+						.unmarshal(new StringReader(fileAsString));
+				MultiAccountingQuestion maq = AccountingXmlHelper.fromXml(question, f.getName());
+				if (image != null) maq.setQuestionImage(new Image("", new FileResource(image)));
+				multiAccountingList.add(maq);
+				successfullyLoaded++;
 			}
 			else if (fileAsString.contains(multipleChoiceRootElement)) {
 					LogHelper.logInfo("Question detected as "
@@ -321,8 +336,10 @@ public class AccountingQuestionManager extends QuestionManager {
 		accountingList.forEach(q -> addQuestion(q));
 		profitList.forEach(q -> addQuestion(q));
 		multipleChoiceList.forEach(q -> addQuestion(q));
+		multiAccountingList.forEach(q -> addQuestion(q));
 		LogHelper.logInfo("Successfully loaded "+successfullyLoaded+" questions.");
-/*		MultipleChoiceDataStorage mds = new MultipleChoiceDataStorage();
+
+		/*		MultipleChoiceDataStorage mds = new MultipleChoiceDataStorage();
 		HashMap<Integer,String> answerOptions = new HashMap<>();
 		answerOptions.put(new Integer(1),"gewinnerhöhend");
 		answerOptions.put(new Integer(2),"gewinnerniedrigend");
@@ -333,12 +350,31 @@ public class AccountingQuestionManager extends QuestionManager {
 		correctAnswers.add(new Integer(2));
 		mds.setCorrectAnswers(correctAnswers);
 		XmlMultipleChoiceQuestion xml = new XmlMultipleChoiceQuestion(mds,"test",1.0f);
-		answerOptions.put(new Integer(1),"gewinnerhöhend");
 		Marshaller jaxbMarshaller = multipleChoiceJAXB.createMarshaller();
 
 		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
+		jaxbMarshaller.marshal(xml, System.out);
+		MultiAccountingDataStorage ads = new MultiAccountingDataStorage();
+		AccountRecordData[] ard1 = new AccountRecordData[3];
+		ard1[0] = new AccountRecordData("test1-1",1.0f,10);
+		ard1[1] = new AccountRecordData("test1-2",1.0f,10);
+		ard1[2] = new AccountRecordData("test1-3",1.0f,10);
+		AccountRecordData[] ard2 = new AccountRecordData[3];
+		ard2[0] = new AccountRecordData("test2-1",1.0f,10);
+		ard2[1] = new AccountRecordData("test2-2",1.0f,10);
+		ard2[2] = new AccountRecordData("test2-3",1.0f,10);
+		ads.addHaben(ard1);
+		ads.addHaben(ard2);
+		ads.addSoll(ard1);
+		ads.addSoll(ard2);
+		XmlMultiAccountingQuestion xml = new XmlMultiAccountingQuestion(ads,"test",1.0f);
+		Marshaller jaxbMarshaller = multiAccountingJAXB.createMarshaller();
+
+		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
 		jaxbMarshaller.marshal(xml, System.out);*/
+
 		return questions.length;
 	}
 

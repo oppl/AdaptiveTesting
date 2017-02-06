@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import at.jku.ce.adaptivetesting.topic.accounting.AccountingDataStorage;
 import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
 
-@XmlRootElement(name = "accountingtQuestionDataStorage")
+@XmlRootElement(name = "accountingtQuestionDataStorage") //todo: fix spelling of root element - needs to be fixed in all XML files
 public class XmlAccountingQuestion extends
 		XmlQuestionData<AccountingDataStorage> {
 

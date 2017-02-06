@@ -4,6 +4,7 @@ package at.jku.ce.adaptivetesting.xml.topic.accounting;
  * which is licenced under LGPL v3+. You may find a copy in the source,
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
 import at.jku.ce.adaptivetesting.topic.accounting.AccountingQuestion;
+import at.jku.ce.adaptivetesting.topic.accounting.MultiAccountingQuestion;
 import at.jku.ce.adaptivetesting.topic.accounting.MultipleChoiceQuestion;
 import at.jku.ce.adaptivetesting.topic.accounting.ProfitQuestion;
 
@@ -13,6 +14,13 @@ public final class AccountingXmlHelper {
 				xml.getDifficulty(), xml.getQuestion()
 						.replace("\\n", " <br />"), null, id);
 	}
+
+	public static MultiAccountingQuestion fromXml(XmlMultiAccountingQuestion xml, String id) {
+		return new MultiAccountingQuestion(xml.getDataStorage(),
+				xml.getDifficulty(), xml.getQuestion()
+				.replace("\\n", " <br />"), null, id);
+	}
+
 
 	public static ProfitQuestion fromXml(XmlProfitQuestion xml, String id) {
 		return new ProfitQuestion(xml.getDataStorage(), xml.getDifficulty(),

@@ -94,6 +94,7 @@ public class MultipleChoiceQuestion extends VerticalLayout implements
         for (CheckBox checkBox: answerSelector) {
             if (checkBox.getValue() == true) checkedBoxes.add((Integer) checkBox.getData());
         }
+        multipleChoiceDataStorage.setAnswerOptions(solution.getAnswerOptions());
         multipleChoiceDataStorage.setCorrectAnswers(checkedBoxes);
         return multipleChoiceDataStorage;
     }

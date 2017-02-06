@@ -30,7 +30,7 @@ public class ProfitDataStorage extends AnswerStorage {
 
 	@Override
 	public String toString() {
-		return value == null ? "NULL" : value.toString();
+		return value == null ? "<keine Auswahl>" : value.toString();
 	}
 
 	@Override
@@ -53,10 +53,7 @@ public class ProfitDataStorage extends AnswerStorage {
 			return false;
 		}
 		ProfitDataStorage other = (ProfitDataStorage) obj;
-		if (value != other.value) {
-			return false;
-		}
-		return true;
+		return value == other.value;
 	}
 
 	public ProfitPossibleAnswers getValue() {

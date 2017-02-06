@@ -49,6 +49,7 @@ public class VaadinResultView extends VerticalLayout implements View,
 		// Create HTML table of the history
 		Table table = new Table();
 		final String solution = "Korrekte Antwort", userAnswer = "Ihre Antwort";
+		table.addContainerProperty("#", Integer.class, null);
 		table.addContainerProperty("Schwierigkeitsgrad", Float.class, null);
 		table.addContainerProperty("Resultat", String.class, null);
 		table.addContainerProperty(userAnswer, Button.class, null);
@@ -56,7 +57,7 @@ public class VaadinResultView extends VerticalLayout implements View,
 		//List<HistoryEntry> entries = Lists.reverse(args.history);
 		List<HistoryEntry> entries = new ArrayList<HistoryEntry>(args.history);
 		Collections.reverse(entries);
-
+		int nr = entries.size();
 		for (HistoryEntry entry : entries) {
 			Button qAnswer = null, qSolution = null;
 			if (entry.question instanceof Component && entry.question != null) {
@@ -86,10 +87,13 @@ public class VaadinResultView extends VerticalLayout implements View,
 						event.getButton().setEnabled(false);
 						window.addCloseListener(e -> event.getButton()
 								.setEnabled(true));
-						window.setContent(iQuestionSolution);
+						VerticalLayout vl = new VerticalLayout();
+						vl.addComponent(iQuestionSolution);
+						vl.setMargin(true);
+						window.setContent(vl);
 						window.center();
 						window.setWidth("90%");
-						window.setHeight("50%");
+						window.setHeight("80%");
 						if (iQuestionSolution instanceof Sizeable) {
 							Sizeable sizeable = iQuestionSolution;
 							sizeable.setSizeFull();
@@ -102,10 +106,13 @@ public class VaadinResultView extends VerticalLayout implements View,
 						event.getButton().setEnabled(false);
 						window.addCloseListener(e -> event.getButton()
 								.setEnabled(true));
-						window.setContent(iQuestionUser);
+						VerticalLayout vl = new VerticalLayout();
+						vl.addComponent(iQuestionUser);
+						vl.setMargin(true);
+						window.setContent(vl);
 						window.center();
 						window.setWidth("90%");
-						window.setHeight("50%");
+						window.setHeight("80%");
 						if (iQuestionUser instanceof Sizeable) {
 							Sizeable sizeable = iQuestionUser;
 							sizeable.setSizeFull();
@@ -128,9 +135,10 @@ public class VaadinResultView extends VerticalLayout implements View,
 				}
 			}
 
-			table.addItem(new Object[] { entry.question.getDifficulty(),
+			table.addItem(new Object[] { new Integer(nr), entry.question.getDifficulty(),
 					isCorrect(entry.points, entry.question.getMaxPoints()),
 					qAnswer, qSolution }, null);
+			nr--;
 		}
 		int size = table.size();
 		if (size > 10) {
