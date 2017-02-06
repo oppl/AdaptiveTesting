@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import at.jku.ce.adaptivetesting.core.StudentData;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
+import com.sun.source.doctree.VersionTree;
 import com.vaadin.server.FileResource;
 import com.vaadin.ui.*;
 import org.apache.commons.io.ByteOrderMark;
@@ -72,7 +73,26 @@ public class AccountingQuestionManager extends QuestionManager {
 			getUI().addWindow(window);
 
 		});
+		Button openCompanyDescription = new Button("Unternehmensbeschreibung öffnen");
+		openCompanyDescription.addClickListener(e -> {
+			Window window = new Window("Unternehmensbeschreibung");
+			window.setWidth("80%");
+			window.setHeight("80%");
+			VerticalLayout vl = assembleCompanyDescription();
+			Button close = new Button("Schließen");
+			close.addClickListener( e1 -> {
+				window.close();
+			});
+			vl.setMargin(true);
+			vl.setSpacing(true);
+			vl.addComponent(close);
+			window.setContent(vl);
+			window.center();
+			window.setResizable(false);
+			getUI().addWindow(window);
+		});
 		addHelpButton(openKontenplan);
+		addHelpButton(openCompanyDescription);
 	}
 
 	@Override
@@ -176,6 +196,22 @@ public class AccountingQuestionManager extends QuestionManager {
 
 	public void displayCompanyInfo(Component[] components) {
 		// Create second page
+		VerticalLayout layout = assembleCompanyDescription();
+		layout.setSpacing(true);
+		Button cont = new Button("Weiter", e -> {
+			removeAllComponents();
+			for (Component c : components) {
+				addComponent(c);
+			}
+			super.startQuiz(student);
+		});
+		layout.addComponent(cont);
+//		layout.setComponentAlignment(components[0], Alignment.MIDDLE_CENTER);
+		addComponent(layout);
+
+	}
+
+	private VerticalLayout assembleCompanyDescription() {
 		VerticalLayout layout = new VerticalLayout();
 
 		addComponent(layout);
@@ -185,22 +221,12 @@ public class AccountingQuestionManager extends QuestionManager {
 		Label companyData = new Label("<table><tr><td>Firmenname:</td><td>World of Tabs</td></tr><tr><td>Adresse:</td><td>Unterfeld 15</td></tr><tr><td></td><td>4541 Adlwang</td></tr><tr><td>E-mail:</td><td>office@worldtabs.at</td></tr><tr><td>Internet:</td><td>www.worldtabs.at</td></tr><tr><td>UID-Nummer:</td><td>ATU32589716</td></tr></table><p/>", ContentMode.HTML);
 		Label descr = new Label("<i>World of Tabs dient im Folgenden als Modellunternehmen, <b>aus dessen Sicht</b> du die Aufgabenstellungen bearbeiten sollst. Wir bitten dich die Aufgaben <b>alleine, ohne Hilfe</b> von Mitschüler/inne/n oder Lehrer/inne/n zu lösen. Du kannst den Kontenplan und einen Taschenrechner verwenden.</i><p/>",ContentMode.HTML);
 		Label disclaimer = new Label("<b>Wichtig ist, dass du im Folgenden bei der Angabe der Kontennummer und des Kontennamens die genaue Nummer bzw. Bezeichnung verwendest. Bspw. wird eine Aufgabe falsch gewertet, wenn du die Nummer 30 anstatt 33 für das Lieferverbindlichkeiten wählst oder du den Kontennamen \"Lieferverbindlichkeiten\" anstatt \"AATech\" (bei personifiziertem Lieferantenkonto) für den Lieferanten wählst.<b>",ContentMode.HTML);
-		Button cont = new Button("Weiter", e -> {
-			removeAllComponents();
-			for (Component c : components) {
-				addComponent(c);
-			}
-			super.startQuiz(student);
-		});
-//		layout.addComponent(components[0]);// Title of the quiz
 		layout.addComponent(HtmlLabel.getCenteredLabel("h1", "Unternehmensbeschreibung"));// Title of the quiz
 		layout.addComponent(companyData);
 		layout.addComponent(label);
 		layout.addComponent(descr);
 		layout.addComponent(disclaimer);
-		layout.addComponent(cont);
-//		layout.setComponentAlignment(components[0], Alignment.MIDDLE_CENTER);
-
+		return layout;
 	}
 
 	public int loadQuestions(File containingFolder) throws JAXBException,
