@@ -233,6 +233,9 @@ public class AccountingQuestionManager extends QuestionManager {
 				XmlProfitQuestion.class, ProfitDataStorage.class);
 		JAXBContext multipleChoiceJAXB = JAXBContext.newInstance(
 				XmlMultipleChoiceQuestion.class, MultipleChoiceDataStorage.class);
+		JAXBContext multipleTaskTableJAXB = JAXBContext.newInstance(
+				XmlMultipleTaskTableQuestion.class, MultipleTaskTableDataStorage.class);
+
 
 		Unmarshaller accountingUnmarshaller = accountingJAXB
 				.createUnmarshaller();
@@ -240,11 +243,13 @@ public class AccountingQuestionManager extends QuestionManager {
 				.createUnmarshaller();
 		Unmarshaller profitUnmarshaller = profitJAXB.createUnmarshaller();
 		Unmarshaller multipleChoiceUnmarshaller = multipleChoiceJAXB.createUnmarshaller();
+		Unmarshaller multipleTaskTableUnmarshaller = multipleTaskTableJAXB.createUnmarshaller();
 
 		final List<AccountingQuestion> accountingList = new ArrayList<>();
 		final List<MultiAccountingQuestion> multiAccountingList = new ArrayList<>();
 		final List<ProfitQuestion> profitList = new ArrayList<>();
 		final List<MultipleChoiceQuestion> multipleChoiceList = new ArrayList<>();
+		final List<MultipleTaskTableQuestion> multipleTaskTableList = new ArrayList<>();
 
 		String accountingRootElement = XmlAccountingQuestion.class
 				.getAnnotation(XmlRootElement.class).name();
@@ -253,6 +258,8 @@ public class AccountingQuestionManager extends QuestionManager {
 		String profitRootElement = XmlProfitQuestion.class.getAnnotation(
 				XmlRootElement.class).name();
 		String multipleChoiceRootElement = XmlMultipleChoiceQuestion.class.getAnnotation(
+				XmlRootElement.class).name();
+		String multipleTaskTableRootElement = XmlMultipleTaskTableQuestion.class.getAnnotation(
 				XmlRootElement.class).name();
 
 		File[] questions = containingFolder.listFiles(f -> f
@@ -315,16 +322,28 @@ public class AccountingQuestionManager extends QuestionManager {
 				successfullyLoaded++;
 			}
 			else if (fileAsString.contains(multipleChoiceRootElement)) {
-					LogHelper.logInfo("Question detected as "
-							+ MultipleChoiceQuestion.class.getName());
-					// Accounting Question
-					XmlMultipleChoiceQuestion question = (XmlMultipleChoiceQuestion) multipleChoiceUnmarshaller
-							.unmarshal(new StringReader(fileAsString));
-					MultipleChoiceQuestion mq = AccountingXmlHelper.fromXml(question, f.getName());
-					if (image!=null) mq.setQuestionImage(new Image("",new FileResource(image)));
-					multipleChoiceList.add(mq);
-					successfullyLoaded++;
-			} else {
+				LogHelper.logInfo("Question detected as "
+						+ MultipleChoiceQuestion.class.getName());
+				// Accounting Question
+				XmlMultipleChoiceQuestion question = (XmlMultipleChoiceQuestion) multipleChoiceUnmarshaller
+						.unmarshal(new StringReader(fileAsString));
+				MultipleChoiceQuestion mq = AccountingXmlHelper.fromXml(question, f.getName());
+				if (image!=null) mq.setQuestionImage(new Image("",new FileResource(image)));
+				multipleChoiceList.add(mq);
+				successfullyLoaded++;
+			}
+			else if (fileAsString.contains(multipleTaskTableRootElement)) {
+				LogHelper.logInfo("Question detected as "
+						+ MultipleTaskTableQuestion.class.getName());
+				// Accounting Question
+				XmlMultipleTaskTableQuestion question = (XmlMultipleTaskTableQuestion) multipleTaskTableUnmarshaller
+						.unmarshal(new StringReader(fileAsString));
+				MultipleTaskTableQuestion mtt = AccountingXmlHelper.fromXml(question, f.getName());
+				if (image!=null) mtt.setQuestionImage(new Image("",new FileResource(image)));
+				multipleTaskTableList.add(mtt);
+				successfullyLoaded++;
+			}
+			else {
 				LogHelper.logInfo("QuestionManager: item type not supported for "+f.getName()+", ignoring file.");
 //				throw new IllegalArgumentException(
 //						"Question type not supported. File: " + f);
@@ -337,6 +356,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		profitList.forEach(q -> addQuestion(q));
 		multipleChoiceList.forEach(q -> addQuestion(q));
 		multiAccountingList.forEach(q -> addQuestion(q));
+		multipleTaskTableList.forEach(q -> addQuestion(q));
 		LogHelper.logInfo("Successfully loaded "+successfullyLoaded+" questions.");
 
 		/*		MultipleChoiceDataStorage mds = new MultipleChoiceDataStorage();
@@ -351,10 +371,9 @@ public class AccountingQuestionManager extends QuestionManager {
 		mds.setCorrectAnswers(correctAnswers);
 		XmlMultipleChoiceQuestion xml = new XmlMultipleChoiceQuestion(mds,"test",1.0f);
 		Marshaller jaxbMarshaller = multipleChoiceJAXB.createMarshaller();
-
 		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
 		jaxbMarshaller.marshal(xml, System.out);
+
 		MultiAccountingDataStorage ads = new MultiAccountingDataStorage();
 		AccountRecordData[] ard1 = new AccountRecordData[3];
 		ard1[0] = new AccountRecordData("test1-1",1.0f,10);
@@ -370,11 +389,33 @@ public class AccountingQuestionManager extends QuestionManager {
 		ads.addSoll(ard2);
 		XmlMultiAccountingQuestion xml = new XmlMultiAccountingQuestion(ads,"test",1.0f);
 		Marshaller jaxbMarshaller = multiAccountingJAXB.createMarshaller();
-
 		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		jaxbMarshaller.marshal(xml, System.out);
 
+		MultipleTaskTableDataStorage tts = new MultipleTaskTableDataStorage();
+		tts.addAnswerColumns(new Integer(1),"USt");
+		tts.addAnswerColumns(new Integer(2),"Nettobetrag");
+		tts.addAnswerColumns(new Integer(3), "Bruttobetrag");
+		tts.addTask(new Integer(1),"531,33 inkl. 20 % USt");
+		tts.addTask(new Integer(2),"1255,40 brutto (20 %)");
+		tts.addTask(new Integer(3),"163,50 + 10 % USt");
+		tts.addTask(new Integer(4),"800 exkl. 10 % USt");
+		tts.addCorrectAnswer(new Integer(11),86.89f);
+		tts.addCorrectAnswer(new Integer(12),434.44f);
+		tts.addCorrectAnswer(new Integer(13),521.33f);
+		tts.addCorrectAnswer(new Integer(21),209.23f);
+		tts.addCorrectAnswer(new Integer(22),1046.17f);
+		tts.addCorrectAnswer(new Integer(23),1255.40f);
+		tts.addCorrectAnswer(new Integer(31),16.35f);
+		tts.addCorrectAnswer(new Integer(32),163.50f);
+		tts.addCorrectAnswer(new Integer(33),179.85f);
+		tts.addCorrectAnswer(new Integer(41),80.00f);
+		tts.addCorrectAnswer(new Integer(42),800.00f);
+		tts.addCorrectAnswer(new Integer(43),880.00f);
+		XmlMultipleTaskTableQuestion xml = new XmlMultipleTaskTableQuestion(tts,"Berechnen Sie:",1.0f);
+		Marshaller jaxbMarshaller = multipleTaskTableJAXB.createMarshaller();
+		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		jaxbMarshaller.marshal(xml, System.out);*/
-
 		return questions.length;
 	}
 

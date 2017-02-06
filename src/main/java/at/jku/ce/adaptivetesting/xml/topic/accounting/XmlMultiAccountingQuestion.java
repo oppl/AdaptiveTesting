@@ -13,7 +13,7 @@ import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
 public class XmlMultiAccountingQuestion extends
         XmlQuestionData<MultiAccountingDataStorage> {
 
-    private static final long serialVersionUID = 3262285204313858210L;
+    private static final long serialVersionUID = 3262285204313858211L;
 
     public XmlMultiAccountingQuestion() {
     }
