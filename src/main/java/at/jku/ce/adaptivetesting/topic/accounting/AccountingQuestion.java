@@ -13,6 +13,7 @@ import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting.AccountingRecordInputGrid;
 import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlAccountingQuestion;
+import com.vaadin.ui.Image;
 
 public class AccountingQuestion extends AccountingRecordInputGrid implements
 		IQuestion<AccountingDataStorage> {
@@ -24,13 +25,13 @@ public class AccountingQuestion extends AccountingRecordInputGrid implements
 	private AccountingRecordInputFields[] soll, haben;
 
 	public AccountingQuestion() {
-		this(AccountingDataStorage.getEmptyDataStorage(), 0f, "", "");
+		this(AccountingDataStorage.getEmptyDataStorage(), 0f, "", null, "");
 	}
 
 	public AccountingQuestion(AccountingDataStorage solution, float difficulty,
-			String question, String id) {
+			String question, Image image, String id) {
 		this(solution, AccountingDataStorage.getEmptyDataStorage(), difficulty,
-				question, id);
+				question, image, id);
 	}
 
 	@Override
@@ -39,11 +40,12 @@ public class AccountingQuestion extends AccountingRecordInputGrid implements
 	}
 
 	public AccountingQuestion(AccountingDataStorage solution,
-							  AccountingDataStorage prefilled, float difficulty, String question, String id) {
+							  AccountingDataStorage prefilled, float difficulty, String question, Image image, String id) {
 		this.difficulty = difficulty;
 		this.solution = solution;
 		this.id = id;
 		setQuestionText(question);
+		if (image != null) setQuestionImage(image);
 		// Fill grid
 		int iSoll = solution.getSoll().length, iHaben = solution.getHaben().length;
 		soll = new AccountingRecordInputFields[iSoll];

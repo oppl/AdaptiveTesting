@@ -13,10 +13,7 @@ import at.jku.ce.adaptivetesting.ProductData;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.html.HtmlUtils;
-import at.jku.ce.adaptivetesting.vaadin.ui.AdminView;
-import at.jku.ce.adaptivetesting.vaadin.ui.LogView;
-import at.jku.ce.adaptivetesting.vaadin.ui.MainUI;
-import at.jku.ce.adaptivetesting.vaadin.ui.QuestionManager;
+import at.jku.ce.adaptivetesting.vaadin.ui.*;
 import at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting.AccountingQuestionManager;
 
 import com.vaadin.annotations.PreserveOnRefresh;
@@ -69,6 +66,7 @@ public class VaadinUI extends UI {
 		navigator.addView(Views.Log.toString(),
 				new LogView(new File(Servlet.getLogFileName())));
 		navigator.addView(Views.Admin.toString(), new AdminView(manager));
+		navigator.addView(Views.Results.toString(), new ResultView(manager));
 		navigator.setErrorView(mainScreen);
 		LogHelper.logInfo("Startup completed");
 	}
@@ -88,6 +86,15 @@ public class VaadinUI extends UI {
 			if (!isWorking) {
 				questionFolderName = null;
 			}
+			// Get the result folder as defined in WEB-INF/web.xml
+			resultFolderName = getServletConfig().getServletContext()
+					.getInitParameter(resultFolderKey);
+			File fRf = new File(resultFolderName);
+			isWorking = fRf.exists() && fRf.isDirectory()
+					|| fRf.mkdirs();
+			if (!isWorking) {
+				resultFolderName = null;
+			}
 			// Get the log location as defined in WEB-INF/web.xml
 			logLocation = getServletConfig().getServletContext()
 					.getInitParameter(logLocKey);
@@ -103,8 +110,9 @@ public class VaadinUI extends UI {
 			}
 		}
 
-		private static String questionFolderName = null, logLocation = null;
+		private static String questionFolderName = null, logLocation = null, resultFolderName = null;
 		private final static String questionFolderKey = "at.jku.ce.adaptivetesting.questionfolder";
+		private final static String resultFolderKey = "at.jku.ce.adaptivetesting.resultfolder";
 		private final static String logLocKey = "at.jku.ce.adaptivetesting.logfilepath";
 
 		/**
@@ -116,6 +124,11 @@ public class VaadinUI extends UI {
 		public static String getQuestionFolderName() {
 			return questionFolderName;
 		}
+
+		public static String getResultFolderName() {
+			return resultFolderName;
+		}
+
 
 		/**
 		 * Gets the Log location
@@ -158,6 +171,9 @@ public class VaadinUI extends UI {
 						}
 						if (source.getUriFragment().equals("log")) {
 							navigator.navigateTo(Views.Log.toString());
+						}
+						if (source.getUriFragment().equals("results")) {
+							navigator.navigateTo(Views.Results.toString());
 						}
 					}
 				});

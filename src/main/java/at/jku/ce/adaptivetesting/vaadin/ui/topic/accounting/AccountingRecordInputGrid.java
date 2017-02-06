@@ -6,15 +6,12 @@ package at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.vaadin.ui.SingleComponentLayout;
 
-import com.vaadin.ui.Component;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 public abstract class AccountingRecordInputGrid extends SingleComponentLayout {
 	public enum Side {
 		Right, Left
-	};
+	}
 
 	private static final long serialVersionUID = 3423260539583285740L;
 	// Create all necessary layouts
@@ -23,6 +20,7 @@ public abstract class AccountingRecordInputGrid extends SingleComponentLayout {
 	private GridLayout right = new GridLayout(1, 4);
 	private GridLayout left = new GridLayout(1, 4);
 	private Label questionText = new HtmlLabel();
+	private Image questionImage = null;
 
 	public AccountingRecordInputGrid() {
 		// Make the layout
@@ -56,4 +54,19 @@ public abstract class AccountingRecordInputGrid extends SingleComponentLayout {
 		return questionText.getValue();
 	}
 
+	public Image getQuestionImage() {
+		return questionImage;
+	}
+
+	public void setQuestionImage(Image questionImage) {
+		this.replaceComponent(this.questionImage, questionImage);
+		if (questionImage == null) return;
+		this.questionImage = questionImage;
+		outer.removeAllComponents();
+		outer.addComponent(questionText);
+		outer.addComponent(questionImage);
+		outer.addComponent(inner);
+		removeAllComponents();
+		addComponent(outer);
+	}
 }

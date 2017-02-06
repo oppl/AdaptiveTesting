@@ -21,13 +21,8 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Sizeable;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.VerticalLayout;
 
 public abstract class QuestionManager extends VerticalLayout implements
 		ICurrentQuestionChangeListener, IResultFiredListener, View {
@@ -36,6 +31,7 @@ public abstract class QuestionManager extends VerticalLayout implements
 	private SingleComponentLayout questionHolder = new SingleComponentLayout();
 	private IEngine iEngine;
 	private GridLayout southLayout = new GridLayout(3, 1);
+	private HorizontalLayout helperRow = new HorizontalLayout();
 	private final Button next;
 	private Component helpComponent = null;
 	private Label title;
@@ -67,6 +63,8 @@ public abstract class QuestionManager extends VerticalLayout implements
 			}
 		});
 		southLayout.addComponent(next, 2, 0);
+		helperRow.setSpacing(true);
+		southLayout.addComponent(helperRow,1,0);
 		southLayout.setSizeFull();
 		southLayout.setMargin(true);
 		// Ensure we have an engine
@@ -104,7 +102,7 @@ public abstract class QuestionManager extends VerticalLayout implements
 	protected final void addHelpButton(Component c) {
 		assert c != null;
 		helpComponent = c;
-		southLayout.addComponent(helpComponent, 1, 0);
+		helperRow.addComponent(helpComponent);
 	}
 
 	@Override
