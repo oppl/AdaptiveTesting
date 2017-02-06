@@ -12,11 +12,11 @@ public class ProfitMockQuestion extends
 
 	public ProfitMockQuestion(ProfitDataStorage solution,
 			ProfitDataStorage dataStorage, float difficulty, String s) {
-		super(new ProfitQuestion(solution, dataStorage, difficulty, s,""));
+		super(new ProfitQuestion(solution, dataStorage, difficulty, s,null,""));
 	}
 
 	public ProfitMockQuestion() {
-		super(new ProfitQuestion(new ProfitDataStorage(null), 0f, "",""));
+		super(new ProfitQuestion(new ProfitDataStorage(null), 0f, "",null,""));
 	}
 
 	@Override

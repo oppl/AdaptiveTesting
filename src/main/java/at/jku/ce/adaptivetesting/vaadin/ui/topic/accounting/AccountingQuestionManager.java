@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import at.jku.ce.adaptivetesting.core.StudentData;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
+import com.vaadin.server.FileResource;
 import com.vaadin.ui.*;
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
@@ -170,7 +171,7 @@ public class AccountingQuestionManager extends QuestionManager {
 
 		layout.addComponent(thankYou);
 		layout.addComponent(cont);
-		layout.setComponentAlignment(components[0], Alignment.MIDDLE_CENTER);
+//		layout.setComponentAlignment(components[0], Alignment.MIDDLE_CENTER);
 	}
 
 	public void displayCompanyInfo(Component[] components) {
@@ -198,7 +199,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		layout.addComponent(descr);
 		layout.addComponent(disclaimer);
 		layout.addComponent(cont);
-		layout.setComponentAlignment(components[0], Alignment.MIDDLE_CENTER);
+//		layout.setComponentAlignment(components[0], Alignment.MIDDLE_CENTER);
 
 	}
 
@@ -249,13 +250,16 @@ public class AccountingQuestionManager extends QuestionManager {
 				}
 			}
 			String fileAsString = sb.toString().replaceAll("& ", "&amp; ");
+			File image = checkImageAvailable(containingFolder, f.getName());
 			if (fileAsString.contains(profitRootElement)) {
 				LogHelper.logInfo("Question detected as "
 						+ ProfitQuestion.class.getName());
 				// Profit Question
 				XmlProfitQuestion question = (XmlProfitQuestion) profitUnmarshaller
 						.unmarshal(new StringReader(fileAsString));
-				profitList.add(AccountingXmlHelper.fromXml(question, f.getName()));
+				ProfitQuestion pq = AccountingXmlHelper.fromXml(question, f.getName());
+				if (image!=null) pq.setQuestionImage(new Image("",new FileResource(image)));
+				profitList.add(pq);
 				successfullyLoaded++;
 			} else if (fileAsString.contains(accountingRootElement)) {
 				LogHelper.logInfo("Question detected as "
@@ -263,7 +267,9 @@ public class AccountingQuestionManager extends QuestionManager {
 				// Accounting Question
 				XmlAccountingQuestion question = (XmlAccountingQuestion) accountingUnmarshaller
 						.unmarshal(new StringReader(fileAsString));
-				accountingList.add(AccountingXmlHelper.fromXml(question, f.getName()));
+				AccountingQuestion aq = AccountingXmlHelper.fromXml(question, f.getName());
+				if (image!=null) aq.setQuestionImage(new Image("",new FileResource(image)));
+				accountingList.add(aq);
 				successfullyLoaded++;
 			} else {
 				LogHelper.logInfo("QuestionManager: item type not supported for "+f.getName()+", ignoring file.");
@@ -278,6 +284,24 @@ public class AccountingQuestionManager extends QuestionManager {
 		profitList.forEach(q -> addQuestion(q));
 		LogHelper.logInfo("Successfully loaded "+successfullyLoaded+" questions.");
 		return questions.length;
+	}
+
+	private File checkImageAvailable(File containingFolder, String fileName) {
+		String imageName = fileName.replace(".xml",".png");
+		File image = new File(containingFolder,imageName);
+		if (image.exists()) {
+			return image;
+		}
+		else {
+			imageName = fileName.replace(".xml",".jpg");
+			image = new File(containingFolder,imageName);
+			if (image.exists()) {
+				return image;
+			}
+			else {
+				return null;
+			}
+		}
 	}
 
 	@Override

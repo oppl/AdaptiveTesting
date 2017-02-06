@@ -9,6 +9,7 @@ import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
 
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -20,20 +21,22 @@ public class ProfitQuestion extends VerticalLayout implements
 	private float difficulty = 0;
 	private ComboBox answerSelector;
 	private Label question;
+	private Image questionImage = null;
 
 	private String id;
 
 	public ProfitQuestion(ProfitDataStorage solution, Float difficulty,
-			String questionText, String id) {
+			String questionText, Image questionImage, String id) {
 		this(solution, ProfitDataStorage.getEmptyDataStorage(), difficulty,
-				questionText, id);
+				questionText, questionImage, id);
 	}
 
 	public ProfitQuestion(ProfitDataStorage solution,
-			ProfitDataStorage prefilled, float difficulty, String questionText, String id) {
+						  ProfitDataStorage prefilled, float difficulty, String questionText, Image questionImage, String id) {
 		// super(1, 2);
 		this.difficulty = difficulty;
 		this.id = id;
+		this.questionImage = questionImage;
 		answerSelector = new ComboBox("Wählen Sie die richtige Antwort:");
 		answerSelector.addItems((Object[]) ProfitPossibleAnswers.values());
 		answerSelector.setSizeFull();
@@ -41,8 +44,10 @@ public class ProfitQuestion extends VerticalLayout implements
 		answerSelector.setEnabled(prefilled.getValue() == null);
 		question = new HtmlLabel();
 		setQuestionText(questionText);
+
 		this.solution = solution;
 		addComponent(question);
+		if (questionImage != null) addComponent(this.questionImage);
 		addComponent(answerSelector);
 		setSpacing(true);
 	}
@@ -95,6 +100,20 @@ public class ProfitQuestion extends VerticalLayout implements
 	@Override
 	public double getMaxPoints() {
 		return 1d;
+	}
+
+	public Image getQuestionImage() {
+		return questionImage;
+	}
+
+	public void setQuestionImage(Image questionImage) {
+		if (questionImage == null) return;
+		this.questionImage = questionImage;
+		removeAllComponents();
+		addComponent(question);
+		addComponent(this.questionImage);
+		addComponent(answerSelector);
+
 	}
 
 }
