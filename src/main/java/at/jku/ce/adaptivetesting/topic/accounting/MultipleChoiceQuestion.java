@@ -54,6 +54,10 @@ public class MultipleChoiceQuestion extends VerticalLayout implements
         for (Integer i: answerOptions.keySet()) {
             CheckBox checkBox = new CheckBox(answerOptions.get(i));
             checkBox.setData(i);
+            if (prefilled.getCorrectAnswers().contains(i)) {
+                checkBox.setValue(true);
+            }
+            if (prefilled.getCorrectAnswers().size()!=0) checkBox.setEnabled(false);
             answerSelector.add(checkBox);
             addComponent(checkBox);
         }
