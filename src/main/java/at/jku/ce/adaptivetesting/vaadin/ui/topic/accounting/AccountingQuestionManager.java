@@ -10,19 +10,19 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import at.jku.ce.adaptivetesting.core.StudentData;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
+import at.jku.ce.adaptivetesting.topic.accounting.*;
 import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
+import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlMultipleChoiceQuestion;
 import com.sun.source.doctree.VersionTree;
 import com.vaadin.server.FileResource;
 import com.vaadin.ui.*;
@@ -30,11 +30,6 @@ import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
 
 import at.jku.ce.adaptivetesting.core.LogHelper;
-import at.jku.ce.adaptivetesting.topic.accounting.AccountingDataProvider;
-import at.jku.ce.adaptivetesting.topic.accounting.AccountingDataStorage;
-import at.jku.ce.adaptivetesting.topic.accounting.AccountingQuestion;
-import at.jku.ce.adaptivetesting.topic.accounting.ProfitDataStorage;
-import at.jku.ce.adaptivetesting.topic.accounting.ProfitQuestion;
 import at.jku.ce.adaptivetesting.vaadin.ui.QuestionManager;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.AccountingXmlHelper;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlAccountingQuestion;
@@ -236,17 +231,23 @@ public class AccountingQuestionManager extends QuestionManager {
 				XmlAccountingQuestion.class, AccountingDataStorage.class);
 		JAXBContext profitJAXB = JAXBContext.newInstance(
 				XmlProfitQuestion.class, ProfitDataStorage.class);
+		JAXBContext multipleChoiceJAXB = JAXBContext.newInstance(
+				XmlMultipleChoiceQuestion.class, MultipleChoiceDataStorage.class);
 
 		Unmarshaller accountingUnmarshaller = accountingJAXB
 				.createUnmarshaller();
 		Unmarshaller profitUnmarshaller = profitJAXB.createUnmarshaller();
+		Unmarshaller multipleChoiceUnmarshaller = multipleChoiceJAXB.createUnmarshaller();
 
 		final List<AccountingQuestion> accountingList = new ArrayList<>();
 		final List<ProfitQuestion> profitList = new ArrayList<>();
+		final List<MultipleChoiceQuestion> multipleChoiceList = new ArrayList<>();
 
 		String accountingRootElement = XmlAccountingQuestion.class
 				.getAnnotation(XmlRootElement.class).name();
 		String profitRootElement = XmlProfitQuestion.class.getAnnotation(
+				XmlRootElement.class).name();
+		String multipleChoiceRootElement = XmlMultipleChoiceQuestion.class.getAnnotation(
 				XmlRootElement.class).name();
 
 		File[] questions = containingFolder.listFiles(f -> f
@@ -294,9 +295,20 @@ public class AccountingQuestionManager extends QuestionManager {
 				XmlAccountingQuestion question = (XmlAccountingQuestion) accountingUnmarshaller
 						.unmarshal(new StringReader(fileAsString));
 				AccountingQuestion aq = AccountingXmlHelper.fromXml(question, f.getName());
-				if (image!=null) aq.setQuestionImage(new Image("",new FileResource(image)));
+				if (image != null) aq.setQuestionImage(new Image("", new FileResource(image)));
 				accountingList.add(aq);
 				successfullyLoaded++;
+			}
+			else if (fileAsString.contains(multipleChoiceRootElement)) {
+					LogHelper.logInfo("Question detected as "
+							+ MultipleChoiceQuestion.class.getName());
+					// Accounting Question
+					XmlMultipleChoiceQuestion question = (XmlMultipleChoiceQuestion) multipleChoiceUnmarshaller
+							.unmarshal(new StringReader(fileAsString));
+					MultipleChoiceQuestion mq = AccountingXmlHelper.fromXml(question, f.getName());
+					if (image!=null) mq.setQuestionImage(new Image("",new FileResource(image)));
+					multipleChoiceList.add(mq);
+					successfullyLoaded++;
 			} else {
 				LogHelper.logInfo("QuestionManager: item type not supported for "+f.getName()+", ignoring file.");
 //				throw new IllegalArgumentException(
@@ -308,7 +320,25 @@ public class AccountingQuestionManager extends QuestionManager {
 		// Add question to the question manager
 		accountingList.forEach(q -> addQuestion(q));
 		profitList.forEach(q -> addQuestion(q));
+		multipleChoiceList.forEach(q -> addQuestion(q));
 		LogHelper.logInfo("Successfully loaded "+successfullyLoaded+" questions.");
+/*		MultipleChoiceDataStorage mds = new MultipleChoiceDataStorage();
+		HashMap<Integer,String> answerOptions = new HashMap<>();
+		answerOptions.put(new Integer(1),"gewinnerhöhend");
+		answerOptions.put(new Integer(2),"gewinnerniedrigend");
+		answerOptions.put(new Integer(3),"beeinflusst nicht");
+		mds.setAnswerOptions(answerOptions);
+		Vector<Integer> correctAnswers = new Vector<>();
+		correctAnswers.add(new Integer(1));
+		correctAnswers.add(new Integer(2));
+		mds.setCorrectAnswers(correctAnswers);
+		XmlMultipleChoiceQuestion xml = new XmlMultipleChoiceQuestion(mds,"test",1.0f);
+		answerOptions.put(new Integer(1),"gewinnerhöhend");
+		Marshaller jaxbMarshaller = multipleChoiceJAXB.createMarshaller();
+
+		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+		jaxbMarshaller.marshal(xml, System.out);*/
 		return questions.length;
 	}
 
@@ -335,10 +365,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		try {
 			loadQuestions(new File(VaadinUI.Servlet.getQuestionFolderName()));
 		} catch (JAXBException | IOException e1) {
-			Notification.show("Questions could not be loaded - FATAL error",
-					e1.getMessage(), Type.ERROR_MESSAGE);
 			LogHelper.logThrowable(e1);
 		}
-
 	}
 }
