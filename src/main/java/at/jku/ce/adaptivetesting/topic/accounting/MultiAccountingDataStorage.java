@@ -66,20 +66,29 @@ public class MultiAccountingDataStorage extends AnswerStorage {
 
     public String toString(boolean html) {
         String nl = html ? "<br>" : System.getProperty("line.separator");
-        //todo: implement new toString method
-/*		int max = soll.length > haben.length ? soll.length : haben.length;
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < max; i++) {
-			if (i < soll.length) {
-				sb.append(soll[i]);
-			}
-			sb.append("  |  ");
-			if (i < haben.length) {
-				sb.append(haben[i]);
-			}
-			sb.append(nl);
-		}
-		return sb.toString();*/
-        return "";
+        StringBuilder sb = new StringBuilder();
+        int i = 1;
+        for (AccountRecordData[] ard: soll) {
+            sb.append("Soll Variante "+i+": ");
+            for (int a = 0;a<ard.length;a++) {
+                sb.append(ard[a]);
+                if (a<ard.length-1) sb.append(", ");
+            }
+            sb.append("; ");
+            i++;
+        }
+        i = 1;
+        sb.append("  |  ");
+        for (AccountRecordData[] ard: haben) {
+            sb.append("Haben Variante "+i+": ");
+            for (int a = 0;a<ard.length;a++) {
+                sb.append(ard[a]);
+                if (a<ard.length-1) sb.append(", ");
+            }
+            sb.append(" - ");
+            i++;
+        }
+		return sb.toString();
+
     }
 }

@@ -73,4 +73,33 @@ public class AccountingRecordInputFields extends GridLayout {
 				currencyTextBox.getNumericValue(),
 				accountNumberInputField.getAccountNumber());
 	}
+
+	public void setAccountRecordData(AccountRecordData data) {
+		AccountingDataProvider dataProvider = AccountingDataProvider
+				.getInstance();
+		if (data.accountName != null) {
+			if (!dataProvider.containsString(data.accountName)) {
+				Notification.show('"' + data.accountName
+								+ "\" ist kein zulässiger Kontenname",
+						Type.WARNING_MESSAGE);
+			}
+			ddAccountNames.setValue(data.accountName);
+			ddAccountNames.setEnabled(data.accountName == null
+					|| data.accountName.length() == 0);
+		}
+		if (data.accountNumber > 0) {
+			if (!dataProvider.containsNumber(data.accountNumber)) {
+				Notification.show('"' + data.accountNumber
+								+ "\" ist keine zulässige Kontennummer",
+						Type.WARNING_MESSAGE);
+			}
+			accountNumberInputField.setValue(Integer
+					.toString(data.accountNumber));
+			accountNumberInputField.setEnabled(false);
+		}
+		if (data.value >= 0.01f) {
+			currencyTextBox.setValue(Float.toString(data.value));
+			currencyTextBox.setEnabled(false);
+		}
+	}
 }

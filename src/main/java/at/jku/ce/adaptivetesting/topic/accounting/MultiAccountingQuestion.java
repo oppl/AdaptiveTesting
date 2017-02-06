@@ -49,17 +49,32 @@ public class MultiAccountingQuestion extends AccountingRecordInputGrid implement
         setQuestionText(question);
         if (image != null) setQuestionImage(image);
         // Fill grid
-        int iSoll = solution.getSoll().get(0).length, iHaben = solution.getHaben().get(0).length;
+        int iSoll = 3;
+        for (AccountRecordData[] ard: solution.getSoll())
+            if (ard.length > iSoll) iSoll = ard.length;
+        int iHaben = 3;
+        for (AccountRecordData[] ard: solution.getHaben())
+            if (ard.length > iHaben) iHaben = ard.length;
+        if (iSoll != iHaben) {
+            iSoll = Math.max(iSoll, iHaben);
+            iHaben = iSoll;
+        }
         soll = new AccountingRecordInputFields[iSoll];
         haben = new AccountingRecordInputFields[iHaben];
         for (int row = 0; row < iSoll; row++) {
             soll[row] = new AccountingRecordInputFields(
-                    prefilled.getSoll().get(0)[row]);
+                    new AccountRecordData());
+            if (prefilled.getSoll().size() > 0 && prefilled.getSoll().get(0).length > row) {
+                soll[row].setAccountRecordData(prefilled.getSoll().get(0)[row]);
+            }
             addComponent(soll[row], Side.Left, row);
         }
         for (int row = 0; row < iHaben; row++) {
             haben[row] = new AccountingRecordInputFields(
-                    prefilled.getHaben().get(0)[row]);
+                    new AccountRecordData());
+            if (prefilled.getHaben().size() > 0 && prefilled.getHaben().get(0).length > row) {
+                haben[row].setAccountRecordData(prefilled.getHaben().get(0)[row]);
+            }
             addComponent(haben[row], Side.Right, row);
         }
 

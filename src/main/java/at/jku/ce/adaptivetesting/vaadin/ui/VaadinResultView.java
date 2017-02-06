@@ -89,7 +89,7 @@ public class VaadinResultView extends VerticalLayout implements View,
 						window.setContent(iQuestionSolution);
 						window.center();
 						window.setWidth("90%");
-						window.setHeight("50%");
+						window.setHeight("80%");
 						if (iQuestionSolution instanceof Sizeable) {
 							Sizeable sizeable = iQuestionSolution;
 							sizeable.setSizeFull();
@@ -105,7 +105,7 @@ public class VaadinResultView extends VerticalLayout implements View,
 						window.setContent(iQuestionUser);
 						window.center();
 						window.setWidth("90%");
-						window.setHeight("50%");
+						window.setHeight("80%");
 						if (iQuestionUser instanceof Sizeable) {
 							Sizeable sizeable = iQuestionUser;
 							sizeable.setSizeFull();
