@@ -6,20 +6,20 @@
          version="3.1">
     <context-param>
        <param-name>at.jku.ce.adaptivetesting.questionfolder</param-name>
-        <!--<param-value>/Users/oppl/IdeaProjects/AdaptiveTesting2/questions</param-value>-->
-       <param-value>D:\JKU\ce\vaadin\questions</param-value>
+        <param-value>/Users/oppl/IdeaProjects/AdaptiveTesting2/questions</param-value>
+       <!--<param-value>D:\JKU\ce\vaadin\questions</param-value>-->
     </context-param>
 
     <context-param>
         <param-name>at.jku.ce.adaptivetesting.resultfolder</param-name>
-        <!--<param-value>/Users/oppl/IdeaProjects/AdaptiveTesting2/results</param-value>-->
-        <param-value>D:\JKU\ce\vaadin\results</param-value>
+        <param-value>/Users/oppl/IdeaProjects/AdaptiveTesting2/results</param-value>
+        <!--<param-value>D:\JKU\ce\vaadin\results</param-value>-->
     </context-param>
 
     <context-param>
         <param-name>at.jku.ce.adaptivetesting.logfilepath</param-name>
-        <!--<param-value>/Users/oppl/IdeaProjects/AdaptiveTesting2/AdaptiveTesting.log</param-value>-->
-       <param-value>D:\JKU\ce\vaadin\AdaptiveTesting.log</param-value>
+        <param-value>/Users/oppl/IdeaProjects/AdaptiveTesting2/AdaptiveTesting.log</param-value>
+       <!--<param-value>D:\JKU\ce\vaadin\AdaptiveTesting.log</param-value>-->
 
     </context-param>
 
