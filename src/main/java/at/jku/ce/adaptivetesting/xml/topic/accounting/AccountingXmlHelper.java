@@ -10,12 +10,12 @@ public final class AccountingXmlHelper {
 	public static AccountingQuestion fromXml(XmlAccountingQuestion xml, String id) {
 		return new AccountingQuestion(xml.getDataStorage(),
 				xml.getDifficulty(), xml.getQuestion()
-						.replace("\\n", " <br />"), id);
+						.replace("\\n", " <br />"), null, id);
 	}
 
 	public static ProfitQuestion fromXml(XmlProfitQuestion xml, String id) {
 		return new ProfitQuestion(xml.getDataStorage(), xml.getDifficulty(),
-				xml.getQuestion().replace("\\n", " <br />"), id);
+				xml.getQuestion().replace("\\n", " <br />"), null, id);
 
 	}
 }

@@ -14,11 +14,11 @@ public class AccountingMockQuestion extends
 	public AccountingMockQuestion(AccountingDataStorage solution,
 			AccountingDataStorage dataStorage, float difficulty,
 			String questionText) {
-		super(new AccountingQuestion(solution, dataStorage, difficulty, "",""));
+		super(new AccountingQuestion(solution, dataStorage, difficulty, "",null,""));
 	}
 
 	public AccountingMockQuestion(int soll, int haben) {
-		super(new AccountingQuestion(getData(soll, haben), 0f, "",""));
+		super(new AccountingQuestion(getData(soll, haben), 0f, "",null,""));
 	}
 
 	@Override
