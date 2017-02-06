@@ -25,13 +25,8 @@ import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Sizeable;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 import rcaller.exception.ExecutionException;
 
 public class VaadinResultView extends VerticalLayout implements View,
@@ -49,7 +44,7 @@ public class VaadinResultView extends VerticalLayout implements View,
 		addComponent(HtmlLabel
 				.getCenteredLabel("Im Folgenden siehst du die Fragen und die gegebenen Antworten in zeitlich absteigender Reihenfolge."));
 		addComponent(HtmlLabel
-				.getCenteredLabel("Die Zahl in der ersten Spalte bezieht sich auf die Schwierigkeit der jeweiligen Frage. Negative Zahlen stehen für leichtere Fragen, positive Zahlen kennzeichnen schwierigere Fragen."));
+				.getCenteredLabel("Die Zahl in der ersten Spalte bezieht sich auf die Schwierigkeit der jeweiligen Frage.<br/>Negative Zahlen stehen für leichtere Fragen, positive Zahlen kennzeichnen schwierigere Fragen."));
 
 		// Create HTML table of the history
 		Table table = new Table();
@@ -71,19 +66,20 @@ public class VaadinResultView extends VerticalLayout implements View,
 					Constructor<? extends IQuestion> constructor = entry.question
 							.getClass()
 							.getConstructor(dataStorageClass, dataStorageClass,
-									float.class, String.class);
+									float.class, String.class, Image.class, String.class);
 					// The following casts can not fail, because the question is
 					// a component as well
 					Component iQuestionSolution = (Component) constructor
 							.newInstance(entry.question.getSolution(),
 									entry.question.getSolution(),
 									entry.question.getDifficulty(),
-									entry.question.getQuestionText());
+									entry.question.getQuestionText(),
+									null,"");
 					Component iQuestionUser = (Component) constructor
 							.newInstance(entry.question.getSolution(),
 									entry.question.getUserAnswer(),
 									entry.question.getDifficulty(),
-									entry.question.getQuestionText());
+									entry.question.getQuestionText(),null,"");
 					// Create the 2 needed click listeners
 					ClickListener clickListenerSol = event -> {
 						Window window = new Window(solution);
@@ -123,11 +119,12 @@ public class VaadinResultView extends VerticalLayout implements View,
 
 				} catch (Exception e) {
 					// Ignore this line in the table
-					LogHelper
+					/*LogHelper
 					.logInfo("1 entry's solution/ user answer are missing on the final screen."
 							+ entry.question.getClass().getName()
 							+ " does not implement the constructors required by"
-							+ IQuestion.class.getName());
+							+ IQuestion.class.getName());*/
+					LogHelper.logError(e.toString());
 				}
 			}
 
@@ -165,7 +162,7 @@ public class VaadinResultView extends VerticalLayout implements View,
 			writer.write(Boolean.toString(args.outOfQuestions)+"\n");
 			writer.write(args.history.size()+"\n");
 			for (HistoryEntry entry : args.history) {
-				writer.write(entry.question.getQuestionText()+";"+entry.question.getDifficulty()+";"+entry.question.getSolution().toString()+";"+entry.question.getUserAnswer().toString()+"\n");
+				writer.write(entry.question.getQuestionText()+";"+entry.question.getDifficulty()+";"+entry.question.getSolution().toString()+";"+entry.question.getUserAnswer().toString()+";"+isCorrect(entry.points, entry.question.getMaxPoints())+"\n");
 			}
 			writer.close();
 		} catch (Exception var9) {
