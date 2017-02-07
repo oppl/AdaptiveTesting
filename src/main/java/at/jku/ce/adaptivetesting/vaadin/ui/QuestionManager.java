@@ -163,6 +163,7 @@ public abstract class QuestionManager extends VerticalLayout implements
 	public abstract void loadQuestions();
 
 	public void startQuiz(StudentData student) {
+		questionNo = 0;
 		iEngine.resetQuestions();
 		iEngine.setStudentData(student);
 		loadQuestions();
