@@ -33,6 +33,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:3.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-server:7.7.4" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-sass-compiler:0.9.13" level="project" />
