@@ -235,6 +235,8 @@ public class AccountingQuestionManager extends QuestionManager {
 				XmlMultipleChoiceQuestion.class, MultipleChoiceDataStorage.class);
 		JAXBContext multipleTaskTableJAXB = JAXBContext.newInstance(
 				XmlMultipleTaskTableQuestion.class, MultipleTaskTableDataStorage.class);
+		JAXBContext openAnswerKeywordJAXB = JAXBContext.newInstance(
+				XmlOpenAnswerKeywordQuestion.class, OpenAnswerKeywordDataStorage.class);
 
 
 		Unmarshaller accountingUnmarshaller = accountingJAXB
@@ -244,12 +246,14 @@ public class AccountingQuestionManager extends QuestionManager {
 		Unmarshaller profitUnmarshaller = profitJAXB.createUnmarshaller();
 		Unmarshaller multipleChoiceUnmarshaller = multipleChoiceJAXB.createUnmarshaller();
 		Unmarshaller multipleTaskTableUnmarshaller = multipleTaskTableJAXB.createUnmarshaller();
+		Unmarshaller openAnswerKeywordUnmarshaller = openAnswerKeywordJAXB.createUnmarshaller();
 
 		final List<AccountingQuestion> accountingList = new ArrayList<>();
 		final List<MultiAccountingQuestion> multiAccountingList = new ArrayList<>();
 		final List<ProfitQuestion> profitList = new ArrayList<>();
 		final List<MultipleChoiceQuestion> multipleChoiceList = new ArrayList<>();
 		final List<MultipleTaskTableQuestion> multipleTaskTableList = new ArrayList<>();
+		final List<OpenAnswerKeywordQuestion> openAnswerKeywordList = new ArrayList<>();
 
 		String accountingRootElement = XmlAccountingQuestion.class
 				.getAnnotation(XmlRootElement.class).name();
@@ -260,6 +264,8 @@ public class AccountingQuestionManager extends QuestionManager {
 		String multipleChoiceRootElement = XmlMultipleChoiceQuestion.class.getAnnotation(
 				XmlRootElement.class).name();
 		String multipleTaskTableRootElement = XmlMultipleTaskTableQuestion.class.getAnnotation(
+				XmlRootElement.class).name();
+		String openAnswerKeywordRootElement = XmlOpenAnswerKeywordQuestion.class.getAnnotation(
 				XmlRootElement.class).name();
 
 		File[] questions = containingFolder.listFiles(f -> f
@@ -343,6 +349,17 @@ public class AccountingQuestionManager extends QuestionManager {
 				multipleTaskTableList.add(mtt);
 				successfullyLoaded++;
 			}
+			else if (fileAsString.contains(openAnswerKeywordRootElement)) {
+				LogHelper.logInfo("Question detected as "
+						+ OpenAnswerKeywordQuestion.class.getName());
+				// Accounting Question
+				XmlOpenAnswerKeywordQuestion question = (XmlOpenAnswerKeywordQuestion) openAnswerKeywordUnmarshaller
+						.unmarshal(new StringReader(fileAsString));
+				OpenAnswerKeywordQuestion oak = AccountingXmlHelper.fromXml(question, f.getName());
+				if (image!=null) oak.setQuestionImage(new Image("",new FileResource(image)));
+				openAnswerKeywordList.add(oak);
+				successfullyLoaded++;
+			}
 			else {
 				LogHelper.logInfo("QuestionManager: item type not supported for "+f.getName()+", ignoring file.");
 //				throw new IllegalArgumentException(
@@ -357,6 +374,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		multipleChoiceList.forEach(q -> addQuestion(q));
 		multiAccountingList.forEach(q -> addQuestion(q));
 		multipleTaskTableList.forEach(q -> addQuestion(q));
+		openAnswerKeywordList.forEach(q -> addQuestion(q));
 		LogHelper.logInfo("Successfully loaded "+successfullyLoaded+" questions.");
 
 		/*		MultipleChoiceDataStorage mds = new MultipleChoiceDataStorage();
@@ -415,7 +433,23 @@ public class AccountingQuestionManager extends QuestionManager {
 		XmlMultipleTaskTableQuestion xml = new XmlMultipleTaskTableQuestion(tts,"Berechnen Sie:",1.0f);
 		Marshaller jaxbMarshaller = multipleTaskTableJAXB.createMarshaller();
 		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		jaxbMarshaller.marshal(xml, System.out);
+
+		OpenAnswerKeywordDataStorage oak = new OpenAnswerKeywordDataStorage();
+		Vector<String> requiredKeyword = new Vector<>();
+		requiredKeyword.add("Test11");
+		requiredKeyword.add("Test12");
+		oak.addAnswer(requiredKeyword.toArray(new String[]{}));
+		Vector<String> requiredKeyword1 = new Vector<>();
+		requiredKeyword1.add("Test21");
+		requiredKeyword1.add("Test22");
+		requiredKeyword1.add("Test23");
+		oak.addAnswer(requiredKeyword1.toArray(new String[]{}));
+		XmlOpenAnswerKeywordQuestion xml = new XmlOpenAnswerKeywordQuestion(oak,"Dies ist ein Test.",0.5f);
+		Marshaller jaxbMarshaller = openAnswerKeywordJAXB.createMarshaller();
+		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		jaxbMarshaller.marshal(xml, System.out);*/
+
 		return questions.length;
 	}
 
