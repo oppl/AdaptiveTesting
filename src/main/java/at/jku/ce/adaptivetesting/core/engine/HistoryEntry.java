@@ -12,7 +12,8 @@ public class HistoryEntry {
 	public final IQuestion<? extends AnswerStorage> question;
 
 	public HistoryEntry(IQuestion<? extends AnswerStorage> question) {
-		points = question.checkUserAnswer();
+		if (question == null) points = 0;
+		else points = question.checkUserAnswer();
 		this.question = question;
 	}
 

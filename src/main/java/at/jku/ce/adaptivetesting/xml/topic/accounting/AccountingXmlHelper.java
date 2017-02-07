@@ -37,4 +37,10 @@ public final class AccountingXmlHelper {
 
 	}
 
+	public static OpenAnswerKeywordQuestion fromXml(XmlOpenAnswerKeywordQuestion xml, String id) {
+		return new OpenAnswerKeywordQuestion(xml.getDataStorage(), xml.getDifficulty(),
+				xml.getQuestion().replace("\\n", " <br />"), null, id);
+
+	}
+
 }
