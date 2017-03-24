@@ -11,11 +11,17 @@ import java.util.Optional;
 
 import javax.script.ScriptException;
 
-import rcaller.Globals;
+import com.github.rcaller.util.Globals;
+import com.github.rcaller.rStuff.RCaller;
+import com.github.rcaller.rStuff.RCaller.FailurePolicy;
+import com.github.rcaller.rStuff.RCode;
+import com.github.rcaller.rStuff.ROutputParser;
+/*import rcaller.Globals;
 import rcaller.RCaller;
 import rcaller.RCaller.FailurePolicy;
 import rcaller.RCode;
 import rcaller.ROutputParser;
+*/
 import at.jku.ce.adaptivetesting.core.LogHelper;
 
 public class RProvider {
