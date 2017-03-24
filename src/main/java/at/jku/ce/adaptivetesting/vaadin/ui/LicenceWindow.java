@@ -18,6 +18,9 @@ public class LicenceWindow extends Window {
 			"Apache 2.0 Lizenz", true);
 	private final HtmlLink lgpl3 = new HtmlLink(
 			"http://www.gnu.org/licenses/lgpl.html", "LGPL v3", true);
+	private final HtmlLink gpl3 = new HtmlLink(
+			"https://cran.r-project.org/web/licenses/GPL v3", "GPL-3", true);
+
 
 	public LicenceWindow() {
 		super("Licences");
@@ -29,9 +32,10 @@ public class LicenceWindow extends Window {
 		// Add the 3rd party licences
 		addLibraryLicence(new HtmlLink("https://vaadin.com/",
 				"Vaadin Framework", true), apache2);
-		addLibraryLicence(new HtmlLink("http://www.mhsatman.com/rcaller.php",
-				"RCaller 2.0", true), lgpl3);
-
+		addLibraryLicence(new HtmlLink("https://github.com/jbytecode/rcaller",
+				"RCaller 2.8", true), lgpl3);
+		addLibraryLicence(new HtmlLink("https://cran.r-project.org/web/packages/catR/index.html",
+				"catR 3.5", true), gpl3);
 	}
 
 	public void addLibraryLicence(HtmlLink library, HtmlLink licence) {

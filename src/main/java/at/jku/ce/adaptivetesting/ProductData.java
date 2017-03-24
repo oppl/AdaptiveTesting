@@ -8,7 +8,7 @@ public class ProductData {
 	private final int minVers = 5;
 	private final int micVers = 2;
 	private final String company = "JKU";
-	private final String product = "Adaptive Testing Plattform";
+	private final String product = "Adaptive Testing Platform";
 
 	public int getMajor() {
 		return mjVers;

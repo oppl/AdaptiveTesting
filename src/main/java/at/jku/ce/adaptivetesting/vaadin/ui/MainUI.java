@@ -55,7 +55,7 @@ public class MainUI extends VerticalLayout implements View {
 			}
 
 		});
-		Label copyright = new HtmlLabel("<i>© Reisisoft & JKU 2014 - "
+		Label copyright = new HtmlLabel("<i>© Reisisoft & JKU 2017 - "
 				+ new GregorianCalendar().get(Calendar.YEAR) + "</i>");
 		/* Button openLog = new Button("Open Log", (ClickListener) event -> {
 			Navigator navigator = getUI().getNavigator();
