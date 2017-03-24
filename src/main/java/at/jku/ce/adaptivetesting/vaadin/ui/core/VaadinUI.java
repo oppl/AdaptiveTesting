@@ -53,7 +53,7 @@ public class VaadinUI extends UI {
 		mainScreen
 				.addComponent(new HtmlLabel(HtmlUtils.center("h2",
 						"Bitte klicke den <b>" + start.getCaption()
-								+ "</b> Button um mit dem Rechnungswesentest zu beginnen!")));
+								+ "</b> Button, um mit dem Rechnungswesentest zu beginnen!")));
 		mainScreen.addComponent(start);
 		mainScreen.setComponentAlignment(start, Alignment.MIDDLE_CENTER);
 
