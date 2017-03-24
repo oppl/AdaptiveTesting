@@ -9,8 +9,10 @@ import java.util.*;
 import javax.script.ScriptException;
 
 import at.jku.ce.adaptivetesting.core.StudentData;
-import rcaller.RCaller;
-import rcaller.RCode;
+import com.github.rcaller.rStuff.RCaller;
+import com.github.rcaller.rStuff.RCode;
+// import rcaller.RCaller;
+// import rcaller.RCode;
 import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
@@ -362,7 +364,7 @@ public class SimpleEngine implements IEngine {
 		+ nl
 		+ "for(i in 1:length(response_pattern)) {"
 		+ nl
-		+ "for (j in 1:nrow(itembank)) {"
+		+ "for(j in 1:nrow(itembank)) {"
 		+ nl
 		+ "if(pre_items_diff[i,1]==itembank[j,2]) (previous_items[i,1] <-j)"
 		+ nl

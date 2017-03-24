@@ -67,6 +67,7 @@
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-client-compiled</artifactId>
+			<version>${vaadin.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vaadin</groupId>
@@ -98,9 +99,9 @@
 			<version>20.0</version>
 		</dependency>
 		<dependency>
-			<groupId>rcaller</groupId>
-			<artifactId>rcaller</artifactId>
-			<version>2.4</version>
+			<groupId>com.github.jbytecode</groupId>
+			<artifactId>RCaller</artifactId>
+			<version>2.8</version>
 		</dependency>
         <dependency>
             <groupId>org.vaadin.addon</groupId>
