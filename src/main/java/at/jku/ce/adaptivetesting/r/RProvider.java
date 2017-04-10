@@ -9,12 +9,6 @@ import com.github.rcaller.rstuff.*;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 
 public class RProvider {
-	RService service;
-
-	public RProvider() {
-		service = new RService();
-		LogHelper.logInfo("Installed " + service.version());
-	}
 
 	private final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
@@ -40,11 +34,11 @@ public class RProvider {
 	}
 
 	public RCaller getRCaller() throws ScriptException {
-		return service.getRCaller();
+		return new RService().getRCaller();
 	}
 
 	public RCode getRCode() {
-		return service.getRCode();
+		return new RService().getRCode();
 	}
 
 	public ROutputParser execute(RCaller caller, RCode code, String toReturn)
