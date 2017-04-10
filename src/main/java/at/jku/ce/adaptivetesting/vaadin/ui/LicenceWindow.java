@@ -33,9 +33,9 @@ public class LicenceWindow extends Window {
 		addLibraryLicence(new HtmlLink("https://vaadin.com/",
 				"Vaadin Framework", true), apache2);
 		addLibraryLicence(new HtmlLink("https://github.com/jbytecode/rcaller",
-				"RCaller 2.8", true), lgpl3);
+				"RCaller 3.0", true), lgpl3);
 		addLibraryLicence(new HtmlLink("https://cran.r-project.org/web/packages/catR/index.html",
-				"catR 3.5", true), gpl3);
+				"catR 3.4", true), gpl3);
 	}
 
 	public void addLibraryLicence(HtmlLink library, HtmlLink licence) {

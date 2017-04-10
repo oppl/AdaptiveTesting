@@ -47,8 +47,9 @@ public class VaadinUI extends UI {
 		Button start = new Button("Start", e -> {
 			navigator.navigateTo(Views.TEST.toString());
 		});
-		start.setWidth("40%");
-		start.setHeight("40%");
+		start.setId("Start");
+		start.setWidth("20%");
+		start.setHeight("20%");
 		//mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h1", "Willkommen zur " + productData)));
 		mainScreen
 				.addComponent(new HtmlLabel(HtmlUtils.center("h2",

@@ -5,14 +5,10 @@ package at.jku.ce.adaptivetesting.core.engine.engines;
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
 import java.io.File;
 import java.util.*;
-
 import javax.script.ScriptException;
-
 import at.jku.ce.adaptivetesting.core.StudentData;
-import com.github.rcaller.rStuff.RCaller;
-import com.github.rcaller.rStuff.RCode;
-// import rcaller.RCaller;
-// import rcaller.RCode;
+import com.github.rcaller.rstuff.RCaller;
+import com.github.rcaller.rstuff.RCode;
 import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
@@ -60,18 +56,12 @@ public class SimpleEngine implements IEngine {
 	 */
 
 	@SuppressWarnings("unchecked")
-	public SimpleEngine(float... upperBounds) throws EngineException {
+	public SimpleEngine (float... upperBounds) throws EngineException {
 		Arrays.sort(upperBounds);
 		this.upperBounds = upperBounds;
 		bags = new List[upperBounds.length + 1];
-		for (int i = 0; i < bags.length; i++) {
-			bags[i] = new ArrayList<>();
-		}
-		try {
-			rProvider = new RProvider();
-		} catch (ScriptException e) {
-			throw new EngineException(e);
-		}
+		for (int i = 0; i < bags.length; i++) bags[i] = new ArrayList<>();
+		rProvider = new RProvider();
 	}
 
 	/*

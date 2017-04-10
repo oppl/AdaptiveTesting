@@ -5,36 +5,27 @@ package at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting;
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.*;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import at.jku.ce.adaptivetesting.core.StudentData;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.topic.accounting.*;
-import at.jku.ce.adaptivetesting.vaadin.ui.ResultView;
 import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.*;
-import com.sun.source.doctree.VersionTree;
 import com.vaadin.server.FileResource;
 import com.vaadin.ui.*;
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
-
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.vaadin.ui.QuestionManager;
-
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Notification.Type;
 
 public class AccountingQuestionManager extends QuestionManager {
 
@@ -90,6 +81,7 @@ public class AccountingQuestionManager extends QuestionManager {
 
 	@Override
 	public void startQuiz(StudentData student) {
+		LogHelper.logInfo("loading private questions");
 		// Remove everything from the layout, save it for displaying after
 		// clicking OK
 		final Component[] components = new Component[getComponentCount()];
