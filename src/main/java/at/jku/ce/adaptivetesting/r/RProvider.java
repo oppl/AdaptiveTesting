@@ -5,11 +5,16 @@ package at.jku.ce.adaptivetesting.r;
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
 import java.io.ByteArrayOutputStream;
 import javax.script.ScriptException;
-
 import com.github.rcaller.rstuff.*;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 
 public class RProvider {
+	RService service;
+
+	public RProvider() {
+		service = new RService();
+		LogHelper.logInfo("Installed " + service.version());
+	}
 
 	private final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
@@ -35,11 +40,11 @@ public class RProvider {
 	}
 
 	public RCaller getRCaller() throws ScriptException {
-		return new RService().getRCaller();
+		return service.getRCaller();
 	}
 
 	public RCode getRCode() {
-		return new RService().getRCode();
+		return service.getRCode();
 	}
 
 	public ROutputParser execute(RCaller caller, RCode code, String toReturn)
