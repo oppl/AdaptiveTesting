@@ -4,20 +4,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
+    <!--Set folder paths for the destinations server and the development environment-->
     <context-param>
        <param-name>at.jku.ce.adaptivetesting.questionfolder</param-name>
-        <param-value>C:\Users\Peter\IdeaProjects\AdaptiveTesting2\questions</param-value>
+        <param-value>/opt/tomcat/temp/adaptiveTesting/questions</param-value>
+        <!--<param-value>C:\Users\Peter\IdeaProjects\AdaptiveTesting2\questions</param-value>-->
     </context-param>
 
     <context-param>
         <param-name>at.jku.ce.adaptivetesting.resultfolder</param-name>
-        <param-value>C:\Users\Peter\IdeaProjects\AdaptiveTesting2\results</param-value>
+        <param-value>/opt/tomcat/temp/adaptiveTesting/results</param-value>
+        <!--<param-value>C:\Users\Peter\IdeaProjects\AdaptiveTesting2\results</param-value>-->
     </context-param>
 
     <context-param>
         <param-name>at.jku.ce.adaptivetesting.logfilepath</param-name>
-        <param-value>C:\Users\Peter\IdeaProjects\AdaptiveTesting2\AdaptiveTesting.log</param-value>
-
+        <param-value>/opt/tomcat/temp/adaptiveTesting/adaptiveTesting.log</param-value>
+        <!--<param-value>C:\Users\Peter\IdeaProjects\AdaptiveTesting2\adaptiveTesting.log</param-value>-->
     </context-param>
 
     <context-param>
