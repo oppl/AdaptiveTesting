@@ -8,6 +8,7 @@ import at.jku.ce.adaptivetesting.html.HtmlUtils;
 import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.easyuploads.MultiFileUpload;
@@ -23,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.lang.reflect.Constructor;
 import java.nio.file.Files;
 import java.util.Collection;
 import java.util.List;
@@ -55,16 +57,19 @@ public class AdminView extends VerticalLayout implements View {
         table = new Table("Available Items");
         table.addContainerProperty("ItemName", String.class, null);
         table.addContainerProperty("ButtonShowQuestionText",  Button.class, null);
-        table.addContainerProperty("ButtonShowFullDetails",  Button.class, null);
+        table.addContainerProperty("ButtonShowQuestionPreview",  Button.class, null);
+        table.addContainerProperty("ButtonShowFullXML",  Button.class, null);
         table.addContainerProperty("ButtonDelete",  Button.class, null);
         table.setWidth("100%");
 
-        table.setColumnWidth("ButtonShowQuestionText",190);
-        table.setColumnWidth("ButtonShowFullDetails",170);
+        table.setColumnWidth("ButtonShowQuestionText",155);
+        table.setColumnWidth("ButtonShowQuestionPreview",210);
+        table.setColumnWidth("ButtonShowFullXML",115);
         table.setColumnWidth("ButtonDelete",100);
         table.setColumnHeaderMode(Table.ColumnHeaderMode.HIDDEN);
         table.setColumnAlignment("ButtonShowQuestionText", Table.Align.CENTER);
-        table.setColumnAlignment("ButtonShowFullDetails", Table.Align.CENTER);
+        table.setColumnAlignment("ButtonShowQuestionPreview", Table.Align.CENTER);
+        table.setColumnAlignment("ButtonShowFullXML", Table.Align.CENTER);
         table.setColumnAlignment("ButtonDelete", Table.Align.CENTER);
 
         this.addComponent(table);
@@ -84,16 +89,23 @@ public class AdminView extends VerticalLayout implements View {
         LogHelper.logInfo("Admin: "+questions.size()+" questions available.");
 
         for (IQuestion<? extends AnswerStorage> question: questions) {
-            Button showQuestionTextButton = new Button("show question text");
+
+            Button showQuestionTextButton = new Button("question text");
             showQuestionTextButton.addClickListener( e -> {
                 closeAllWindows ();
                 this.getUI().addWindow(new QuestionTextUI(question));
             });
 
-            Button showFullDetailsButton = new Button("show full details");
-            showFullDetailsButton.addClickListener( e -> {
+            Button showQuestionPreviewButton = new Button("question full preview");
+            showQuestionPreviewButton.addClickListener( e -> {
                 closeAllWindows ();
-                this.getUI().addWindow(new FullDetailsUI(question));
+                this.getUI().addWindow(new QuestionPreviewUI(question));
+            });
+
+            Button showFullXMLButton = new Button("full XML");
+            showFullXMLButton.addClickListener( e -> {
+                closeAllWindows ();
+                this.getUI().addWindow(new FullXMLUI(question));
             });
 
             Button deleteButton = new Button ("delete");
@@ -105,7 +117,8 @@ public class AdminView extends VerticalLayout implements View {
             table.addItem(new Object[]{
                     question.getQuestionID(),
                     showQuestionTextButton,
-                    showFullDetailsButton,
+                    showQuestionPreviewButton,
+                    showFullXMLButton,
                     deleteButton
             }, itemID);
             itemID++;
@@ -128,21 +141,22 @@ public class AdminView extends VerticalLayout implements View {
         GridLayout gLayout = new GridLayout(2,3);
 
         public QuestionTextUI(IQuestion<? extends AnswerStorage> question) {
-            super("Question");
+            super("Question Text");
             this.center();
             gLayout.setWidth("100%");
             this.setWidth("400px");
             Label titleLabel = new Label("<b>"+question.getQuestionID()+"</b>", ContentMode.HTML);
             Label descrLabel = new Label(question.getQuestionText(), ContentMode.HTML);
+            /*
             Button close = new Button("Close");
 
             close.addClickListener( e -> {
                 this.close();
             });
-
+            */
             gLayout.addComponent(titleLabel,0,0,1,0);
             gLayout.addComponent(descrLabel,0,1,1,1);
-            gLayout.addComponent(close,0,2);
+            //gLayout.addComponent(close,0,2);
             gLayout.setRowExpandRatio(1,1);
             gLayout.setMargin(true);
             gLayout.setSpacing(true);
@@ -150,16 +164,69 @@ public class AdminView extends VerticalLayout implements View {
         }
     }
 
-    private class FullDetailsUI extends Window {
+    private class QuestionPreviewUI extends Window {
+
+        VerticalLayout vLayout = new VerticalLayout();
+
+        public QuestionPreviewUI(IQuestion<? extends AnswerStorage> question) {
+            super("Full Question Preview");
+
+            try {
+                Class<? extends AnswerStorage> dataStorageClass = question.getSolution().getClass();
+                Constructor<? extends IQuestion> constructor = question.getClass()
+                        .getConstructor(dataStorageClass,
+                                dataStorageClass,
+                                float.class,
+                                String.class,
+                                Image.class,
+                                String.class);
+
+                Component iQuestionSolution = (Component) constructor
+                        .newInstance(question.getSolution(),
+                                question.getSolution(),
+                                question.getDifficulty(),
+                                question.getQuestionText(),
+                                null,"");
+
+                this.center();
+                vLayout.setWidth("100%");
+                this.setWidth("90%");
+                this.setHeight("80%");
+                Label titleLabel = new Label("<b>"+question.getQuestionID()+"</b>", ContentMode.HTML);
+                /*
+                Button close = new Button("Close");
+
+                close.addClickListener( e -> {
+                    this.close();
+                });
+                */
+                vLayout.addComponent(titleLabel);
+                vLayout.addComponent(iQuestionSolution);
+                //vLayout.addComponent(close);
+                vLayout.setMargin(true);
+                vLayout.setSpacing(true);
+                setContent(vLayout);
+                if (iQuestionSolution instanceof Sizeable) {
+                    Sizeable sizeable = iQuestionSolution;
+                    sizeable.setSizeFull();
+                }
+            } catch (Exception e) {
+                LogHelper.logError(e.toString());
+            }
+        }
+    }
+
+    private class FullXMLUI extends Window {
 
         GridLayout gLayout = new GridLayout(2,3);
 
-        public FullDetailsUI(IQuestion<? extends AnswerStorage> question) {
-            super("Question");
+        public FullXMLUI(IQuestion<? extends AnswerStorage> question) {
+            super("Full Question XML");
             this.center();
             gLayout.setWidth("100%");
             gLayout.addStyleName("v-scrollable");
             this.setWidth("1100px");
+            this.setHeight("80%");
             Label titleLabel = new Label("<b>"+question.getQuestionID()+"</b>", ContentMode.HTML);
             Label descrLabel = null;
             try {
@@ -167,15 +234,16 @@ public class AdminView extends VerticalLayout implements View {
             } catch (JAXBException e) {
                 e.printStackTrace();
             }
+            /*
             Button close = new Button("Close");
 
             close.addClickListener( e -> {
                 this.close();
             });
-
+            */
             gLayout.addComponent(titleLabel,0,0,1,0);
             gLayout.addComponent(descrLabel,0,1,1,1);
-            gLayout.addComponent(close,0,2);
+            //gLayout.addComponent(close,0,2);
             gLayout.setRowExpandRatio(1,1);
             gLayout.setMargin(true);
             gLayout.setSpacing(true);
@@ -188,26 +256,27 @@ public class AdminView extends VerticalLayout implements View {
         GridLayout gLayout = new GridLayout(2,3);
 
         public DeleteUI(IQuestion<? extends AnswerStorage> question) {
-            super("Delete");
+            super("Delete Question");
             this.center();
             gLayout.setWidth("100%");
-            this.setWidth("800px");
+            this.setWidth("400px");
             Label titleLabel = new Label(question.getQuestionID(), ContentMode.HTML);
-            Label descrLabel = new Label("<b>The following command is destructive and cannot be undone!</b>", ContentMode.HTML);
-            Button close = new Button("Cancel");
-//            Button remove = new Button("Remove from this test");
+            Label descrLabel = new Label("<font color=\"red\"><b>The following command is destructive and cannot be undone!</b></font>", ContentMode.HTML);
+//          Button remove = new Button("Remove from this test");
             Button delete = new Button("Delete permanently from disk");
+            /*
+            Button close = new Button("Cancel");
 
             close.addClickListener( e -> {
                 this.close();
             });
 
-/*            remove.addClickListener( e -> {
+            remove.addClickListener( e -> {
                 manager.getEngine().removeQuestion(question);
                 AdminView.this.buildTable();
                 this.close();
             });
-*/
+            */
             delete.addClickListener( e -> {
                 manager.getEngine().removeQuestion(question);
                 File questionFolder = new File(VaadinUI.Servlet.getQuestionFolderName());
@@ -229,9 +298,9 @@ public class AdminView extends VerticalLayout implements View {
 
             gLayout.addComponent(titleLabel,0,0,1,0);
             gLayout.addComponent(descrLabel,0,1,1,1);
-            gLayout.addComponent(close,0,2);
-//            gLayout.addComponent(remove,1,2);
-            gLayout.addComponent(delete,1,2);
+            //gLayout.addComponent(close,0,2);
+            //gLayout.addComponent(remove,1,2);
+            gLayout.addComponent(delete,0,2);
             gLayout.setRowExpandRatio(1,1);
             gLayout.setMargin(true);
             gLayout.setSpacing(true);
@@ -264,20 +333,18 @@ public class AdminView extends VerticalLayout implements View {
                     }
                 }
             };
-
-
-            Button close = new Button("Close");
+            /*Button close = new Button("Close");
 
             close.addClickListener( e -> {
                 this.close();
                 manager.getEngine().resetQuestions();
                 manager.loadQuestions();
             });
-
+            */
             gLayout.addComponent(titleLabel,0,0,1,0);
             gLayout.addComponent(descrLabel,0,1,1,1);
             gLayout.addComponent(multiFileUpload,0,2,1,2);
-            gLayout.addComponent(close,0,3);
+            //gLayout.addComponent(close,0,3);
             gLayout.setRowExpandRatio(1,1);
             gLayout.setMargin(true);
             gLayout.setSpacing(true);
