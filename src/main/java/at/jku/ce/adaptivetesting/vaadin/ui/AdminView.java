@@ -270,6 +270,7 @@ public class AdminView extends VerticalLayout implements View {
             close.addClickListener( e -> {
                 this.close();
             });
+
             remove.addClickListener( e -> {
                 manager.getEngine().removeQuestion(question);
                 AdminView.this.buildTable();
