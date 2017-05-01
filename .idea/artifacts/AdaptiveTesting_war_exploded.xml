@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="AdaptiveTesting:war exploded">
-    <output-path>$PROJECT_DIR$/target/AdaptiveTesting-1.1</output-path>
+    <output-path>$PROJECT_DIR$/target/AdaptiveTesting-1.0-SNAPSHOT</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">

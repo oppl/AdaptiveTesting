@@ -102,14 +102,68 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
     @Override
     public double checkUserAnswer() {
         String userAnswer = answer.getValue();
+        // change user's input to match xxx(x),yy
+        userAnswer.replace("+", "");
+        userAnswer.replace(",--", ",00");
+        userAnswer.replace(",-", ",00");
+        userAnswer.replace(".", "");
+        // all characters to lower case
+        userAnswer.toLowerCase();
+
         for (String[] requriedKeyword: solution.getAnswers()) {
             boolean variantFound = false;
+            //stela
+            switch (userAnswer){
+
+                case "eins":
+                    userAnswer = "1,00";
+                case "zwei":
+                    userAnswer = "2,00";
+                case "drei":
+                    userAnswer = "3,00";
+                case "vier":
+                    userAnswer = "4,00";
+                case "fünf":
+                    userAnswer = "5,00";
+                case "sechs":
+                    userAnswer = "6,00";
+                case "sieben":
+                    userAnswer = "7,00";
+                case "acht":
+                    userAnswer = "8,00";
+                case "neun":
+                    userAnswer = "9,00";
+                case "zehn":
+                    userAnswer = "10,00";
+                case "elf":
+                    userAnswer = "11,00";
+                case "zwölf":
+                    userAnswer = "12,00";
+                case "dreizehn":
+                    userAnswer = "13,00";
+                case "vierzehn":
+                    userAnswer = "14,00";
+                case "fünfzehn":
+                    userAnswer = "15,00";
+                case "sechszehn":
+                    userAnswer = "16,00";
+                case "siebzehn":
+                    userAnswer = "17,00";
+                case "achtzehn":
+                    userAnswer = "18,00";
+                case "neunzehn":
+                    userAnswer = "19,00";
+                case "zwanzigs":
+                    userAnswer = "20,00";
+            }
+
             for (String variant: requriedKeyword) {
-                if (StringUtils.contains(userAnswer,variant)) variantFound = true;
+                // check if the userAnswer contains the variant
+                if (StringUtils.equalsIgnoreCase(userAnswer,variant))
+                    variantFound = true;
             }
             if (!variantFound) return 0.0d;
         }
-
         return 1.0d;
     }
 

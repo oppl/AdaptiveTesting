@@ -66,7 +66,7 @@ public class SimpleEngine implements IEngine {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * IEngine#addQuestionToPool
 	 * (IQuestion)
@@ -104,7 +104,7 @@ public class SimpleEngine implements IEngine {
 	}
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see IEngine#
 	 * addQuestionChangeListener
 	 * (at.reisisoft.jku.ce.adaptivelearning.core.engine
@@ -119,7 +119,7 @@ public class SimpleEngine implements IEngine {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see IEngine#
 	 * addResultFiredListener
 	 * (IResultFiredListener)
@@ -132,7 +132,7 @@ public class SimpleEngine implements IEngine {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see IEngine#
 	 * removeQuestionChangeListener
 	 * (at.reisisoft.jku.ce.adaptivelearning.core.engine
@@ -147,7 +147,7 @@ public class SimpleEngine implements IEngine {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see IEngine#
 	 * removeResultFiredListener
 	 * (IResultFiredListener)
@@ -191,7 +191,7 @@ public class SimpleEngine implements IEngine {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * IEngine#requestCalculation
 	 * ()
@@ -243,7 +243,7 @@ public class SimpleEngine implements IEngine {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see IEngine#start()
 	 */
 	@Override
@@ -396,7 +396,7 @@ public class SimpleEngine implements IEngine {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * IEngine#resetQuestions()
 	 */
