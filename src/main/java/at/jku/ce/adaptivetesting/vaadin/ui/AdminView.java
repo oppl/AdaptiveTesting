@@ -11,9 +11,20 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.easyuploads.MultiFileUpload;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.nio.file.Files;
+import java.util.Collection;
 import java.util.List;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -43,14 +54,17 @@ public class AdminView extends VerticalLayout implements View {
 
         table = new Table("Available Items");
         table.addContainerProperty("ItemName", String.class, null);
-        table.addContainerProperty("ButtonShow",  Button.class, null);
+        table.addContainerProperty("ButtonShowQuestionText",  Button.class, null);
+        table.addContainerProperty("ButtonShowFullDetails",  Button.class, null);
         table.addContainerProperty("ButtonDelete",  Button.class, null);
         table.setWidth("100%");
 
-        table.setColumnWidth("ButtonShow",150);
-        table.setColumnWidth("ButtonDelete",150);
+        table.setColumnWidth("ButtonShowQuestionText",190);
+        table.setColumnWidth("ButtonShowFullDetails",170);
+        table.setColumnWidth("ButtonDelete",100);
         table.setColumnHeaderMode(Table.ColumnHeaderMode.HIDDEN);
-        table.setColumnAlignment("ButtonShow", Table.Align.CENTER);
+        table.setColumnAlignment("ButtonShowQuestionText", Table.Align.CENTER);
+        table.setColumnAlignment("ButtonShowFullDetails", Table.Align.CENTER);
         table.setColumnAlignment("ButtonDelete", Table.Align.CENTER);
 
         this.addComponent(table);
@@ -70,19 +84,28 @@ public class AdminView extends VerticalLayout implements View {
         LogHelper.logInfo("Admin: "+questions.size()+" questions available.");
 
         for (IQuestion<? extends AnswerStorage> question: questions) {
-            Button showButton = new Button("show");
-            showButton.addClickListener( e -> {
-                this.getUI().addWindow(new DetailsUI(question));
+            Button showQuestionTextButton = new Button("show question text");
+            showQuestionTextButton.addClickListener( e -> {
+                closeAllWindows ();
+                this.getUI().addWindow(new QuestionTextUI(question));
+            });
+
+            Button showFullDetailsButton = new Button("show full details");
+            showFullDetailsButton.addClickListener( e -> {
+                closeAllWindows ();
+                this.getUI().addWindow(new FullDetailsUI(question));
             });
 
             Button deleteButton = new Button ("delete");
             deleteButton.addClickListener( e -> {
+                closeAllWindows ();
                 this.getUI().addWindow(new DeleteUI(question));
             });
 
             table.addItem(new Object[]{
                     question.getQuestionID(),
-                    showButton,
+                    showQuestionTextButton,
+                    showFullDetailsButton,
                     deleteButton
             }, itemID);
             itemID++;
@@ -91,11 +114,20 @@ public class AdminView extends VerticalLayout implements View {
 
     }
 
-    private class DetailsUI extends Window {
+    private void closeAllWindows () {
+        Collection<Window> windows = this.getUI().getWindows();
+        if (windows.size() != 0) {
+            for (Window w : windows) {
+                if (w != null) w.close();
+            }
+        }
+    }
+
+    private class QuestionTextUI extends Window {
 
         GridLayout gLayout = new GridLayout(2,3);
 
-        public DetailsUI(IQuestion<? extends AnswerStorage> question) {
+        public QuestionTextUI(IQuestion<? extends AnswerStorage> question) {
             super("Question");
             this.center();
             gLayout.setWidth("100%");
@@ -111,9 +143,40 @@ public class AdminView extends VerticalLayout implements View {
             gLayout.addComponent(titleLabel,0,0,1,0);
             gLayout.addComponent(descrLabel,0,1,1,1);
             gLayout.addComponent(close,0,2);
-
             gLayout.setRowExpandRatio(1,1);
+            gLayout.setMargin(true);
+            gLayout.setSpacing(true);
+            setContent(gLayout);
+        }
+    }
 
+    private class FullDetailsUI extends Window {
+
+        GridLayout gLayout = new GridLayout(2,3);
+
+        public FullDetailsUI(IQuestion<? extends AnswerStorage> question) {
+            super("Question");
+            this.center();
+            gLayout.setWidth("100%");
+            gLayout.addStyleName("v-scrollable");
+            this.setWidth("1100px");
+            Label titleLabel = new Label("<b>"+question.getQuestionID()+"</b>", ContentMode.HTML);
+            Label descrLabel = null;
+            try {
+                descrLabel = new Label(prettyFormat(question.toXML()), ContentMode.PREFORMATTED);
+            } catch (JAXBException e) {
+                e.printStackTrace();
+            }
+            Button close = new Button("Close");
+
+            close.addClickListener( e -> {
+                this.close();
+            });
+
+            gLayout.addComponent(titleLabel,0,0,1,0);
+            gLayout.addComponent(descrLabel,0,1,1,1);
+            gLayout.addComponent(close,0,2);
+            gLayout.setRowExpandRatio(1,1);
             gLayout.setMargin(true);
             gLayout.setSpacing(true);
             setContent(gLayout);
@@ -169,9 +232,7 @@ public class AdminView extends VerticalLayout implements View {
             gLayout.addComponent(close,0,2);
 //            gLayout.addComponent(remove,1,2);
             gLayout.addComponent(delete,1,2);
-
             gLayout.setRowExpandRatio(1,1);
-
             gLayout.setMargin(true);
             gLayout.setSpacing(true);
             setContent(gLayout);
@@ -217,14 +278,46 @@ public class AdminView extends VerticalLayout implements View {
             gLayout.addComponent(descrLabel,0,1,1,1);
             gLayout.addComponent(multiFileUpload,0,2,1,2);
             gLayout.addComponent(close,0,3);
-
             gLayout.setRowExpandRatio(1,1);
-
             gLayout.setMargin(true);
             gLayout.setSpacing(true);
             setContent(gLayout);
         }
     }
 
+    public static String prettyFormat(String input, int indent) {
+        try {
+            Source xmlInput = new StreamSource(new StringReader(input));
+            StreamResult xmlOutput = new StreamResult(new StringWriter());
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformerFactory.setAttribute("indent-number", indent);
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.transform(xmlInput, xmlOutput);
+            return xmlOutput.getWriter().toString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public static String prettyFormat(String input) {
+        String xmlOutput = prettyFormat(input, 5);
+        String delimiter = "question\u003E";
+        String[] xml = xmlOutput.split(delimiter);
+
+        // from start of xml until <question>
+        String xmlStart = xml[0].substring(0, xml[0].length()-1);
+
+        // Everything between <question> and </question>
+        String xmlMiddle = "\u003C" + delimiter + xml[1].substring(0, xml[1].length()-2), temp = "";
+        for (int x = 0; x < xmlMiddle.length(); x++) {
+            temp = temp + xmlMiddle.charAt(x);
+            if (x != 0 && x % 100 == 0) temp = temp + "\n\u0020\u0020\u0020\u0020\u0020";
+        }
+        xmlMiddle = temp;
+
+        // from </question> until end of file
+        String xmlEnd = "\n\u0020\u0020\u0020\u0020\u0020\u003C\u002F" + delimiter + xml[2];
+        return xmlStart + xmlMiddle + xmlEnd;
+    }
 }
