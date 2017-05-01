@@ -153,7 +153,7 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
                     userAnswer = "18,00";
                 case "neunzehn":
                     userAnswer = "19,00";
-                case "zwanzigs":
+                case "zwanzig":
                     userAnswer = "20,00";
             }
 
