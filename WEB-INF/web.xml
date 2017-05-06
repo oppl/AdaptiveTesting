@@ -7,21 +7,18 @@
 
     <!--Set folder paths for the destinations server and the development environment-->
     <context-param>
-       <param-name>at.jku.ce.adaptivetesting.questionfolder</param-name>
-        <param-value>C:/_UNI/IT-Projekt/apache-tomcat-8.5.12/temp/questions</param-value>
-        <!--<param-value>C:\Users\Peter\IdeaProjects\AdaptiveTesting2\questions</param-value>-->
+        <param-name>at.jku.ce.adaptivetesting.questionfolder</param-name>
+        <param-value>${catalina.home}/temp/adaptiveTesting/questions</param-value>
     </context-param>
 
     <context-param>
         <param-name>at.jku.ce.adaptivetesting.resultfolder</param-name>
-        <param-value>C:/_UNI/IT-Projekt/apache-tomcat-8.5.12/temp/results</param-value>
-        <!--<param-value>C:\Users\Peter\IdeaProjects\AdaptiveTesting2\results</param-value>-->
+        <param-value>${catalina.home}/temp/adaptiveTesting/results</param-value>
     </context-param>
 
     <context-param>
         <param-name>at.jku.ce.adaptivetesting.logfilepath</param-name>
-        <param-value>C:/_UNI/IT-Projekt/apache-tomcat-8.5.12/temp/AdaptiveTesting.log</param-value>
-        <!--<param-value>C:\Users\Peter\IdeaProjects\AdaptiveTesting2\adaptiveTesting.log</param-value>-->
+        <param-value>${catalina.home}/logs/AdaptiveTesting.log</param-value>
     </context-param>
 
     <context-param>

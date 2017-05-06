@@ -28,12 +28,11 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
-import sun.rmi.runtime.Log;
 
 @SuppressWarnings("serial")
 @Theme("vaadin")
 @PreserveOnRefresh
-@Title("Loading page...")
+@Title("Seite wird geladen...")
 public class VaadinUI extends UI {
 	private Navigator navigator;
 
@@ -47,25 +46,20 @@ public class VaadinUI extends UI {
 		Button start = new Button("Start", e -> {
 			navigator.navigateTo(Views.TEST.toString());
 		});
-		start.setId("Start");
 		start.setWidth("20%");
 		start.setHeight("20%");
 		//mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h1", "Willkommen zur " + productData)));
-		mainScreen
-				.addComponent(new HtmlLabel(HtmlUtils.center("h2",
-						"Bitte klicke den <b>" + start.getCaption()
-								+ "</b> Button, um mit dem Rechnungswesentest zu beginnen!")));
+		mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h2", "Bitte klicke auf den <b>" +
+						start.getCaption() + "</b> Button, um mit dem Rechnungswesentest zu beginnen!")));
 		mainScreen.addComponent(start);
 		mainScreen.setComponentAlignment(start, Alignment.MIDDLE_CENTER);
 
 		navigator.addView(Views.DEFAULT.toString(), mainScreen);
 		// Question view
 		// Change this to the questionManager you like
-		final QuestionManager manager = new AccountingQuestionManager(
-				"Rechnungswesentest");
+		final QuestionManager manager = new AccountingQuestionManager("Rechnungswesentest");
 		navigator.addView(Views.TEST.toString(), manager);
-		navigator.addView(Views.Log.toString(),
-				new LogView(new File(Servlet.getLogFileName())));
+		navigator.addView(Views.Log.toString(), new LogView(new File(Servlet.getLogFileName())));
 		navigator.addView(Views.Admin.toString(), new AdminView(manager));
 		navigator.addView(Views.Results.toString(), new ResultView(manager));
 		navigator.setErrorView(mainScreen);
@@ -79,30 +73,24 @@ public class VaadinUI extends UI {
 		protected void servletInitialized() throws ServletException {
 			super.servletInitialized();
 			// Get the question folder as defined in WEB-INF/web.xml
-			questionFolderName = getServletConfig().getServletContext()
-					.getInitParameter(questionFolderKey);
+			questionFolderName = getServletConfig().getServletContext().getInitParameter(questionFolderKey);
 			File fQf = new File(questionFolderName);
-			boolean isWorking = fQf.exists() && fQf.isDirectory()
-					|| fQf.mkdirs();
+			boolean isWorking = fQf.exists() && fQf.isDirectory() || fQf.mkdirs();
 			if (!isWorking) {
 				questionFolderName = null;
 			}
 			// Get the result folder as defined in WEB-INF/web.xml
-			resultFolderName = getServletConfig().getServletContext()
-					.getInitParameter(resultFolderKey);
+			resultFolderName = getServletConfig().getServletContext().getInitParameter(resultFolderKey);
 			File fRf = new File(resultFolderName);
-			isWorking = fRf.exists() && fRf.isDirectory()
-					|| fRf.mkdirs();
+			isWorking = fRf.exists() && fRf.isDirectory() || fRf.mkdirs();
 			if (!isWorking) {
 				resultFolderName = null;
 			}
 			// Get the log location as defined in WEB-INF/web.xml
-			logLocation = getServletConfig().getServletContext()
-					.getInitParameter(logLocKey);
+			logLocation = getServletConfig().getServletContext().getInitParameter(logLocKey);
 			File fLog = new File(logLocation);
 			try {
-				isWorking = fLog.exists() && fLog.isFile()
-						|| fLog.createNewFile();
+				isWorking = fLog.exists() && fLog.isFile() || fLog.createNewFile();
 			} catch (IOException e) {
 				isWorking = false;
 			}
@@ -130,7 +118,6 @@ public class VaadinUI extends UI {
 			return resultFolderName;
 		}
 
-
 		/**
 		 * Gets the Log location
 		 *
@@ -156,7 +143,6 @@ public class VaadinUI extends UI {
 						+ VaadinUI.getProductData().getProduct()
 						+ " v"
 						+ VaadinUI.getProductData().getVersion());
-
 	}
 
 	@Override
@@ -178,7 +164,5 @@ public class VaadinUI extends UI {
 						}
 					}
 				});
-
 	}
-
 }
