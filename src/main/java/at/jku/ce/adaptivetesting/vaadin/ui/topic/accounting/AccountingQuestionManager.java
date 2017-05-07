@@ -25,6 +25,7 @@ import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.vaadin.ui.QuestionManager;
+import at.jku.ce.adaptivetesting.vaadin.ui.Calculator;
 import com.vaadin.shared.ui.label.ContentMode;
 
 public class AccountingQuestionManager extends QuestionManager {
@@ -63,20 +64,26 @@ public class AccountingQuestionManager extends QuestionManager {
 			window.setWidth("80%");
 			window.setHeight("80%");
 			VerticalLayout vl = assembleCompanyDescription();
-			Button close = new Button("Schließen");
+			/*Button close = new Button("Schließen");
 			close.addClickListener( e1 -> {
 				window.close();
-			});
+			});*/
 			vl.setMargin(true);
 			vl.setSpacing(true);
-			vl.addComponent(close);
+			//vl.addComponent(close);
 			window.setContent(vl);
 			window.center();
 			window.setResizable(false);
 			getUI().addWindow(window);
 		});
+		Button openCalculator = new Button("Taschenrechner öffnen");
+		openCalculator.addClickListener(e -> {
+			Calculator Calculator = new Calculator();
+			getUI().addWindow(Calculator.getWindow());
+		});
 		addHelpButton(openKontenplan);
 		addHelpButton(openCompanyDescription);
+		addHelpButton(openCalculator);
 	}
 
 	@Override
