@@ -28,7 +28,9 @@ public class LicenceWindow extends Window {
 		// Layout for the window
 		setContent(vLayout);
 		vLayout.setMargin(true);
-		vLayout.addComponent(new HtmlLabel("Originalversion erstellt 2014 von Florian Reisinger."));
+		// Original Version Info
+		vLayout.addComponent(new HtmlLabel("Originalversion erstellt durch Reisisoft (2014)"));
+		vLayout.addComponent(new HtmlLabel("Weiterentwickelt durch JKU"));
 		// Add the 3rd party licences
 		addLibraryLicence(new HtmlLink("https://vaadin.com/",
 				"Vaadin Framework", true), apache2);

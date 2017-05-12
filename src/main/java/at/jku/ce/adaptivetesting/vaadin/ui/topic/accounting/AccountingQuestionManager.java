@@ -318,7 +318,7 @@ public class AccountingQuestionManager extends QuestionManager {
 			} else if (fileAsString.contains(multiAccountingRootElement)) {
 				LogHelper.logInfo("Question detected as "
 						+ MultiAccountingQuestion.class.getName());
-				// Accounting Question
+				// Multi Accounting Question
 				XmlMultiAccountingQuestion question = (XmlMultiAccountingQuestion) multiAccountingUnmarshaller
 						.unmarshal(new StringReader(fileAsString));
 				MultiAccountingQuestion maq = AccountingXmlHelper.fromXml(question, f.getName());
@@ -369,9 +369,9 @@ public class AccountingQuestionManager extends QuestionManager {
 		}
 		// Add question to the question manager
 		accountingList.forEach(q -> addQuestion(q));
+		multiAccountingList.forEach(q -> addQuestion(q));
 		profitList.forEach(q -> addQuestion(q));
 		multipleChoiceList.forEach(q -> addQuestion(q));
-		multiAccountingList.forEach(q -> addQuestion(q));
 		multipleTaskTableList.forEach(q -> addQuestion(q));
 		openAnswerKeywordList.forEach(q -> addQuestion(q));
 		LogHelper.logInfo("Successfully loaded "+successfullyLoaded+" questions.");

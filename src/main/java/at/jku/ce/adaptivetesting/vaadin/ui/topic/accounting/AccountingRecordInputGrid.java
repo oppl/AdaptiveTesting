@@ -17,8 +17,8 @@ public abstract class AccountingRecordInputGrid extends SingleComponentLayout {
 	// Create all necessary layouts
 	private VerticalLayout outer = new VerticalLayout();
 	private GridLayout inner = new GridLayout(2, 1);
-	private GridLayout right = new GridLayout(1, 4);
-	private GridLayout left = new GridLayout(1, 4);
+	private GridLayout right = new GridLayout(1, 8);
+	private GridLayout left = new GridLayout(1, 8);
 	private Label questionText = new HtmlLabel();
 	private Image questionImage = null;
 

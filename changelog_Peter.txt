@@ -1,0 +1,366 @@
+Sourcecode Changelog
+===========================================================================================================
+Name:               Peter Baumann, BSc
+Matr. Nr.:          1155812
+Letzte Änderung:    12.05.2017
+===========================================================================================================
+
+WEB-INF/web.xml
+===========================================================================================================
+Plattform-unabhängige Pfade gesetzt. Sie verweisen nun auf das "Tomcat/temp" Verzeichnis
+------------------------------------------------------------------------------------------------------------
+
+    <context-param>
+        <param-name>at.jku.ce.adaptivetesting.questionfolder</param-name>
+        <param-value>${catalina.home}/temp/adaptiveTesting/questions</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>at.jku.ce.adaptivetesting.resultfolder</param-name>
+        <param-value>${catalina.home}/temp/adaptiveTesting/results</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>at.jku.ce.adaptivetesting.logfilepath</param-name>
+        <param-value>${catalina.home}/logs/AdaptiveTesting.log</param-value>
+    </context-param>
+
+pom.xml
+============================================================================================================
+RCaller 2.4 durch RCaller 3.0 ersetzt.
+------------------------------------------------------------------------------------------------------------
+		<dependency>
+			<groupId>com.github.jbytecode</groupId>
+			<artifactId>RCaller</artifactId>
+			<version>3.0</version>
+		</dependency>
+
+slf4j simple durch die vollversion ersetzt, da die Simple Version nur Console-output unterstützt und
+keine Log-files schreiben kann.
+------------------------------------------------------------------------------------------------------------
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4jVersion}</version>
+		</dependency>
+
+Log4j hinzugefügt, um den Logger zu konfigurieren (Datei + Speicherort)
+------------------------------------------------------------------------------------------------------------
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+src/resources/rcaller/
+============================================================================================================
+Ordner gelöscht
+
+src/main/java/at/jku/ce/adaptivetesting/r/RProvider.java
+============================================================================================================
+Konstruktor entfernt. Version 3.0 des RCallers ist soweit in der Lage selbstständig die R-Installation zu
+finden.Hilfsfunktionen, um den Pfad von R zu finden werden nicht mehr benötigt.
+
+RCaller 3.0 hat eine statische Klasse RService, mit der ein RCaller bzw RCode angelegt werden kann.
+- entfernt
++ hinzugefügt
+-----------------------------------------------------------------------------------------------------------
+public RCaller getRCaller() throws ScriptException {
+-		RCaller caller = new RCaller();
+-		caller.setRscriptExecutable(rScript_exe);
+-		caller.setFailurePolicy(FailurePolicy.RETRY_1);
+-		return caller;
++		return new RService().getRCaller();
+ 	}
+
+ 	public RCode getRCode() {
+-		return new RCode();
++		return new RService().getRCode();
+ 	}
+
+src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/core/VaadinUI.java
+============================================================================================================
+Größe der Start-Buttons verkleindert
+
+	start.setWidth("20%");
+	start.setHeight("20%");
+
+
+Beistrich "...Button, um..." im Intro-Satz hinzugefügt
+
+src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/LicenceWindow.java
+============================================================================================================
+Infos aktualisiert
+------------------------------------------------------------------------------------------------------------
+		vLayout.addComponent(new HtmlLabel("Originalversion erstellt durch Reisisoft (2014)"));
+		vLayout.addComponent(new HtmlLabel("Weiterentwickelt durch JKU"));
+
+Lizenzinformationen zu CatR 3.4 und RCaller 3.0 hinzugefügt
+------------------------------------------------------------------------------------------------------------
+		addLibraryLicence(new HtmlLink("https://github.com/jbytecode/rcaller",
+				"RCaller 3.0", true), lgpl3);
+		addLibraryLicence(new HtmlLink("https://cran.r-project.org/web/packages/catR/index.html",
+				"catR 3.4", true), gpl3);
+
+src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\topic\accounting/AccountingRecordInputGrid.java
+============================================================================================================
+
+private GridLayout right = new GridLayout(1, 8);
+private GridLayout left = new GridLayout(1, 8);
+
+------------------------------------------------------------------------------------------------------------
+Rows von 4 auf 8 geändert, um Platz für MultiAccountingQuestions zu schaffen.
+Führt sonst zu einem Programmabsturz, da bei z.B.: 6 Kontenreihen nur 4 davon dargestellt werden
+können, und es so zu einem Programmabsturz kommt.
+
+src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\Calculator.java
+============================================================================================================
+Taschenrechner implementiert, Komma-Taste funktioniert noch nicht. Layout muss ebenfalls noch angepasst
+werden.
+------------------------------------------------------------------------------------------------------------
+package at.jku.ce.adaptivetesting.vaadin.ui;
+
+import com.vaadin.ui.*;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+
+/**
+ * Created by Peter
+ *
+ */
+public class Calculator implements ClickListener {
+
+    private double current = 0.0;
+    private double stored = 0.0;
+    private char lastOperationRequested = 'C';
+    private final Label display = new Label("0.0");
+    private Window window;
+
+    public Calculator() {
+        window = new Window("Taschenrechner");
+        window.setWidth("170px");
+        window.setHeight("170px");
+        window.center();
+        window.setResizable(false);
+        GridLayout gl = new GridLayout(5, 5);
+        window.setContent(gl);
+        gl.addComponent(display, 0, 0, 4, 0);
+        String[] operations = new String[] {
+                "7", "8", "9", "/", "%",
+                "4", "5", "6", "*", "",
+                "1", "2", "3", "-", "",
+                ",", "0", "=", "+", "C"};
+        for (String caption : operations) {
+            Button button = new Button(caption);
+            button.addClickListener(this);
+            button.setHeight(25, AbstractComponent.UNITS_PIXELS);
+            button.setWidth(25, AbstractComponent.UNITS_PIXELS);
+            gl.addComponent(button);
+        }
+    }
+
+    public Window getWindow() {
+        return window;
+    }
+
+    public void buttonClick(ClickEvent event) {
+
+        Button button = event.getButton();
+        char requestedOperation = button.getCaption().charAt(0);
+        double newValue = calculate(requestedOperation);
+        display.setValue(String.valueOf(newValue));
+    }
+
+    private double calculate(char requestedOperation) {
+        if ('0' <= requestedOperation && requestedOperation <= '9') {
+            current = current * 10 + Double.parseDouble("" + requestedOperation);
+            return current;
+        }
+        switch (lastOperationRequested) {
+            case '+':
+                stored = stored + current;
+                break;
+            case '-':
+                stored = stored - current;
+                break;
+            case '/':
+                stored = stored / current;
+                break;
+            case '*':
+                stored = stored * current;
+                break;
+            case 'C':
+                stored = current;
+                break;
+        }
+        lastOperationRequested = requestedOperation;
+        current = 0.0;
+        if (requestedOperation == 'C') {
+            stored = 0.0;
+        }
+        if (requestedOperation == '%') {
+            stored = stored / 100;
+        }
+        if (requestedOperation == ',') {
+            //TODO
+        }
+        return stored;
+    }
+}
+
+
+src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\AdminView.java
+============================================================================================================
+question full preview und full XML preview ergänzt.
+
+Buttons hinzugefügt, Alle close Buttons in den Fenstern entfernt, da Rechts oben eh ein X zum Schließen ist.
+
+------------------------------------------------------------------------------------------------------------
+private class QuestionPreviewUI extends Window {
+
+        VerticalLayout vLayout = new VerticalLayout();
+
+        public QuestionPreviewUI(IQuestion<? extends AnswerStorage> question) {
+            super("Full Question Preview");
+
+            try {
+                Class<? extends AnswerStorage> dataStorageClass = question.getSolution().getClass();
+                Constructor<? extends IQuestion> constructor = question.getClass()
+                        .getConstructor(dataStorageClass,
+                                dataStorageClass,
+                                float.class,
+                                String.class,
+                                Image.class,
+                                String.class);
+
+                Component iQuestionSolution = (Component) constructor
+                        .newInstance(question.getSolution(),
+                                question.getSolution(),
+                                question.getDifficulty(),
+                                question.getQuestionText(),
+                                null,"");
+
+                this.center();
+                vLayout.setWidth("100%");
+                this.setWidth("90%");
+                this.setHeight("80%");
+                Label titleLabel = new Label("<b>"+question.getQuestionID()+"</b>", ContentMode.HTML);
+                vLayout.addComponent(titleLabel);
+                vLayout.addComponent(iQuestionSolution);
+                vLayout.setMargin(true);
+                vLayout.setSpacing(true);
+                setContent(vLayout);
+                if (iQuestionSolution instanceof Sizeable) {
+                    Sizeable sizeable = iQuestionSolution;
+                    sizeable.setSizeFull();
+                }
+            } catch (Exception e) {
+                LogHelper.logError(e.toString());
+            }
+        }
+    }
+
+    private class FullXMLUI extends Window {
+
+        GridLayout gLayout = new GridLayout(2,3);
+
+        public FullXMLUI(IQuestion<? extends AnswerStorage> question) {
+            super("Full Question XML");
+            this.center();
+            gLayout.setWidth("100%");
+            gLayout.addStyleName("v-scrollable");
+            this.setWidth("1100px");
+            this.setHeight("80%");
+            Label titleLabel = new Label("<b>"+question.getQuestionID()+"</b>", ContentMode.HTML);
+            Label descrLabel = null;
+            try {
+                descrLabel = new Label(prettyFormat(question.toXML()), ContentMode.PREFORMATTED);
+            } catch (JAXBException e) {
+                e.printStackTrace();
+            }
+            gLayout.addComponent(titleLabel,0,0,1,0);
+            gLayout.addComponent(descrLabel,0,1,1,1);
+            gLayout.setRowExpandRatio(1,1);
+            gLayout.setMargin(true);
+            gLayout.setSpacing(true);
+            setContent(gLayout);
+        }
+    }
+
+------------------------------------------------------------------------------------------------------------
+XML Pretty Print Funktionen implementiert
+------------------------------------------------------------------------------------------------------------
+public static String prettyFormat(String input, int indent) {
+        try {
+            Source xmlInput = new StreamSource(new StringReader(input));
+            StreamResult xmlOutput = new StreamResult(new StringWriter());
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformerFactory.setAttribute("indent-number", indent);
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.transform(xmlInput, xmlOutput);
+            return xmlOutput.getWriter().toString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String prettyFormat(String input) {
+        String xmlOutput = prettyFormat(input, 5);
+        String delimiter = "question\u003E";
+        String[] xml = xmlOutput.split(delimiter);
+
+        // from start of xml until <question>
+        String xmlStart = xml[0].substring(0, xml[0].length()-1);
+
+        // Everything between <question> and </question>
+        String xmlMiddle = "\u003C" + delimiter + xml[1].substring(0, xml[1].length()-2), temp = "";
+        for (int x = 0; x < xmlMiddle.length(); x++) {
+            temp = temp + xmlMiddle.charAt(x);
+            if (x != 0 && x % 100 == 0) temp = temp + "\n\u0020\u0020\u0020\u0020\u0020";
+        }
+        xmlMiddle = temp;
+
+        // from </question> until end of file
+        String xmlEnd = "\n\u0020\u0020\u0020\u0020\u0020\u003C\u002F" + delimiter + xml[2];
+        return xmlStart + xmlMiddle + xmlEnd;
+    }
+------------------------------------------------------------------------------------------------------------
+Funktion für das automatische Schließen aller offenen Fenster, beim öffnen eines neuen Fensters implementiert
+------------------------------------------------------------------------------------------------------------
+
+	private void closeAllWindows () {
+        Collection<Window> windows = this.getUI().getWindows();
+        if (windows.size() != 0) {
+            for (Window w : windows) {
+                if (w != null) w.close();
+            }
+        }
+    }
+
+src\main\resources\log4j.properties
+============================================================================================================
+
+Logger konfiguriert, Pfad des Log-files verweist nun auf das "Tomcat/log" Verzeichnis
+------------------------------------------------------------------------------------------------------------
+
+# Created by Baumann Peter
+
+# Set logging mode to file and system console
+log4j.rootLogger=INFO, file, stdout
+
+# Redirect log messages to a log file
+log4j.appender.file=org.apache.log4j.RollingFileAppender
+
+# Output to Tomcat home
+log4j.appender.file.File=${catalina.home}/logs/AdaptiveTesting.log
+log4j.appender.file.MaxFileSize=10MB
+log4j.appender.file.MaxBackupIndex=10
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
+
+# Outputs to system console
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target=System.out
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n

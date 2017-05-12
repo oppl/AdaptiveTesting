@@ -31,9 +31,9 @@ public class MultiAccountingQuestion extends AccountingRecordInputGrid implement
     }
 
     public MultiAccountingQuestion(MultiAccountingDataStorage solution, float difficulty,
-                              String question, Image image, String id) {
+                              String question, Image questionImage, String id) {
         this(solution, MultiAccountingDataStorage.getEmptyDataStorage(), difficulty,
-                question, image, id);
+                question, questionImage, id);
     }
 
     @Override
@@ -42,12 +42,12 @@ public class MultiAccountingQuestion extends AccountingRecordInputGrid implement
     }
 
     public MultiAccountingQuestion(MultiAccountingDataStorage solution,
-                                   MultiAccountingDataStorage prefilled, float difficulty, String question, Image image, String id) {
+                                   MultiAccountingDataStorage prefilled, float difficulty, String question, Image questionImage, String id) {
         this.difficulty = difficulty;
         this.solution = solution;
         this.id = id;
         setQuestionText(question);
-        if (image != null) setQuestionImage(image);
+        if (questionImage != null) setQuestionImage(questionImage);
         // Fill grid
         int iSoll = 3;
         for (AccountRecordData[] ard: solution.getSoll())
@@ -77,7 +77,6 @@ public class MultiAccountingQuestion extends AccountingRecordInputGrid implement
             }
             addComponent(haben[row], Side.Right, row);
         }
-
     }
 
     @Override

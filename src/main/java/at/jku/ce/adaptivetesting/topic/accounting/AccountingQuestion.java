@@ -29,9 +29,9 @@ public class AccountingQuestion extends AccountingRecordInputGrid implements
 	}
 
 	public AccountingQuestion(AccountingDataStorage solution, float difficulty,
-			String question, Image image, String id) {
+			String question, Image questionImage, String id) {
 		this(solution, AccountingDataStorage.getEmptyDataStorage(), difficulty,
-				question, image, id);
+				question, questionImage, id);
 	}
 
 	@Override
@@ -40,12 +40,12 @@ public class AccountingQuestion extends AccountingRecordInputGrid implements
 	}
 
 	public AccountingQuestion(AccountingDataStorage solution,
-							  AccountingDataStorage prefilled, float difficulty, String question, Image image, String id) {
+							  AccountingDataStorage prefilled, float difficulty, String question, Image questionImage, String id) {
 		this.difficulty = difficulty;
 		this.solution = solution;
 		this.id = id;
 		setQuestionText(question);
-		if (image != null) setQuestionImage(image);
+		if (questionImage != null) setQuestionImage(questionImage);
 		// Fill grid
 		int iSoll = solution.getSoll().length, iHaben = solution.getHaben().length;
 		soll = new AccountingRecordInputFields[iSoll];

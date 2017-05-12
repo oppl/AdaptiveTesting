@@ -13,9 +13,8 @@ public final class AccountingXmlHelper {
 	}
 
 	public static MultiAccountingQuestion fromXml(XmlMultiAccountingQuestion xml, String id) {
-		return new MultiAccountingQuestion(xml.getDataStorage(),
-				xml.getDifficulty(), xml.getQuestion()
-				.replace("\\n", " <br />"), null, id);
+		return new MultiAccountingQuestion(xml.getDataStorage(), xml.getDifficulty(),
+				xml.getQuestion().replace("\\n", " <br />"), null, id);
 	}
 
 
