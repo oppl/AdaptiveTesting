@@ -83,7 +83,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		});
 		addHelpButton(openKontenplan);
 		addHelpButton(openCompanyDescription);
-		addHelpButton(openCalculator);
+		//addHelpButton(openCalculator);
 	}
 
 	@Override
