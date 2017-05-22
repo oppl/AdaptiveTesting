@@ -103,58 +103,81 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
     public double checkUserAnswer() {
         String userAnswer = answer.getValue();
         // change user's input to match xxx(x),yy
-        userAnswer.replace("+", "");
-        userAnswer.replace(",--", ",00");
-        userAnswer.replace(",-", ",00");
-        userAnswer.replace(".", "");
-        // all characters to lower case
-        userAnswer.toLowerCase();
+
+        if (userAnswer.charAt(0) != '+' && userAnswer.charAt(0) != '-')
+            userAnswer = "+" + userAnswer;
+
+        userAnswer = userAnswer.replace(",--", ",00");
+        userAnswer = userAnswer.replace(",-", ",00");
+        userAnswer = userAnswer.replace(".", "");
+
+        int index = userAnswer.indexOf(',');
+        userAnswer = userAnswer.substring(0, index + 3);
 
         for (String[] requriedKeyword: solution.getAnswers()) {
             boolean variantFound = false;
             //stela
             switch (userAnswer){
-
                 case "eins":
                     userAnswer = "1,00";
+                    break;
                 case "zwei":
                     userAnswer = "2,00";
+                    break;
                 case "drei":
                     userAnswer = "3,00";
+                    break;
                 case "vier":
                     userAnswer = "4,00";
+                    break;
                 case "fünf":
                     userAnswer = "5,00";
+                    break;
                 case "sechs":
                     userAnswer = "6,00";
+                    break;
                 case "sieben":
                     userAnswer = "7,00";
+                    break;
                 case "acht":
                     userAnswer = "8,00";
+                    break;
                 case "neun":
                     userAnswer = "9,00";
+                    break;
                 case "zehn":
                     userAnswer = "10,00";
+                    break;
                 case "elf":
                     userAnswer = "11,00";
+                    break;
                 case "zwölf":
                     userAnswer = "12,00";
+                    break;
                 case "dreizehn":
                     userAnswer = "13,00";
+                    break;
                 case "vierzehn":
                     userAnswer = "14,00";
+                    break;
                 case "fünfzehn":
                     userAnswer = "15,00";
+                    break;
                 case "sechszehn":
                     userAnswer = "16,00";
+                    break;
                 case "siebzehn":
                     userAnswer = "17,00";
+                    break;
                 case "achtzehn":
                     userAnswer = "18,00";
+                    break;
                 case "neunzehn":
                     userAnswer = "19,00";
+                    break;
                 case "zwanzig":
                     userAnswer = "20,00";
+                    break;
             }
 
             for (String variant: requriedKeyword) {

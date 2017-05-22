@@ -19,7 +19,7 @@ import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.topic.accounting.*;
 import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.*;
-import com.vaadin.server.FileResource;
+import com.vaadin.server.*;
 import com.vaadin.ui.*;
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
@@ -51,9 +51,9 @@ public class AccountingQuestionManager extends QuestionManager {
 			layout.setSizeFull();
 			window.setContent(layout);
 			window.center();
-				window.setWidth("60%");
+			window.setWidth("60%");
 			window.setHeight("80%");
-				window.setResizable(false);
+			window.setResizable(false);
 			window.addCloseListener(e1 -> openKontenplan.setEnabled(true));
 			getUI().addWindow(window);
 
@@ -76,6 +76,27 @@ public class AccountingQuestionManager extends QuestionManager {
 			window.setResizable(false);
 			getUI().addWindow(window);
 		});
+
+		Button openPersBilling = new Button("Personalverrechnungstabelle");
+		openPersBilling.addClickListener(e -> {
+			Window window = new Window("Personalverrechnungstabelle");
+			window.setWidth("80%");
+			window.setHeight("80%");
+			VerticalLayout vl = assemblePersBilling();
+
+			/*Button close = new Button("Schließen");
+			close.addClickListener( e1 -> {
+				window.close();
+			});*/
+			vl.setMargin(true);
+			vl.setSpacing(true);
+			//vl.addComponent(close);
+			window.setContent(vl);
+			window.center();
+			window.setResizable(false);
+			getUI().addWindow(window);
+		});
+
 		Button openCalculator = new Button("Taschenrechner öffnen");
 		openCalculator.addClickListener(e -> {
 			Calculator Calculator = new Calculator();
@@ -83,7 +104,36 @@ public class AccountingQuestionManager extends QuestionManager {
 		});
 		addHelpButton(openKontenplan);
 		addHelpButton(openCompanyDescription);
+		addHelpButton(openPersBilling);
 		//addHelpButton(openCalculator);
+	}
+
+	private VerticalLayout assemblePersBilling() {
+
+		VerticalLayout layout = new VerticalLayout();
+
+		layout.setSizeFull();
+
+		// get application directory
+		String basepath = VaadinService.getCurrent().getBaseDirectory().getPath();
+
+		// Image as a file resource
+		FileResource resource = new FileResource(new File(basepath +
+				"/WEB-INF/images/Personalverrechnungstabelle.jpg"));
+
+		// Show the image in the application
+		Image image = new Image("", resource);
+
+		image.setWidth("80%");
+		//image.setHeight(layout.getHeight(), Unit.PIXELS);
+
+		layout.addComponent(image);
+		layout.setComponentAlignment(
+				image, Alignment.MIDDLE_CENTER
+		);
+
+		layout.setHeight(null);
+		return layout;
 	}
 
 	@Override
@@ -191,33 +241,157 @@ public class AccountingQuestionManager extends QuestionManager {
 		VerticalLayout layout = assembleCompanyDescription();
 		layout.setSpacing(true);
 		Button cont = new Button("Weiter", e -> {
+
+			removeAllComponents();
+			quizRules(components);
+		});
+		layout.addComponent(cont);
+//		layout.setComponentAlignment(components[0], Alignment.MIDDLE_CENTER);
+		addComponent(layout);
+	}
+
+	public void quizRules(Component[] components){
+
+		VerticalLayout layout = assemleRules();
+		layout.setSpacing(true);
+		Button cont = new Button("Weiter", e -> {
+
 			removeAllComponents();
 			for (Component c : components) {
 				addComponent(c);
 			}
 			super.startQuiz(student);
 		});
-		layout.addComponent(cont);
-//		layout.setComponentAlignment(components[0], Alignment.MIDDLE_CENTER);
-		addComponent(layout);
 
+		layout.addComponent(cont);
+		addComponent(layout);
 	}
 
 	private VerticalLayout assembleCompanyDescription() {
 		VerticalLayout layout = new VerticalLayout();
 
 		addComponent(layout);
-		Label label = new Label(
-				"Stelle dir vor, du hast dich mit dem Handel von Tablet-PCs aller Art selbständig gemacht und dazu das Einzelunternehmen „World of Tabs e. U.“ vor zwei Jahren gegründet. Da du dich in Rechnungswesen schon gut auskennst, beschließt du selbst die Buchhaltung zu führen.<p/>",
-				ContentMode.HTML);
-		Label companyData = new Label("<table><tr><td>Firmenname:</td><td>World of Tabs</td></tr><tr><td>Adresse:</td><td>Unterfeld 15</td></tr><tr><td></td><td>4541 Adlwang</td></tr><tr><td>E-mail:</td><td>office@worldtabs.at</td></tr><tr><td>Internet:</td><td>www.worldtabs.at</td></tr><tr><td>UID-Nummer:</td><td>ATU32589716</td></tr></table><p/>", ContentMode.HTML);
+
+		Label companyData = new Label("\n" +
+				"<table >\n" +
+				"\t<caption style=\"font-size:25px\"><strong>Ausgangssituation</strong></caption>\n" +
+				"\t<tbody>\n" +
+				"\t\n" +
+				"\t<tr>\n" +
+				"\t<td colspan=\"4\"><strong><br>Du bist als selbständiger Steuerberater und Buchhalter tätig. Zu deinen Kunden gehören die unten angeführten Unternehmen.<br> Für diese übernimmst du die Buchhaltung, d.h. du verbuchst die angeführten Geschäftsfälle aus deren Sicht. </strong></td>\n" +
+				"\t</tr>\n" +
+				"\t\n" +
+				"\t<tr>\n" +
+				"\t<td colspan=\"4\"><strong><br>Unternehmensbeschreibungen</strong></td>\n" +
+				"\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td>Firmenname: </td>\n" +
+				"\t\t\t<td><strong>World of Tabs GmbH  </strong></td>\n" +
+				"\t\t\t<td><strong>Restaurant Sommer  </strong></td>\n" +
+				"\t\t\t<td><strong>ATM GmbH  </strong></td>\n" +
+				"\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td>Adresse: </td>\n" +
+				"\t\t<td>Unterfeld 15</td>\n" +
+				"\t\t<td>Am Berg 5</td>\n" +
+				"\t\t<td>Altenbergstr. 7</td>\n" +
+				"\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td></td>\n" +
+				"\t\t<td>4541 Adlwang</td>\n" +
+				"\t\t<td>4452 Ternberg</td>\n" +
+				"\t\t<td>4040 Linz</td>\n" +
+				"\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td>E-Mail:</td>\n" +
+				"\t\t<td>office@worldtabs.at</td>\n" +
+				"\t\t<td>office@summer.at</td>\n" +
+				"\t\t<td>office@atm.at</td>\n" +
+				"\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td>Internet:</td>\n" +
+				"\t\t<td>www.worldtabs.at</td>\n" +
+				"\t\t<td>www.sommer.at</td>\n" +
+				"\t\t<td>www.atm.at</td>\n" +
+				"\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td>UID-Nummer:</td>\n" +
+				"\t\t<td>ATU32589716</td>\n" +
+				"\t\t<td>ATU89716325</td>\n" +
+				"\t\t<td>ATU58932761</td>\n" +
+				"\t\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td> </td>\n" +
+				"\t\t<td> </td>\n" +
+				"\t\t<td> </td>\n" +
+				"\t\t<td> </td>\n" +
+				"\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td colspan=\"4\"><strong><br>Hinweise zu den laufenden und den Um- und Nachbuchungen/strong></td>\n" +
+				"\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td>Buchung:</td>\n" +
+				"\t\t<td colspan=\"3\">Sofern nichts Anderes angeführt ist, wird erfolgsorientiert und nicht <br> bestandsorientiert gebucht. D.h., sofern nichts anderes angeführt ist, wird <br> darauf abgezielt, den Gewinn niedrig zu halten, um Steuerabgaben gering <br> zu halten. </td>\n" +
+				"\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td>Abschlussjahr</td>\n" +
+				"\t\t<td colspan=\"3\">2016</td>\n" +
+				"\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td>Abschreibung</td>\n" +
+				"\t\t<td colspan=\"3\">Halbjahres- bzw. Ganzjahresabschreibung</td>\n" +
+				"\t</tr><tr>\n" +
+				"\t\t<td>Skonto</td>\n" +
+				"\t\t<td colspan=\"3\">Wird stets in Anspruch genommen.</td>\n" +
+				"\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td>Zeitliche<br> Abgrenzung</td>\n" +
+				"\t\t<td colspan=\"3\">Die Abgrenzung erfolgt am Jahresende im Rahmen der Um- und <br> Nachbuchungen.</td>\n" +
+				"\t</tr>\n" +
+				"\t<tr>\n" +
+				"\t\t<td>Geringwertig <br> Wirtschaftsgüter</td>\n" +
+				"\t\t<td colspan=\"3\">Sofern nichts Anderes angeführt ist, wird für geringwertige <br> Wirtschaftsgüter mit Anschaffungs- bzw. Herstellungskosten bis 400,00<br> die Bewertungsfreiheit nach § 13 EStG (Sofortabschreibung) in Anspruch<br> genommen.</td>\n" +
+				"\t</tr>\n" +
+				"\t</tbody>\n" +
+				"</table><p/>", ContentMode.HTML);
+		/*
 		Label descr = new Label("<i>World of Tabs dient im Folgenden als Modellunternehmen, <b>aus dessen Sicht</b> du die Aufgabenstellungen bearbeiten sollst. Wir bitten dich die Aufgaben <b>alleine, ohne Hilfe</b> von Mitschüler/inne/n oder Lehrer/inne/n zu lösen. Du kannst den Kontenplan und einen Taschenrechner verwenden.</i><p/>",ContentMode.HTML);
 		Label disclaimer = new Label("<b>Wichtig ist, dass du im Folgenden bei der Angabe der Kontennummer und des Kontennamens die genaue Nummer bzw. Bezeichnung verwendest. Bspw. wird eine Aufgabe falsch gewertet, wenn du die Nummer 30 anstatt 33 für das Lieferverbindlichkeiten wählst oder du den Kontennamen \"Lieferverbindlichkeiten\" anstatt \"AATech\" (bei personifiziertem Lieferantenkonto) für den Lieferanten wählst.<b>",ContentMode.HTML);
 		layout.addComponent(HtmlLabel.getCenteredLabel("h1", "Unternehmensbeschreibung"));// Title of the quiz
+		*/
 		layout.addComponent(companyData);
+		//layout.addComponent(descr);
+		//layout.addComponent(disclaimer);
+		return layout;
+	}
+
+	private VerticalLayout assemleRules() {
+
+		VerticalLayout layout = new VerticalLayout();
+		addComponent(layout);
+		Label label = new Label("<table >\n" +
+				"\t<tbody>\n" +
+				"\t\t\t<caption style=\"font-size:25px\"><strong>Bearbeitungshinweise</strong></caption>\n" +
+				"\t\t<tr>\n" +
+				"\t\t\t<td valign=\"top\"><br>1. </td>\n" +
+				"\t\t\t<td><br>Wir bitten dich die Aufgaben <strong>alleine, ohne Hilfe</strong> von anderen Personen oder Unterlagen<br> zu lösen.</td>\n" +
+				"\t\t</tr>\n" +
+				"\t\t<tr>\n" +
+				"\t\t\t<td valign=\"top\">2.</td>\n" +
+				"\t\t\t<td>Du kannst den <strong>Kontenplan</strong> und einen <strong>Taschenrechner</strong> verwenden.</td>\n" +
+				"\t\t</tr>\n" +
+				"\t\t<tr>\n" +
+				"\t\t\t<td valign=\"top\">3.</td>\n" +
+				"\t\t\t<td>Wichtig ist, dass du bei der Angabe der <strong>Kontennummer</strong> und des <strong>Kontennamens</strong> die<br> <strong>genaue Nummer bzw. Bezeichnung</strong> verwendest. Bspw. wird eine Aufgabe falsch<br> gewertet, <u>wenn du die Nummer 30 anstatt 33 für das Lieferverbindlichkeiten wählst oder<br> du den Kontennamen \"Lieferverbindlichkeiten\" anstatt \"AATech\"</u> (bei personifiziertem<br> Lieferantenkonto) für den Lieferanten wählst.</td>\n" +
+				"\t\t</tr>\n" +
+				"\t\t<tr>\n" +
+				"\t\t\t<td colspan=\"2\"><strong><br>Viel Erfolg!</strong></td>\n" +
+				"\t\t</tr>\n" +
+				"\t</tbody>\n" +
+				"</table>", ContentMode.HTML);
+
 		layout.addComponent(label);
-		layout.addComponent(descr);
-		layout.addComponent(disclaimer);
+
 		return layout;
 	}
 

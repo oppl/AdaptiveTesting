@@ -1,0 +1,113 @@
+Sourcecode Changelog
+===========================================================================================================
+Name:               Stela Dinkova
+Matr. Nr.:          1156799
+Letzte Änderung:    22.05.2017
+===========================================================================================================
+
+OpenAnswerKeywordQuestion.checkUserAnswer() changed
+================
+Change user's input to match xxx(x),yy before comparing it to the stored answer. If the input does not begin with a '+' or '-', assume
+it is a positive number and add '+'. Replace all unauthorised characters
+...
+String userAnswer = answer.getValue();
+        // change user's input to match xxx(x),yy
+
+       if (userAnswer.charAt(0) != '+' && userAnswer.charAt(0) != '-')
+                   userAnswer = "+" + userAnswer;
+
+               userAnswer = userAnswer.replace(",--", ",00");
+               userAnswer = userAnswer.replace(",-", ",00");
+               userAnswer = userAnswer.replace(".", "");
+
+...
+
+===========================================================================================================
+AccountingDataProvider
+================
+Replace accounting plan with the new accounting plan in the constructor.
+
+
+===========================================================================================================
+AccountingQuestionManager
+================
+Change table
+
+Remove: Label descr
+Remove: Label disclaimer
+
+
+===========================================================================================================
+AccountingQuestionManager
+================
+Add new page
+
+Add page "Bearbeitungshinweise"
+
++ quizRules()
++ assembleRules()
+
+
+===========================================================================================================
+AccountingQuestionManager
+================
+Add new button -> Personalverrechnungstabelle
+Add Personalverrechnungstabelle image
+
+
+Button openPersBilling = new Button("Personalverrechnungstabelle");
+		openPersBilling.addClickListener(e -> {
+			Window window = new Window("Personalverrechnungstabelle");
+			window.setWidth("80%");
+			window.setHeight("80%");
+			VerticalLayout vl = assemblePersBilling();
+
+			/*Button close = new Button("Schließen");
+			close.addClickListener( e1 -> {
+				window.close();
+			});*/
+			vl.setMargin(true);
+			vl.setSpacing(true);
+			//vl.addComponent(close);
+			window.setContent(vl);
+			window.center();
+			window.setResizable(false);
+			getUI().addWindow(window);
+		});
+
+private VerticalLayout assemblePersBilling() {
+
+		VerticalLayout layout = new VerticalLayout();
+
+		String basepath = VaadinService.getCurrent().getBaseDirectory().getPath();
+
+        		// Image as a file resource
+        		FileResource resource = new FileResource(new File(basepath +
+        				"/WEB-INF/images/Personalverrechnungstabelle.jpg"));
+
+        		// Show the image in the application
+        		Image image = new Image("", resource);
+
+        		image.setWidth("80%");
+        		//image.setHeight(layout.getHeight(), Unit.PIXELS);
+
+        		layout.addComponent(image);
+        		layout.setComponentAlignment(
+        				image, Alignment.MIDDLE_CENTER
+        		);
+
+        		layout.setHeight(null);
+        		...
+	}
+===========================================================================================================
+
+OpenAnswerKeywordQuestion.checkUserAnswer() changed
+================
+substring of user's answer -> 'cut' everything after the first two characters after the comma
+
+...
+        int index = userAnswer.indexOf(',');
+        userAnswer = userAnswer.substring(0, index + 3);
+...
+
+
