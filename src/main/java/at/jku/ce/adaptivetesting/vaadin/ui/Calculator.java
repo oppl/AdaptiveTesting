@@ -82,7 +82,7 @@ public class Calculator implements ClickListener {
             stored = stored / 100;
         }
         if (requestedOperation == ',') {
-            //TODO
+            Notification.show("Komma noch nicht implementiert");
         }
         return stored;
     }

@@ -65,6 +65,13 @@ public interface IEngine {
     void start() throws EngineException;
 
 	/**
+	 * Starts the test
+	 *
+	 * @throws EngineException
+	 */
+	void start(StudentData student) throws EngineException;
+
+	/**
 	 * Deletes all questions stored in the Engine
 	 */
     void resetQuestions();

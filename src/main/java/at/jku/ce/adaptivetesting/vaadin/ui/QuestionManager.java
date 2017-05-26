@@ -168,7 +168,7 @@ public abstract class QuestionManager extends VerticalLayout implements
 		iEngine.setStudentData(student);
 		loadQuestions();
 		try {
-			iEngine.start();
+			iEngine.start(student);
 		} catch (EngineException e) {
 			Notification.show("Das Test-System konnte nicht gestartet werden", "Bitte wenden Sie sich an den Lehrenden.", Type.ERROR_MESSAGE);
 			LogHelper.logThrowable(e);

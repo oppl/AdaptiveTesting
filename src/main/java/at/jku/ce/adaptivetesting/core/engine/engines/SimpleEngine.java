@@ -44,7 +44,17 @@ public class SimpleEngine implements IEngine {
 	 * @throws EngineException
 	 */
 	public SimpleEngine() throws EngineException {
-		this(-1.6f, -0.2f, 1.2f, 2.5f);
+		//this(-1.6f, -0.2f, 1.2f, 2.5f);
+		this(-2.715000f, -2.246250f, -2.049900f, -1.631000f,
+				-1.440625f, -1.316250f, -1.169125f, -0.832000f,
+				-0.710075f, -0.551250f, -0.443000f, -0.358900f,
+				-0.202650f, -0.079700f, 0.169000f, 0.251200f,
+				0.310700f, 0.411500f, 0.526175f, 0.610500f,
+				0.744375f, 0.805600f, 0.844675f, 0.927600f,
+				1.027125f, 1.170350f, 1.252075f, 1.377600f,
+				1.515100f, 1.600750f, 1.716900f, 1.946600f,
+				2.041800f, 2.262850f, 2.430500f, 2.619900f,
+				2.921600f, 3.103350f, 3.794900f, 4.937000f);
 	}
 
 	/**
@@ -59,6 +69,7 @@ public class SimpleEngine implements IEngine {
 	public SimpleEngine (float... upperBounds) throws EngineException {
 		Arrays.sort(upperBounds);
 		this.upperBounds = upperBounds;
+		LogHelper.logInfo(String.valueOf("Number of question categories: " + upperBounds.length));
 		bags = new List[upperBounds.length + 1];
 		for (int i = 0; i < bags.length; i++) bags[i] = new ArrayList<>();
 		rProvider = new RProvider();
@@ -253,6 +264,61 @@ public class SimpleEngine implements IEngine {
 		question = getQuestion((upperBounds.length + 1) / 2 - 1);
 		fireQuestionChangeListener(question);
 
+	}
+
+	private int setClass(int schoolClass) {
+		float category = 0.0f;
+		for (int i = 0; i < upperBounds.length; i++) {
+			if (i == schoolClass) category = upperBounds[schoolClass];
+		}
+		LogHelper.logInfo("Set initial question category to: " + String.valueOf(category));
+		return schoolClass;
+	}
+
+	/*
+ 	* (non-Javadoc)
+ 	*
+ 	* @see IEngine#start(StudentData student)
+ 	*/
+	@Override
+	public void start(StudentData student) throws EngineException {
+		initR();
+		history.clear();
+		String studentClass = student.getStudentClass();
+		int schoolClass;
+		try {
+			schoolClass = Integer.parseInt(studentClass.substring(0, 1));
+			if (schoolClass > 0 && schoolClass < 6)
+				LogHelper.logInfo("Student class: " + String.valueOf(schoolClass));
+			else
+				LogHelper.logError("Invalid student class: " + String.valueOf(schoolClass));
+		} catch (Exception e) {
+			LogHelper.logError(e.toString());
+			schoolClass = 0;
+		}
+		switch(schoolClass) {
+			case 1:
+				// 1. class (9. grade) - bag 3
+				question = getQuestion(setClass(2));
+				break;
+			case 2:
+				// 2. class (10. grade) - bag 5
+				question = getQuestion(setClass(4));
+				break;
+			case 3:
+				// 3. class (11. grade) - bag 7
+				question = getQuestion(setClass(6));
+				break;
+			case 4: case 5:
+				// 4. / 5. class (12. / 13. grade) - bag 10
+				question = getQuestion(setClass(9));
+				break;
+				// no choice or invalid grade (bag 3)
+			default:
+				question = getQuestion(setClass(2));
+		}
+		LogHelper.logInfo(String.valueOf(question.getDifficulty()));
+		fireQuestionChangeListener(question);
 	}
 
 	private void initR() throws EngineException {

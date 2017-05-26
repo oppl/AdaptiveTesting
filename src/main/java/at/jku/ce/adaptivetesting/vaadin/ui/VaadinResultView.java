@@ -45,16 +45,6 @@ public class VaadinResultView extends VerticalLayout implements View,
 				+ (args.outOfQuestions ? "keine weiteren Fragen verfügbar sind."
 						: "dein Kompetenzniveau bestimmt wurde.")));
 
-		Link link = new Link("Umfrage Adaptive Testing",
-				new ExternalResource("https://docs.google.com/forms/d/e/1FAIpQLSdg0GyIhMymJaLB6hCSkutV41WqJs09qCUSn9DMmSYJ3Lu_Pg/viewform?c=0&w=1"));
-		link.setTargetName("_blank");
-		link.setDescription("Der Fragebogen soll Schwächen der Performance und Usability der Test-Software aufzeigen. " +
-				"Die Auswertung wird zur Verbessung eventueller Schwachstellen herangezogen. " +
-				"Damit die Ergebnisse des Fragebogens denen des Tests zugeordnet werden können, " +
-				"ist es notwendig, den zuvor erstellen anonymen Benutzernamen anzugeben.");
-		addComponent(link);
-		setComponentAlignment(link, Alignment.MIDDLE_CENTER);
-
 		addComponent(HtmlLabel
 				.getCenteredLabel("Im Folgenden siehst du die Fragen und die gegebenen Antworten in zeitlich absteigender Reihenfolge."));
 		addComponent(HtmlLabel
@@ -164,10 +154,18 @@ public class VaadinResultView extends VerticalLayout implements View,
 
 		addComponent(HtmlLabel.getCenteredLabel("h3",
 				"Dein Kompetenzniveau ist: <b>" + args.skillLevel + "</b>"));
-		addComponent(HtmlLabel
-				.getCenteredLabel("Delta:  "
-						+ args.delta));
+		addComponent(HtmlLabel.getCenteredLabel("Delta:  " + args.delta));
 		storeResults(args);
+
+		Link link = new Link("Umfrage Adaptive Testing",
+				new ExternalResource("https://docs.google.com/forms/d/e/1FAIpQLSdg0GyIhMymJaLB6hCSkutV41WqJs09qCUSn9DMmSYJ3Lu_Pg/viewform?c=0&w=1"));
+		link.setTargetName("_blank");
+		link.setDescription("Der Fragebogen soll Schwächen der Performance und Usability der Test-Software aufzeigen. " +
+				"Die Auswertung wird zur Verbessung eventueller Schwachstellen herangezogen. " +
+				"Damit die Ergebnisse des Fragebogens denen des Tests zugeordnet werden können, " +
+				"ist es notwendig, den zuvor erstellen anonymen Benutzernamen anzugeben.");
+		addComponent(link);
+		setComponentAlignment(link, Alignment.MIDDLE_CENTER);
 	}
 
 	private void storeResults(ResultFiredArgs args) {

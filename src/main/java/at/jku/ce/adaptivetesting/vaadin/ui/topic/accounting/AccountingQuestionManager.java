@@ -40,7 +40,7 @@ public class AccountingQuestionManager extends QuestionManager {
 
 	public AccountingQuestionManager(String quizName) {
 		super(quizName);
-		Button openKontenplan = new Button("Kontenplan öffnen");
+		Button openKontenplan = new Button("Kontenplan");
 		openKontenplan.addClickListener(e -> {
 			openKontenplan.setEnabled(false);
 			// Create Window with layout
@@ -58,7 +58,7 @@ public class AccountingQuestionManager extends QuestionManager {
 			getUI().addWindow(window);
 
 		});
-		Button openCompanyDescription = new Button("Unternehmensbeschreibung öffnen");
+		Button openCompanyDescription = new Button("Unternehmensbeschreibung");
 		openCompanyDescription.addClickListener(e -> {
 			Window window = new Window("Unternehmensbeschreibung");
 			window.setWidth("80%");
@@ -97,7 +97,7 @@ public class AccountingQuestionManager extends QuestionManager {
 			getUI().addWindow(window);
 		});
 
-		Button openCalculator = new Button("Taschenrechner öffnen");
+		Button openCalculator = new Button("Taschenrechner");
 		openCalculator.addClickListener(e -> {
 			Calculator Calculator = new Calculator();
 			getUI().addWindow(Calculator.getWindow());
@@ -105,7 +105,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		addHelpButton(openKontenplan);
 		addHelpButton(openCompanyDescription);
 		addHelpButton(openPersBilling);
-		//addHelpButton(openCalculator);
+		addHelpButton(openCalculator);
 	}
 
 	private VerticalLayout assemblePersBilling() {
