@@ -22,6 +22,11 @@
     </context-param>
 
     <context-param>
+        <param-name>at.jku.ce.adaptivetesting.imagepath</param-name>
+        <param-value>${catalina.home}/temp/adaptiveTesting/images</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>widgetset</param-name>
         <param-value>at.jku.ce.adaptivetesting.VaadinWidgetset</param-value>
     </context-param>

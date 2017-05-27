@@ -262,7 +262,7 @@ public class AdminView extends VerticalLayout implements View {
             this.setWidth("400px");
             Label titleLabel = new Label(question.getQuestionID(), ContentMode.HTML);
             Label descrLabel = new Label("<font color=\"red\"><b>The following command is destructive and cannot be undone!</b></font>", ContentMode.HTML);
-//          Button remove = new Button("Remove from this test");
+            // Button remove = new Button("Remove from this test");
             Button delete = new Button("Delete permanently from disk");
             /*
             Button close = new Button("Cancel");
@@ -281,13 +281,15 @@ public class AdminView extends VerticalLayout implements View {
                 manager.getEngine().removeQuestion(question);
                 File questionFolder = new File(VaadinUI.Servlet.getQuestionFolderName());
                 assert questionFolder.isDirectory();
-                File[] matches = questionFolder.listFiles(f ->
-                        f.isFile()
-                        && (f.canRead() || f.setReadable(true))
-                        && f.getName().equals(question.getQuestionID()));
-                for (File f: matches) {
+                File[] matches = questionFolder.listFiles(file ->
+                        file.isFile()
+                        && (file.canRead() || file.setReadable(true))
+                        && file.getName().equals(question.getQuestionID()));
+                for (File file: matches) {
                     try {
-                        Files.deleteIfExists(f.toPath());
+                        Files.deleteIfExists(file.toPath());
+                        reloadQuestions();
+                        Notification.show("Successfully deleted file "+file.getName()+".", Notification.Type.TRAY_NOTIFICATION);
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
@@ -327,6 +329,7 @@ public class AdminView extends VerticalLayout implements View {
                     File target = new File(questionFolder,filename);
                     try {
                         Files.move(file.toPath(),target.toPath(),REPLACE_EXISTING);
+                        reloadQuestions();
                         Notification.show("Successfully uploaded file "+filename+".", Notification.Type.TRAY_NOTIFICATION);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -387,4 +390,11 @@ public class AdminView extends VerticalLayout implements View {
         String xmlEnd = "\n\u0020\u0020\u0020\u0020\u0020\u003C\u002F" + delimiter + xml[2];
         return xmlStart + xmlMiddle + xmlEnd;
     }
+
+    private void reloadQuestions() {
+        manager.resetQuestionNo();
+        manager.getEngine().resetQuestions();
+        manager.loadQuestions();
+    }
 }
+

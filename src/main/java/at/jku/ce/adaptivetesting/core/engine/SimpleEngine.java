@@ -1,4 +1,4 @@
-package at.jku.ce.adaptivetesting.core.engine.engines;
+package at.jku.ce.adaptivetesting.core.engine;
 
 /*This file is part of the project "Reisisoft Adaptive Testing",
  * which is licenced under LGPL v3+. You may find a copy in the source,

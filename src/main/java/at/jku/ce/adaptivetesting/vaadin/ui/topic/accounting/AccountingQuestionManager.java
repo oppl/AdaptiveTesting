@@ -40,6 +40,7 @@ public class AccountingQuestionManager extends QuestionManager {
 
 	public AccountingQuestionManager(String quizName) {
 		super(quizName);
+
 		Button openKontenplan = new Button("Kontenplan");
 		openKontenplan.addClickListener(e -> {
 			openKontenplan.setEnabled(false);
@@ -58,6 +59,7 @@ public class AccountingQuestionManager extends QuestionManager {
 			getUI().addWindow(window);
 
 		});
+
 		Button openCompanyDescription = new Button("Unternehmensbeschreibung");
 		openCompanyDescription.addClickListener(e -> {
 			Window window = new Window("Unternehmensbeschreibung");
@@ -102,6 +104,7 @@ public class AccountingQuestionManager extends QuestionManager {
 			Calculator Calculator = new Calculator();
 			getUI().addWindow(Calculator.getWindow());
 		});
+
 		addHelpButton(openKontenplan);
 		addHelpButton(openCompanyDescription);
 		addHelpButton(openPersBilling);
@@ -114,15 +117,15 @@ public class AccountingQuestionManager extends QuestionManager {
 
 		layout.setSizeFull();
 
-		// get application directory
-		String basepath = VaadinService.getCurrent().getBaseDirectory().getPath();
+		// get image path of application
+		String imagepath = VaadinServlet.getCurrent().getServletConfig().
+				getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagepath");
 
 		// Image as a file resource
-		FileResource resource = new FileResource(new File(basepath +
-				"/WEB-INF/images/Personalverrechnungstabelle.jpg"));
+		FileResource resource = new FileResource(new File(imagepath + "/Personalverrechnungstabelle.jpg"));
 
 		// Show the image in the application
-		Image image = new Image("", resource);
+		Image image = new Image("Personalverrechnungstabelle", resource);
 
 		image.setWidth("80%");
 		//image.setHeight(layout.getHeight(), Unit.PIXELS);

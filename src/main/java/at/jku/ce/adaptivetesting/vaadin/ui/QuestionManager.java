@@ -7,7 +7,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import at.jku.ce.adaptivetesting.core.*;
-import at.jku.ce.adaptivetesting.core.engine.engines.SimpleEngine;
+import at.jku.ce.adaptivetesting.core.engine.SimpleEngine;
 import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
 import at.jku.ce.adaptivetesting.core.engine.EngineException;
 import at.jku.ce.adaptivetesting.core.engine.ICurrentQuestionChangeListener;
@@ -72,7 +72,8 @@ public abstract class QuestionManager extends VerticalLayout implements
 			try {
 				iEngine = new SimpleEngine();
 			} catch (EngineException e1) {
-				Notification.show("Test-System konnte nicht gestartet werden", "Bitte wende dich an den Lehrenden.",
+				Notification.show("Test-System konnte nicht gestartet werden",
+						"Bitte wende dich an den Lehrenden.",
 						Type.ERROR_MESSAGE);
 				LogHelper.logThrowable(e1);
 
@@ -163,14 +164,13 @@ public abstract class QuestionManager extends VerticalLayout implements
 	public abstract void loadQuestions();
 
 	public void startQuiz(StudentData student) {
-		questionNo = 0;
-		iEngine.resetQuestions();
 		iEngine.setStudentData(student);
-		loadQuestions();
 		try {
+			// Start Quiz with consideration of student grade
 			iEngine.start(student);
 		} catch (EngineException e) {
-			Notification.show("Das Test-System konnte nicht gestartet werden", "Bitte wenden Sie sich an den Lehrenden.", Type.ERROR_MESSAGE);
+			Notification.show("Das Test-System konnte nicht gestartet werden",
+					"Bitte wenden Sie sich an den Lehrenden.", Type.ERROR_MESSAGE);
 			LogHelper.logThrowable(e);
 		}
 	}
@@ -184,5 +184,9 @@ public abstract class QuestionManager extends VerticalLayout implements
 	public <RView extends View & IResultView> void setResultView(
 			Class<? extends RView> class1) {
 		resultViewClass = class1;
+	}
+
+	public void resetQuestionNo() {
+		questionNo = 0;
 	}
 }
