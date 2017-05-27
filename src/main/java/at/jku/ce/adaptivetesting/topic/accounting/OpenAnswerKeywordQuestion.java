@@ -1,6 +1,7 @@
 package at.jku.ce.adaptivetesting.topic.accounting;
 
 import at.jku.ce.adaptivetesting.core.IQuestion;
+import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlOpenAnswerKeywordQuestion;
@@ -103,6 +104,12 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
     public double checkUserAnswer() {
         String userAnswer = answer.getValue();
         // change user's input to match xxx(x),yy
+
+        // error handling
+        if (userAnswer.equals("")) {
+            LogHelper.logInfo("The text input was empty");
+            return 0.0d;
+        }
 
         if (userAnswer.charAt(0) != '+' && userAnswer.charAt(0) != '-')
             userAnswer = "+" + userAnswer;

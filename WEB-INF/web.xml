@@ -22,7 +22,7 @@
     </context-param>
 
     <context-param>
-        <param-name>at.jku.ce.adaptivetesting.imagepath</param-name>
+        <param-name>at.jku.ce.adaptivetesting.imagefolder</param-name>
         <param-value>${catalina.home}/temp/adaptiveTesting/images</param-value>
     </context-param>
 

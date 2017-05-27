@@ -118,11 +118,11 @@ public class AccountingQuestionManager extends QuestionManager {
 		layout.setSizeFull();
 
 		// get image path of application
-		String imagepath = VaadinServlet.getCurrent().getServletConfig().
-				getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagepath");
+		String imagefolder = VaadinServlet.getCurrent().getServletConfig().
+				getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder");
 
 		// Image as a file resource
-		FileResource resource = new FileResource(new File(imagepath + "/Personalverrechnungstabelle.jpg"));
+		FileResource resource = new FileResource(new File(imagefolder + "/Personalverrechnungstabelle.jpg"));
 
 		// Show the image in the application
 		Image image = new Image("Personalverrechnungstabelle", resource);
@@ -285,7 +285,7 @@ public class AccountingQuestionManager extends QuestionManager {
 				"\t</tr>\n" +
 				"\t\n" +
 				"\t<tr>\n" +
-				"\t<td colspan=\"4\"><strong><br>Unternehmensbeschreibungen</strong></td>\n" +
+				"\t<td colspan=\"4\"><strong><br>Unternehmensbeschreibungen></strong></td>\n" +
 				"\t</tr>\n" +
 				"\t<tr>\n" +
 				"\t\t<td>Firmenname: </td>\n" +

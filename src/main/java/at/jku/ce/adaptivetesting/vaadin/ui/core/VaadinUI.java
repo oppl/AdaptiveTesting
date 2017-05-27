@@ -35,6 +35,7 @@ import com.vaadin.ui.UI;
 @Title("Seite wird geladen...")
 public class VaadinUI extends UI {
 	private Navigator navigator;
+	private QuestionManager manager;
 
 	public VaadinUI() {
 		// Set up the Navigator
@@ -57,7 +58,10 @@ public class VaadinUI extends UI {
 		navigator.addView(Views.DEFAULT.toString(), mainScreen);
 		// Question view
 		// Change this to the questionManager you like
-		final QuestionManager manager = new AccountingQuestionManager("Rechnungswesentest");
+		manager = new AccountingQuestionManager("Rechnungswesentest");
+		// initial load of questions for the student quiz
+		manager.loadQuestions();
+		// add views
 		navigator.addView(Views.TEST.toString(), manager);
 		navigator.addView(Views.Log.toString(), new LogView(new File(Servlet.getLogFileName())));
 		navigator.addView(Views.Admin.toString(), new AdminView(manager));
@@ -86,6 +90,13 @@ public class VaadinUI extends UI {
 			if (!isWorking) {
 				resultFolderName = null;
 			}
+			// Get the image folder as defined in WEB-INF/web.xml
+			imageFolderName = getServletConfig().getServletContext().getInitParameter(imageFolderKey);
+			File fIf = new File(imageFolderName);
+			isWorking = fIf.exists() && fIf.isDirectory() || fIf.mkdirs();
+			if (!isWorking) {
+				imageFolderName = null;
+			}
 			// Get the log location as defined in WEB-INF/web.xml
 			logLocation = getServletConfig().getServletContext().getInitParameter(logLocKey);
 			File fLog = new File(logLocation);
@@ -99,9 +110,14 @@ public class VaadinUI extends UI {
 			}
 		}
 
-		private static String questionFolderName = null, logLocation = null, resultFolderName = null;
+		private static String
+				questionFolderName = null,
+				resultFolderName = null,
+				imageFolderName = null,
+				logLocation = null;
 		private final static String questionFolderKey = "at.jku.ce.adaptivetesting.questionfolder";
 		private final static String resultFolderKey = "at.jku.ce.adaptivetesting.resultfolder";
+		private final static String imageFolderKey = "at.jku.ce.adaptivetesting.imagefolder";
 		private final static String logLocKey = "at.jku.ce.adaptivetesting.logfilepath";
 
 		/**

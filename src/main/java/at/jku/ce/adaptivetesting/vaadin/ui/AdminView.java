@@ -40,21 +40,18 @@ public class AdminView extends VerticalLayout implements View {
     Table table;
 
     public AdminView(QuestionManager manager) {
-        if (manager.getEngine().getQuestions().isEmpty()) manager.loadQuestions();
 
         this.setMargin(true);
         this.setSpacing(true);
-        this.addComponent(new HtmlLabel(HtmlUtils.center("h1",
-                "Administration")));
+        this.addComponent(new HtmlLabel(HtmlUtils.center("h1", "Item Administration")));
 
-        Button upload = new Button("Upload new Items ...");
+        Button upload = new Button("Neue Items hinzufügen");
         upload.addClickListener( e -> {
             this.getUI().addWindow(new UploadUI());
         });
-
         this.addComponent(upload);
 
-        table = new Table("Available Items");
+        table = new Table("Vorhandene Items");
         table.addContainerProperty("ItemName", String.class, null);
         table.addContainerProperty("ButtonShowQuestionText",  Button.class, null);
         table.addContainerProperty("ButtonShowQuestionPreview",  Button.class, null);
@@ -62,10 +59,10 @@ public class AdminView extends VerticalLayout implements View {
         table.addContainerProperty("ButtonDelete",  Button.class, null);
         table.setWidth("100%");
 
-        table.setColumnWidth("ButtonShowQuestionText",155);
-        table.setColumnWidth("ButtonShowQuestionPreview",210);
-        table.setColumnWidth("ButtonShowFullXML",115);
-        table.setColumnWidth("ButtonDelete",100);
+        table.setColumnWidth("ButtonShowQuestionText",165);
+        table.setColumnWidth("ButtonShowQuestionPreview",245);
+        table.setColumnWidth("ButtonShowFullXML",155);
+        table.setColumnWidth("ButtonDelete",125);
         table.setColumnHeaderMode(Table.ColumnHeaderMode.HIDDEN);
         table.setColumnAlignment("ButtonShowQuestionText", Table.Align.CENTER);
         table.setColumnAlignment("ButtonShowQuestionPreview", Table.Align.CENTER);
@@ -90,25 +87,25 @@ public class AdminView extends VerticalLayout implements View {
 
         for (IQuestion<? extends AnswerStorage> question: questions) {
 
-            Button showQuestionTextButton = new Button("question text");
+            Button showQuestionTextButton = new Button("Frage anzeigen");
             showQuestionTextButton.addClickListener( e -> {
                 closeAllWindows ();
                 this.getUI().addWindow(new QuestionTextUI(question));
             });
 
-            Button showQuestionPreviewButton = new Button("question full preview");
+            Button showQuestionPreviewButton = new Button("Komplettes Item anzeigen");
             showQuestionPreviewButton.addClickListener( e -> {
                 closeAllWindows ();
                 this.getUI().addWindow(new QuestionPreviewUI(question));
             });
 
-            Button showFullXMLButton = new Button("full XML");
+            Button showFullXMLButton = new Button("XML anzeigen");
             showFullXMLButton.addClickListener( e -> {
                 closeAllWindows ();
                 this.getUI().addWindow(new FullXMLUI(question));
             });
 
-            Button deleteButton = new Button ("delete");
+            Button deleteButton = new Button ("Entfernen");
             deleteButton.addClickListener( e -> {
                 closeAllWindows ();
                 this.getUI().addWindow(new DeleteUI(question));
@@ -141,7 +138,7 @@ public class AdminView extends VerticalLayout implements View {
         GridLayout gLayout = new GridLayout(2,3);
 
         public QuestionTextUI(IQuestion<? extends AnswerStorage> question) {
-            super("Question Text");
+            super("Voransicht: Frage (textuell)");
             this.center();
             gLayout.setWidth("100%");
             this.setWidth("400px");
@@ -169,7 +166,7 @@ public class AdminView extends VerticalLayout implements View {
         VerticalLayout vLayout = new VerticalLayout();
 
         public QuestionPreviewUI(IQuestion<? extends AnswerStorage> question) {
-            super("Full Question Preview");
+            super("Voransicht: komplettes Item");
 
             try {
                 Class<? extends AnswerStorage> dataStorageClass = question.getSolution().getClass();
@@ -221,7 +218,7 @@ public class AdminView extends VerticalLayout implements View {
         GridLayout gLayout = new GridLayout(2,3);
 
         public FullXMLUI(IQuestion<? extends AnswerStorage> question) {
-            super("Full Question XML");
+            super("Voransicht: XML");
             this.center();
             gLayout.setWidth("100%");
             gLayout.addStyleName("v-scrollable");
@@ -256,14 +253,14 @@ public class AdminView extends VerticalLayout implements View {
         GridLayout gLayout = new GridLayout(2,3);
 
         public DeleteUI(IQuestion<? extends AnswerStorage> question) {
-            super("Delete Question");
+            super("Frage entfernen");
             this.center();
             gLayout.setWidth("100%");
             this.setWidth("400px");
             Label titleLabel = new Label(question.getQuestionID(), ContentMode.HTML);
-            Label descrLabel = new Label("<font color=\"red\"><b>The following command is destructive and cannot be undone!</b></font>", ContentMode.HTML);
+            Label descrLabel = new Label("<font color=\"red\"><b>Diese Aktion ist unumkehrbar!</b></font>", ContentMode.HTML);
             // Button remove = new Button("Remove from this test");
-            Button delete = new Button("Delete permanently from disk");
+            Button delete = new Button("Entfernen");
             /*
             Button close = new Button("Cancel");
 
@@ -289,7 +286,7 @@ public class AdminView extends VerticalLayout implements View {
                     try {
                         Files.deleteIfExists(file.toPath());
                         reloadQuestions();
-                        Notification.show("Successfully deleted file "+file.getName()+".", Notification.Type.TRAY_NOTIFICATION);
+                        Notification.show("Das Item "+file.getName()+" wurde erfolgreich entfernt.", Notification.Type.TRAY_NOTIFICATION);
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
@@ -315,12 +312,12 @@ public class AdminView extends VerticalLayout implements View {
         GridLayout gLayout = new GridLayout(2,4);
 
         public UploadUI() {
-            super("Upload new Items");
+            super("Neue Items hinzufügen");
             this.center();
             gLayout.setWidth("100%");
             this.setWidth("400px");
-            Label titleLabel = new Label("<b>Upload new Items</b>", ContentMode.HTML);
-            Label descrLabel = new Label("Please select files or drop them below.", ContentMode.HTML);
+            Label titleLabel = new Label("<b>Neue Items hinzufügen</b>", ContentMode.HTML);
+            Label descrLabel = new Label("Bitte Item auswählen oder die Drag & Drop-Funktion benutzen.", ContentMode.HTML);
 
             MultiFileUpload multiFileUpload = new MultiFileUpload() {
                 @Override
@@ -330,7 +327,7 @@ public class AdminView extends VerticalLayout implements View {
                     try {
                         Files.move(file.toPath(),target.toPath(),REPLACE_EXISTING);
                         reloadQuestions();
-                        Notification.show("Successfully uploaded file "+filename+".", Notification.Type.TRAY_NOTIFICATION);
+                        Notification.show("Das Item "+filename+" wurde erfolgreich hinzugefügt.", Notification.Type.TRAY_NOTIFICATION);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
