@@ -72,6 +72,11 @@ public interface IEngine {
 	void start(StudentData student) throws EngineException;
 
 	/**
+	 * Stops the R instance and deletes all temporary created files
+	 */
+	void stop();
+
+	/**
 	 * Deletes all questions stored in the Engine
 	 */
     void resetQuestions();

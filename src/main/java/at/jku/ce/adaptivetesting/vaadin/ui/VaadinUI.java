@@ -1,4 +1,4 @@
-package at.jku.ce.adaptivetesting.vaadin.ui.core;
+package at.jku.ce.adaptivetesting.vaadin.ui;
 
 /*This file is part of the project "Reisisoft Adaptive Testing",
  * which is licenced under LGPL v3+. You may find a copy in the source,
@@ -13,7 +13,6 @@ import at.jku.ce.adaptivetesting.ProductData;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.html.HtmlUtils;
-import at.jku.ce.adaptivetesting.vaadin.ui.*;
 import at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting.AccountingQuestionManager;
 
 import com.vaadin.annotations.PreserveOnRefresh;
@@ -47,11 +46,14 @@ public class VaadinUI extends UI {
 		Button start = new Button("Start", e -> {
 			navigator.navigateTo(Views.TEST.toString());
 		});
-		start.setWidth("20%");
-		start.setHeight("20%");
+		start.setWidth("30%");
+		start.setHeight("30%");
 		//mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h1", "Willkommen zur " + productData)));
 		mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h2", "Bitte klicke auf den <b>" +
 						start.getCaption() + "</b> Button, um mit dem Rechnungswesentest zu beginnen!")));
+		mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h3",
+				"<i>Hinweis: Während des Tests darf die <b>Zurück-Taste</b> nicht zur Navigation " +
+						"verwendet werden!</b>")));
 		mainScreen.addComponent(start);
 		mainScreen.setComponentAlignment(start, Alignment.MIDDLE_CENTER);
 

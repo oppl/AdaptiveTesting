@@ -8,14 +8,12 @@ import java.lang.reflect.InvocationTargetException;
 
 import at.jku.ce.adaptivetesting.core.*;
 import at.jku.ce.adaptivetesting.core.engine.SimpleEngine;
-import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
 import at.jku.ce.adaptivetesting.core.engine.EngineException;
 import at.jku.ce.adaptivetesting.core.engine.ICurrentQuestionChangeListener;
 import at.jku.ce.adaptivetesting.core.engine.IEngine;
 import at.jku.ce.adaptivetesting.core.engine.IResultFiredListener;
 import at.jku.ce.adaptivetesting.core.engine.ResultFiredArgs;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
-import at.jku.ce.adaptivetesting.vaadin.ui.core.Views;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -119,6 +117,8 @@ public abstract class QuestionManager extends VerticalLayout implements
 			resultConstructor = resultViewClass.getConstructor(
 					ResultFiredArgs.class, String.class);
 			result = resultConstructor.newInstance(args, title.getValue());
+			// delete temp data and stop R instance
+			iEngine.stop();
 		} catch (NoSuchMethodException | SecurityException
 				| InstantiationException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException

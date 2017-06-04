@@ -2,7 +2,7 @@ Sourcecode Changelog
 ===========================================================================================================
 Name:               Peter Baumann, BSc
 Matr. Nr.:          1155812
-Letzte Änderung:    27.05.2017
+Letzte Änderung:    04.06.2017
 ===========================================================================================================
 
 WEB-INF/web.xml
@@ -39,28 +39,44 @@ pom.xml
 ============================================================================================================
 RCaller 2.4 durch RCaller 3.0 ersetzt.
 ------------------------------------------------------------------------------------------------------------
+
 <dependency>
     <groupId>com.github.jbytecode</groupId>
     <artifactId>RCaller</artifactId>
     <version>3.0</version>
 </dependency>
 
+------------------------------------------------------------------------------------------------------------
 slf4j simple durch die vollversion ersetzt, da die Simple Version nur Console-output unterstützt und
 keine Log-files schreiben kann.
 ------------------------------------------------------------------------------------------------------------
+
 <dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>slf4j-log4j12</artifactId>
     <version>${slf4jVersion}</version>
 </dependency>
 
+------------------------------------------------------------------------------------------------------------
 Log4j hinzugefügt, um den Logger zu konfigurieren (Datei + Speicherort)
 ------------------------------------------------------------------------------------------------------------
+
 <dependency>
     <groupId>log4j</groupId>
     <artifactId>log4j</artifactId>
     <version>1.2.17</version>
 </dependency>
+
+------------------------------------------------------------------------------------------------------------
+Zip4J hinzugefügt, um die Files automatisch entzippen zu können
+------------------------------------------------------------------------------------------------------------
+
+<dependency>
+	<groupId>net.lingala.zip4j</groupId>
+	<artifactId>zip4j</artifactId>
+	<version>1.3.2</version>
+</dependency>
+
 
 src/resources/rcaller/
 ============================================================================================================
@@ -68,35 +84,64 @@ Ordner gelöscht
 
 src/main/java/at/jku/ce/adaptivetesting/r/RProvider.java
 ============================================================================================================
-Konstruktor entfernt. Version 3.0 des RCallers ist soweit in der Lage selbstständig die R-Installation zu
-finden.Hilfsfunktionen, um den Pfad von R zu finden werden nicht mehr benötigt.
+Version 3.0 des RCallers ist soweit in der Lage selbstständig die R-Installation zu
+finden. Hilfsfunktionen, um den Pfad von R zu finden werden nicht mehr benötigt.
 
-RCaller 3.0 hat eine statische Klasse RService, mit der ein RCaller bzw RCode angelegt werden kann.
-- entfernt
-+ hinzugefügt
------------------------------------------------------------------------------------------------------------
-public RCaller getRCaller() throws ScriptException {
--		RCaller caller = new RCaller();
--		caller.setRscriptExecutable(rScript_exe);
--		caller.setFailurePolicy(FailurePolicy.RETRY_1);
--		return caller;
-+		return new RService().getRCaller();
+RCaller 3.0 bietet die Möglichkeit eine einzige R Instanzu für die Berechnungen offen zu halten, deren
+Code Input immer wieder nach jeder Kalukation überschrieben wird. Erst nachdem alle Vorgänge abgeschlossen
+sind, wird die Instanz beendet. Das Beenden erfolgt im QuestionManager genau dort, wo der Test abgeschlossen
+ist und auf die VaadinResultView Seite gewechselt wird.
+------------------------------------------------------------------------------------------------------------
+
+public class RProvider {
+
+	private RCaller caller;
+	private RCode code;
+
+	public RProvider() {
+		caller = RCaller.create();
+		code = RCode.create();
+		caller.setRCode(code);
+	}
+
+	public double[] execute(String RCodeScript, String toReturn) throws ScriptException {
+		code.addRCode(RCodeScript);
+		synchronized (toReturn) {
+			caller.runAndReturnResultOnline(toReturn);
+			code.clearOnline();
+			LogHelper.logInfo("R successfully completed");
+		}
+		return caller.getParser().getAsDoubleArray(toReturn);
+	}
+
+	public void terminate() {
+		caller.deleteTempFiles();
+		LogHelper.logInfo("R temporaty data deleted");
+		caller.StopRCallerOnline();
+		LogHelper.logInfo("R successfully terminated");
+	}
 }
 
-public RCode getRCode() {
--		return new RCode();
-+		return new RService().getRCode();
-}
+src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/core/Views.java
+============================================================================================================
+Views eine Package nach oben verschoben:
+Neuer Pfad: src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/Views.java
+
 
 src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/core/VaadinUI.java
 ============================================================================================================
-Beistrich "...Button, um..." im Intro-Satz hinzugefügt
+VaadinUI eine Package nach oben verschoben:
+Neuer Pfad: src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/VaadinUI.java
 
-Größe der Start-Buttons verkleindert
+Größe der Start-Buttons verändert
+Navigationsinformation eingefügt
+------------------------------------------------------------------------------------------------------------
 ...
-start.setWidth("20%");
-start.setHeight("20%");
+start.setWidth("30%");
+start.setHeight("30%");
 ...
+mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h3",
+"<i>Hinweis: Während des Tests darf die <b>Zurück-Taste</b> nicht zur Navigation verwendet werden!</b>")));
 
 ------------------------------------------------------------------------------------------------------------
 Fragen werden ein Mal bei der Initialisierung geladen
@@ -177,6 +222,20 @@ private VerticalLayout assemblePersBilling() {
     Image image = new Image("Personalverrechnungstabelle", resource);
     ...
 }
+src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\MainUI.java
+============================================================================================================
+JKU CE Logo eingefügt
+------------------------------------------------------------------------------------------------------------
+
+String logoFolder = VaadinServlet.getCurrent().getServletConfig().
+getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder");
+
+FileResource resource = new FileResource(new File(logoFolder + "/ce_jku_copyright_logo.png"));
+Image copyrightLogo = new Image("© Reisisoft & JKU 2014 - "
++ new GregorianCalendar().get(Calendar.YEAR), resource);
+copyrightLogo.setHeight("50");
+copyrightLogo.setWidth("200");
+
 
 src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\Calculator.java
 ============================================================================================================
@@ -290,6 +349,20 @@ public void resetQuestionNo() {
     questionNo = 0;
 }
 
+------------------------------------------------------------------------------------------------------------
+Beenden der R Instanz und löschen der temprären Dateien (rCallerxxx, ROutputxxx) nach Beendigung des Tests
+------------------------------------------------------------------------------------------------------------
+@Override
+public void resultFired(ResultFiredArgs args) throws EngineException {
+...
+try {
+    resultConstructor = resultViewClass.getConstructor(
+	    ResultFiredArgs.class, String.class);
+		result = resultConstructor.newInstance(args, title.getValue());
+		// delete temp data and stop R instance
+		iEngine.stop();
+	} catch (NoSuchMethodException | SecurityException ...
+}
 
 src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\AdminView.java
 ============================================================================================================
@@ -476,6 +549,23 @@ log4j.appender.stdout.Target=System.out
 log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
 
+src\main\java\at\jku\ce\adaptivetesting\core\engine\iEngine.java
+============================================================================================================
+Interface um folgenden Code erweitert:
+------------------------------------------------------------------------------------------------------------
+/**
+* Starts the test
+*
+* @throws EngineException
+*/
+void start(StudentData student) throws EngineException;
+
+/**
+* Stops the R instance and deletes all temporary created files
+*/
+void stop();
+
+
 src\main\java\at\jku\ce\adaptivetesting\core\engine\SimpleEngine.java
 ============================================================================================================
 SimpleEngine um einen Ornder nach vor verschoben.
@@ -545,6 +635,31 @@ public void start(StudentData student) throws EngineException {
     }
     LogHelper.logInfo(String.valueOf(question.getDifficulty()));
     fireQuestionChangeListener(question);
+}
+------------------------------------------------------------------------------------------------------------
+CatR.zip in den src\main\ressources hinzugefügt.
+Falls r_lib Ordner nicht vorhanden ist:
+Nach der automatischen Erstellung des r_lib Folders im Tomcat\temp Verzeichnis, wird die CatR.zip dort
+hin extrahiert.
+------------------------------------------------------------------------------------------------------------
+private void initR() {
+...
+// Get library home
+File path = new File(System.getProperty("java.io.tmpdir"), "r_lib");
+if (!path.exists()) {
+	path.mkdirs();
+	// CatR 3.4 auto extract
+	try {
+		String sourcePath = getClass().getResource("/catR.zip").getPath();
+		ZipFile zipFile = new ZipFile(sourcePath);
+		zipFile.extractAll(path.getAbsolutePath());
+		} catch (ZipException e) {
+			e.printStackTrace();
+		}
+	}
+	r_libFolder = path.getPath().replace("\\", "\\\\");
+	// initialize RCaller
+	rProvider = new RProvider();
 }
 
 src\main\java\at\jku\ce\adaptivetesting\topic.accounting\OpenAnswerKeywordQuestion.java

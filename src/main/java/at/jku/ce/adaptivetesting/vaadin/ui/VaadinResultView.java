@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import at.jku.ce.adaptivetesting.html.HtmlLink;
-import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
 import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.IResultView;

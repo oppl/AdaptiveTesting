@@ -7,18 +7,12 @@ import java.io.File;
 import java.util.*;
 import javax.script.ScriptException;
 import at.jku.ce.adaptivetesting.core.StudentData;
-import com.github.rcaller.rstuff.RCaller;
-import com.github.rcaller.rstuff.RCode;
 import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
-import at.jku.ce.adaptivetesting.core.engine.EngineException;
-import at.jku.ce.adaptivetesting.core.engine.HistoryEntry;
-import at.jku.ce.adaptivetesting.core.engine.ICurrentQuestionChangeListener;
-import at.jku.ce.adaptivetesting.core.engine.IEngine;
-import at.jku.ce.adaptivetesting.core.engine.IResultFiredListener;
-import at.jku.ce.adaptivetesting.core.engine.ResultFiredArgs;
 import at.jku.ce.adaptivetesting.r.RProvider;
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
 
 /**
  * The worker class
@@ -72,7 +66,6 @@ public class SimpleEngine implements IEngine {
 		LogHelper.logInfo(String.valueOf("Number of question categories: " + upperBounds.length));
 		bags = new List[upperBounds.length + 1];
 		for (int i = 0; i < bags.length; i++) bags[i] = new ArrayList<>();
-		rProvider = new RProvider();
 	}
 
 	/*
@@ -212,17 +205,13 @@ public class SimpleEngine implements IEngine {
 		addQuestionToHistory(question);
 		// Do R
 		try {
-			RCaller caller = rProvider.getRCaller();
-			// Get r code
-			RCode rCode = rProvider.getRCode();
-			// Add script
-			rCode.addRCode(getRScript());
+			// Get script
+			String RCodeScript = getRScript();
 			// Execute R code and get result
 			String rNameReturn = "next_item_parm";
 			// [0] -> next item's difficulty [1] -> current competence
 			// [2] ->Delta to result
-			double[] result = rProvider.execute(caller, rCode, rNameReturn)
-					.getAsDoubleArray(rNameReturn);
+			double[] result = rProvider.execute(RCodeScript, rNameReturn);
 			LogHelper.logInfo("StudentID: "+ student.getStudentIDCode() + " - Calculation result:\tNext item: " + result[0]
 					+ "\tCurrent competence:\t" + result[1] + "\tDelta:\t"
 					+ result[2]);
@@ -321,7 +310,12 @@ public class SimpleEngine implements IEngine {
 		fireQuestionChangeListener(question);
 	}
 
-	private void initR() throws EngineException {
+	@Override
+	public void stop() {
+		rProvider.terminate();
+	}
+
+	private void initR() {
 		if (questionNumber <= 0) {
 			return;
 		}
@@ -354,20 +348,18 @@ public class SimpleEngine implements IEngine {
 		File path = new File(System.getProperty("java.io.tmpdir"), "r_lib");
 		if (!path.exists()) {
 			path.mkdirs();
+			// CatR 3.4 auto extract
+			try {
+				String sourcePath = getClass().getResource("/catR.zip").getPath();
+				ZipFile zipFile = new ZipFile(sourcePath);
+				zipFile.extractAll(path.getAbsolutePath());
+			} catch (ZipException e) {
+				e.printStackTrace();
+			}
 		}
 		r_libFolder = path.getPath().replace("\\", "\\\\");
-		// Set up needed R libraries
-		String nl = System.getProperty("line.separator");
-		String cmd = "options(repos=structure(c(CRAN=\"http://cran.r-project.org/\")))"
-				+ nl + "install.packages(\"catR\",lib=\"" + r_libFolder + "\")";
-		try {
-			RProvider rProvider = new RProvider();
-			RCaller rCaller = rProvider.getRCaller();
-			RCode rCode = rProvider.getRCode();
-			rProvider.run(rCaller, rCode);
-		} catch (ScriptException e) {
-			throw new EngineException(e);
-		}
+		// initialize RCaller
+		rProvider = new RProvider();
 	}
 
 	/**

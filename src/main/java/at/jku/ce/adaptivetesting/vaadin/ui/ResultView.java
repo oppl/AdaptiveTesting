@@ -1,11 +1,8 @@
 package at.jku.ce.adaptivetesting.vaadin.ui;
 
-import at.jku.ce.adaptivetesting.core.AnswerStorage;
-import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.html.HtmlUtils;
-import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FileDownloader;

@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import at.jku.ce.adaptivetesting.core.StudentData;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.topic.accounting.*;
-import at.jku.ce.adaptivetesting.vaadin.ui.core.VaadinUI;
+import at.jku.ce.adaptivetesting.vaadin.ui.VaadinUI;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.*;
 import com.vaadin.server.*;
 import com.vaadin.ui.*;
@@ -125,7 +125,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		FileResource resource = new FileResource(new File(imagefolder + "/Personalverrechnungstabelle.jpg"));
 
 		// Show the image in the application
-		Image image = new Image("Personalverrechnungstabelle", resource);
+		Image image = new Image("", resource);
 
 		image.setWidth("80%");
 		//image.setHeight(layout.getHeight(), Unit.PIXELS);
