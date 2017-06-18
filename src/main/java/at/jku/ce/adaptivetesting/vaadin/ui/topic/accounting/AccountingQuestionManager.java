@@ -101,8 +101,9 @@ public class AccountingQuestionManager extends QuestionManager {
 
 		Button openCalculator = new Button("Taschenrechner");
 		openCalculator.addClickListener(e -> {
-			Calculator Calculator = new Calculator();
-			getUI().addWindow(Calculator.getWindow());
+			//Calculator Calculator = new Calculator();
+			//getUI().addWindow(Calculator.getWindow());
+			Notification.show("Zur Zeit nicht verfügbar:\nBitte eigenen Taschenrechner verwenden.");
 		});
 
 		addHelpButton(openKontenplan);
@@ -450,10 +451,9 @@ public class AccountingQuestionManager extends QuestionManager {
 				&& f.getName().endsWith(".xml"));
 
 		// read all questions
-		LogHelper.logInfo("Found "+questions.length+" potential questions");
+		LogHelper.logInfo("Found "+questions.length+" potential question(s)");
 		int successfullyLoaded = 0;
 		for (File f : questions) {
-			LogHelper.logInfo("Loading question with filename: " + f.getName());
 			BufferedReader reader = null;
 			StringBuilder sb = new StringBuilder();
 			try {
@@ -473,9 +473,8 @@ public class AccountingQuestionManager extends QuestionManager {
 			String fileAsString = sb.toString().replaceAll("& ", "&amp; ");
 			File image = checkImageAvailable(containingFolder, f.getName());
 			if (fileAsString.contains(profitRootElement)) {
-				LogHelper.logInfo("Question detected as "
-						+ ProfitQuestion.class.getName());
 				// Profit Question
+				questionLoadedInfo(f, successfullyLoaded, ProfitQuestion.class.getName());
 				XmlProfitQuestion question = (XmlProfitQuestion) profitUnmarshaller
 						.unmarshal(new StringReader(fileAsString));
 				ProfitQuestion pq = AccountingXmlHelper.fromXml(question, f.getName());
@@ -483,9 +482,8 @@ public class AccountingQuestionManager extends QuestionManager {
 				profitList.add(pq);
 				successfullyLoaded++;
 			} else if (fileAsString.contains(accountingRootElement)) {
-				LogHelper.logInfo("Question detected as "
-						+ AccountingQuestion.class.getName());
 				// Accounting Question
+				questionLoadedInfo(f, successfullyLoaded, AccountingQuestion.class.getName());
 				XmlAccountingQuestion question = (XmlAccountingQuestion) accountingUnmarshaller
 						.unmarshal(new StringReader(fileAsString));
 				AccountingQuestion aq = AccountingXmlHelper.fromXml(question, f.getName());
@@ -493,9 +491,8 @@ public class AccountingQuestionManager extends QuestionManager {
 				accountingList.add(aq);
 				successfullyLoaded++;
 			} else if (fileAsString.contains(multiAccountingRootElement)) {
-				LogHelper.logInfo("Question detected as "
-						+ MultiAccountingQuestion.class.getName());
 				// Multi Accounting Question
+				questionLoadedInfo(f, successfullyLoaded, MultiAccountingQuestion.class.getName());
 				XmlMultiAccountingQuestion question = (XmlMultiAccountingQuestion) multiAccountingUnmarshaller
 						.unmarshal(new StringReader(fileAsString));
 				MultiAccountingQuestion maq = AccountingXmlHelper.fromXml(question, f.getName());
@@ -504,9 +501,8 @@ public class AccountingQuestionManager extends QuestionManager {
 				successfullyLoaded++;
 			}
 			else if (fileAsString.contains(multipleChoiceRootElement)) {
-				LogHelper.logInfo("Question detected as "
-						+ MultipleChoiceQuestion.class.getName());
-				// Accounting Question
+				// Multiple Choice Question
+				questionLoadedInfo(f, successfullyLoaded, MultipleChoiceQuestion.class.getName());
 				XmlMultipleChoiceQuestion question = (XmlMultipleChoiceQuestion) multipleChoiceUnmarshaller
 						.unmarshal(new StringReader(fileAsString));
 				MultipleChoiceQuestion mq = AccountingXmlHelper.fromXml(question, f.getName());
@@ -515,9 +511,8 @@ public class AccountingQuestionManager extends QuestionManager {
 				successfullyLoaded++;
 			}
 			else if (fileAsString.contains(multipleTaskTableRootElement)) {
-				LogHelper.logInfo("Question detected as "
-						+ MultipleTaskTableQuestion.class.getName());
-				// Accounting Question
+				// Multiple Task Table Question
+				questionLoadedInfo(f, successfullyLoaded, MultipleTaskTableQuestion.class.getName());
 				XmlMultipleTaskTableQuestion question = (XmlMultipleTaskTableQuestion) multipleTaskTableUnmarshaller
 						.unmarshal(new StringReader(fileAsString));
 				MultipleTaskTableQuestion mtt = AccountingXmlHelper.fromXml(question, f.getName());
@@ -526,9 +521,8 @@ public class AccountingQuestionManager extends QuestionManager {
 				successfullyLoaded++;
 			}
 			else if (fileAsString.contains(openAnswerKeywordRootElement)) {
-				LogHelper.logInfo("Question detected as "
-						+ OpenAnswerKeywordQuestion.class.getName());
-				// Accounting Question
+				// Open Answer Keyword Question
+				questionLoadedInfo(f, successfullyLoaded, OpenAnswerKeywordQuestion.class.getName());
 				XmlOpenAnswerKeywordQuestion question = (XmlOpenAnswerKeywordQuestion) openAnswerKeywordUnmarshaller
 						.unmarshal(new StringReader(fileAsString));
 				OpenAnswerKeywordQuestion oak = AccountingXmlHelper.fromXml(question, f.getName());
@@ -538,11 +532,8 @@ public class AccountingQuestionManager extends QuestionManager {
 			}
 			else {
 				LogHelper.logInfo("QuestionManager: item type not supported for "+f.getName()+", ignoring file.");
-//				throw new IllegalArgumentException(
-//						"Question type not supported. File: " + f);
 				continue;
 			}
-			LogHelper.logInfo("Loaded question with filename:" + f.getName());
 		}
 		// Add question to the question manager
 		accountingList.forEach(q -> addQuestion(q));
@@ -551,7 +542,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		multipleChoiceList.forEach(q -> addQuestion(q));
 		multipleTaskTableList.forEach(q -> addQuestion(q));
 		openAnswerKeywordList.forEach(q -> addQuestion(q));
-		LogHelper.logInfo("Successfully loaded "+successfullyLoaded+" questions.");
+		LogHelper.logInfo("Successfully loaded "+successfullyLoaded+" question(s).");
 
 		/*		MultipleChoiceDataStorage mds = new MultipleChoiceDataStorage();
 		HashMap<Integer,String> answerOptions = new HashMap<>();
@@ -654,5 +645,11 @@ public class AccountingQuestionManager extends QuestionManager {
 		} catch (JAXBException | IOException e1) {
 			LogHelper.logThrowable(e1);
 		}
+	}
+
+	private static void questionLoadedInfo(File file, int counter, String questionType) {
+		counter++;
+		LogHelper.logInfo("(" + counter + ") Loading questionfile: " + file.getName());
+		LogHelper.logInfo("Type: " + questionType);
 	}
 }

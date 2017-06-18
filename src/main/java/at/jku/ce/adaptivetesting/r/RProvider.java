@@ -30,7 +30,7 @@ public class RProvider {
 
 	public void terminate() {
 		caller.deleteTempFiles();
-		LogHelper.logInfo("R temporaty data deleted");
+		LogHelper.logInfo("R temporary data deleted");
 		caller.StopRCallerOnline();
 		LogHelper.logInfo("R successfully terminated");
 	}

@@ -5,7 +5,9 @@ import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlOpenAnswerKeywordQuestion;
-import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlProfitQuestion;
+import com.sun.jdi.FloatValue;
+import com.vaadin.data.util.MethodProperty;
+import com.vaadin.event.ListenerMethod;
 import com.vaadin.ui.*;
 import org.apache.commons.lang.StringUtils;
 
@@ -102,98 +104,96 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
 
     @Override
     public double checkUserAnswer() {
+        LogHelper.logInfo("Questionfile: " + id);
         String userAnswer = answer.getValue();
         // change user's input to match xxx(x),yy
 
         // error handling
         if (userAnswer.equals("")) {
-            LogHelper.logInfo("The text input was empty");
+            LogHelper.logInfo("No answer: The text input was empty");
             return 0.0d;
         }
+        boolean numberanswer = false;
+        String[] userAnswerParts;
+        try {
+            // convert TextNumbers into Double values
+            userAnswer = TextNumberToDouble (userAnswer);
+            // check if useranswer is a number
+            if(userAnswer.contains(",")) userAnswer = userAnswer.replaceAll(",", ".");
+            Double.valueOf(userAnswer);
 
-        if (userAnswer.charAt(0) != '+' && userAnswer.charAt(0) != '-')
-            userAnswer = "+" + userAnswer;
+            if (userAnswer.charAt(0) != '+' && userAnswer.charAt(0) != '-')
+                userAnswer = "+" + userAnswer;
 
-        userAnswer = userAnswer.replace(",--", ",00");
-        userAnswer = userAnswer.replace(",-", ",00");
-        userAnswer = userAnswer.replace(".", "");
+            if (userAnswer.contains(".")) {
+                userAnswerParts = userAnswer.split("\\.");
+                if (userAnswerParts[1].charAt(0) == '-') userAnswerParts[0] = "00";
+                if (userAnswerParts[1].length() > 2) userAnswerParts[1] = userAnswerParts[1].substring(0, 2);
+                userAnswer = userAnswerParts[0] + "," + userAnswerParts[1];
+            }
+            else {
+                userAnswerParts = new String[2];
+                userAnswer = userAnswer + ",00";
+            }
+            numberanswer = true;
+        } catch (NumberFormatException e) {
+            //LogHelper.logInfo("The input was not a number");
+            if(userAnswer.contains(" "))
+                userAnswer = userAnswer.replaceAll(" ", ",");
+            if(userAnswer.contains(";"))
+                userAnswer = userAnswer.replaceAll(";", ",");
+            if(userAnswer.contains("."))
+                userAnswer = userAnswer.replaceAll(".", ",");
 
-        int index = userAnswer.indexOf(',');
-        userAnswer = userAnswer.substring(0, index + 3);
+            userAnswerParts = userAnswer.split(",");
+            for (int i = 0; i < userAnswerParts.length; i++) {
+                try {
+                    userAnswerParts[i] = userAnswerParts[i].toLowerCase();
+                    userAnswerParts[i] = userAnswerParts[i].substring(0, 1).toUpperCase() +
+                            userAnswerParts[i].substring(1, userAnswerParts[i].length());
+                } catch (Exception ex) {
+                    userAnswerParts[i] = "_empty";
+                }
+            }
+        }
 
         for (String[] requriedKeyword: solution.getAnswers()) {
-            boolean variantFound = false;
-            //stela
-            switch (userAnswer){
-                case "eins":
-                    userAnswer = "1,00";
-                    break;
-                case "zwei":
-                    userAnswer = "2,00";
-                    break;
-                case "drei":
-                    userAnswer = "3,00";
-                    break;
-                case "vier":
-                    userAnswer = "4,00";
-                    break;
-                case "fünf":
-                    userAnswer = "5,00";
-                    break;
-                case "sechs":
-                    userAnswer = "6,00";
-                    break;
-                case "sieben":
-                    userAnswer = "7,00";
-                    break;
-                case "acht":
-                    userAnswer = "8,00";
-                    break;
-                case "neun":
-                    userAnswer = "9,00";
-                    break;
-                case "zehn":
-                    userAnswer = "10,00";
-                    break;
-                case "elf":
-                    userAnswer = "11,00";
-                    break;
-                case "zwölf":
-                    userAnswer = "12,00";
-                    break;
-                case "dreizehn":
-                    userAnswer = "13,00";
-                    break;
-                case "vierzehn":
-                    userAnswer = "14,00";
-                    break;
-                case "fünfzehn":
-                    userAnswer = "15,00";
-                    break;
-                case "sechszehn":
-                    userAnswer = "16,00";
-                    break;
-                case "siebzehn":
-                    userAnswer = "17,00";
-                    break;
-                case "achtzehn":
-                    userAnswer = "18,00";
-                    break;
-                case "neunzehn":
-                    userAnswer = "19,00";
-                    break;
-                case "zwanzig":
-                    userAnswer = "20,00";
-                    break;
-            }
 
-            for (String variant: requriedKeyword) {
-                // check if the userAnswer contains the variant
-                if (StringUtils.equalsIgnoreCase(userAnswer,variant))
-                    variantFound = true;
+            int nrOfKeywords = 0;
+            for (int i = 0; i < requriedKeyword.length; i++) {
+                if (!requriedKeyword[i].equals("")) nrOfKeywords++;
             }
-            if (!variantFound) return 0.0d;
+            boolean[]variantFoundParts = new boolean[nrOfKeywords];
+
+            boolean variantFound = false;
+            if (numberanswer) {
+                for (int k = 0; k < nrOfKeywords; k++) {
+                    // check if the userAnswer contains the variant
+                    if (StringUtils.equalsIgnoreCase(userAnswer, requriedKeyword[k]))
+                        variantFound = true;
+                }
+            } else {
+                int x = 0;
+                for (int i = 0; i < userAnswerParts.length; i++) {
+                    for (int j = 0; j < nrOfKeywords; j++) {
+                        if (StringUtils.equalsIgnoreCase(userAnswerParts[i],
+                                requriedKeyword[j].replaceAll(" ", ""))) {
+                            variantFoundParts[x] = true;
+                            x++;
+                            break;
+                        }
+                    }
+                }
+                for (int i = 0; i < variantFoundParts.length; i++) {
+                    variantFound = true && variantFoundParts[i];
+                }
+            }
+            if (!variantFound) {
+                LogHelper.logInfo("Incorrect answer");
+                return 0.0d;
+            }
         }
+        LogHelper.logInfo("Correct answer");
         return 1.0d;
     }
 
@@ -224,5 +224,71 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
         addComponent(question);
         addComponent(this.questionImage);
         addComponent(answer);
+    }
+
+    private String TextNumberToDouble (String userAnswer) {
+        switch (userAnswer.toLowerCase()) {
+            case "eins":
+                userAnswer = "1.00";
+                break;
+            case "zwei":
+                userAnswer = "2.00";
+                break;
+            case "drei":
+                userAnswer = "3.00";
+                break;
+            case "vier":
+                userAnswer = "4.00";
+                break;
+            case "fünf": case "fuenf":
+                userAnswer = "5.00";
+                break;
+            case "sechs":
+                userAnswer = "6.00";
+                break;
+            case "sieben":
+                userAnswer = "7.00";
+                break;
+            case "acht":
+                userAnswer = "8.00";
+                break;
+            case "neun":
+                userAnswer = "9.00";
+                break;
+            case "zehn":
+                userAnswer = "10.00";
+                break;
+            case "elf":
+                userAnswer = "11.00";
+                break;
+            case "zwölf": case "zwoelf":
+                userAnswer = "12.00";
+                break;
+            case "dreizehn":
+                userAnswer = "13.00";
+                break;
+            case "vierzehn":
+                userAnswer = "14.00";
+                break;
+            case "fünfzehn": case "fuenfzehn":
+                userAnswer = "15.00";
+                break;
+            case "sechszehn":
+                userAnswer = "16.00";
+                break;
+            case "siebzehn":
+                userAnswer = "17.00";
+                break;
+            case "achtzehn":
+                userAnswer = "18.00";
+                break;
+            case "neunzehn":
+                userAnswer = "19.00";
+                break;
+            case "zwanzig":
+                userAnswer = "20.00";
+                break;
+        }
+        return userAnswer;
     }
 }

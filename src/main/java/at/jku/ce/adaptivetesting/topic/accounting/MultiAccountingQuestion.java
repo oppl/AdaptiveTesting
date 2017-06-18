@@ -13,7 +13,6 @@ import at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting.AccountingRecordInpu
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting.AccountingRecordInputGrid;
 import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
-import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlAccountingQuestion;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlMultiAccountingQuestion;
 import com.vaadin.ui.Image;
 
@@ -105,14 +104,26 @@ public class MultiAccountingQuestion extends AccountingRecordInputGrid implement
 
     @Override
     public double checkUserAnswer() {
+        LogHelper.logInfo("Questionfile: " + id);
         MultiAccountingDataStorage user = getUserAnswer(), solution = getSolution();
-        Vector<AccountRecordData[]> uSoll = user.getSoll(), uHaben = user.getHaben(), sSoll = solution
-                .getSoll(), sHaben = solution.getHaben();
-        // Return if the answer is right
-        boolean correct = check(sSoll, uSoll) && check(sHaben, uHaben);
-        LogHelper.logInfo("Correctness: "+correct);
-        return correct ? 1d : 0d;
+        Vector<AccountRecordData[]>
+                uSoll = user.getSoll(),
+                uHaben = user.getHaben(),
+                sSoll = solution.getSoll(),
+                sHaben = solution.getHaben();
 
+        if ((UserInputExists(uSoll) + UserInputExists(uHaben)) == 0) {
+            LogHelper.logInfo("No user input exists -> incorrect answer");
+            return 0.0d;
+        } else {
+            if (check(sSoll, uSoll) && check(sHaben, uHaben)) {
+                LogHelper.logInfo("Correct answer");
+                return 1.0d;
+            } else {
+                LogHelper.logInfo("Incorrect answer");
+                return 0.0d;
+            }
+        }
     }
 
     private boolean check(Vector<AccountRecordData[]> solution, Vector<AccountRecordData[]> user) {
@@ -156,6 +167,18 @@ public class MultiAccountingQuestion extends AccountingRecordInputGrid implement
 		}
 		LogHelper.logInfo("Answer correct");
 		return true;*/
+    }
+
+    private int UserInputExists(Vector<AccountRecordData[]> user) {
+        List<AccountRecordData> answerRecords = new LinkedList<>();
+        answerRecords.addAll(Arrays.asList(user.get(0)));
+        int counter = 0;
+        for (AccountRecordData answerRecord : answerRecords) {
+            if (answerRecord.toString().equals("(0) ??? 0.0€") == false)
+                counter++;
+        }
+        if (counter > 0) return 1;
+        else return 0;
     }
 
     @Override

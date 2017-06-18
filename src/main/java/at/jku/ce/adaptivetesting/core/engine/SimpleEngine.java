@@ -11,6 +11,9 @@ import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.r.RProvider;
+import at.jku.ce.adaptivetesting.r.RProviderOld;
+import com.github.rcaller.rstuff.RCaller;
+import com.github.rcaller.rstuff.RCode;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
@@ -30,6 +33,7 @@ public class SimpleEngine implements IEngine {
 	private IQuestion<? extends AnswerStorage> question;
 	private String r_itemdiff, r_libFolder;
 	private RProvider rProvider;
+	private RProviderOld rProviderOld;
 	private StudentData student;
 
 	/**
@@ -63,7 +67,7 @@ public class SimpleEngine implements IEngine {
 	public SimpleEngine (float... upperBounds) throws EngineException {
 		Arrays.sort(upperBounds);
 		this.upperBounds = upperBounds;
-		LogHelper.logInfo(String.valueOf("Number of question categories: " + upperBounds.length));
+		LogHelper.logInfo(String.valueOf("Total number of question categories: " + upperBounds.length));
 		bags = new List[upperBounds.length + 1];
 		for (int i = 0; i < bags.length; i++) bags[i] = new ArrayList<>();
 	}
@@ -205,16 +209,37 @@ public class SimpleEngine implements IEngine {
 		addQuestionToHistory(question);
 		// Do R
 		try {
+			String rNameReturn = "next_item_parm";
+
+			/*// --- OLD CODE BEGIN ---
+			RCaller caller = rProviderOld.getRCaller();
+			// Get r code
+			RCode rCode = rProviderOld.getRCode();
+			// Add script
+			rCode.addRCode(getRScript());
+			// Execute R code and get result
+			// [0] -> next item's difficulty [1] -> current competence
+			// [2] ->Delta to result
+			double[] resultOld = rProviderOld.execute(caller, rCode, rNameReturn).getAsDoubleArray(rNameReturn);
+			LogHelper.logInfo("StudentID: "+ student.getStudentIDCode() +
+					" - Calculation [OLD] result:\tNext item: " + resultOld[0]
+					+ "\tCurrent competence:\t" + resultOld[1] + "\tDelta:\t"
+					+ resultOld[2]);
+			// --- OLD CODE END ---*/
+
+			// --- NEW CODE BEGIN ---
 			// Get script
 			String RCodeScript = getRScript();
 			// Execute R code and get result
-			String rNameReturn = "next_item_parm";
 			// [0] -> next item's difficulty [1] -> current competence
 			// [2] ->Delta to result
 			double[] result = rProvider.execute(RCodeScript, rNameReturn);
-			LogHelper.logInfo("StudentID: "+ student.getStudentIDCode() + " - Calculation result:\tNext item: " + result[0]
+			LogHelper.logInfo("StudentID: "+ student.getStudentIDCode() +
+					" - Calculation result:\tNext item: " + result[0]
 					+ "\tCurrent competence:\t" + result[1] + "\tDelta:\t"
 					+ result[2]);
+			// --- NEW CODE END ---
+
 			// Get array position of difficulty
 			IQuestion<? extends AnswerStorage> nextQuestion = getQuestion(getArrayPositionFromWantedDifficulty(result[0]));
 			if (nextQuestion == null || result[2] < 0.5d) {
@@ -226,6 +251,7 @@ public class SimpleEngine implements IEngine {
 				return;
 			}
 			question = nextQuestion;
+			LogHelper.logInfo("Next question difficulty: " + String.valueOf(question.getDifficulty()));
 			fireQuestionChangeListener(nextQuestion);
 		} catch (ScriptException e) {
 			throw new EngineException(e);
@@ -234,7 +260,7 @@ public class SimpleEngine implements IEngine {
 
 	private int getArrayPositionFromWantedDifficulty(double wantedDifficulty) {
 		for (int i = 0; i < upperBounds.length - 1; i++) {
-			if (wantedDifficulty > upperBounds[i]) {
+			if (wantedDifficulty < upperBounds[i]) {
 				return i;
 			}
 		}
@@ -306,7 +332,7 @@ public class SimpleEngine implements IEngine {
 			default:
 				question = getQuestion(setClass(2));
 		}
-		LogHelper.logInfo(String.valueOf(question.getDifficulty()));
+		LogHelper.logInfo(String.valueOf("Difficulty of chosen question: " + question.getDifficulty()));
 		fireQuestionChangeListener(question);
 	}
 
@@ -360,6 +386,7 @@ public class SimpleEngine implements IEngine {
 		r_libFolder = path.getPath().replace("\\", "\\\\");
 		// initialize RCaller
 		rProvider = new RProvider();
+		//rProviderOld = new RProviderOld();
 	}
 
 	/**
@@ -377,9 +404,8 @@ public class SimpleEngine implements IEngine {
 		String nl = System.getProperty("line.separator");
 		// Get R matrix (input)
 		StringBuilder sb = new StringBuilder("double <- c(");
-		Iterator<String> iterator = history
-				.stream()
-				.map(e -> e.question.getDifficulty() + ","
+		Iterator<String> iterator =
+				history.stream().map(e -> e.question.getDifficulty() + ","
 						+ (Math.abs(e.points) < 0.01 ? "0" : "1")).iterator();
 		if (iterator.hasNext()) {
 			sb.append(iterator.next());
@@ -388,45 +414,47 @@ public class SimpleEngine implements IEngine {
 			sb.append(',').append(iterator.next());
 		}
 		String inputMatrix = sb.append(")").toString();
-		return "library(catR, lib.loc=\""
+		String RScript = "library(catR, lib.loc=\""
 				+ r_libFolder
 				+ "\")"
 				+ nl
 				+ r_itemdiff
-		+ nl
-		+ inputMatrix
-		+ nl
-		+ "itembank <- unname(as.matrix(cbind(1, item_diff, 0, 1)))"
-		+ nl
-		+ "stellen <- 1:length(double)"
-		+ nl
-		+ "ungerade <- stellen[which(stellen %% 2 != 0)]"
-		+ nl
-		+ "gerade <- stellen[which(stellen %% 2 == 0)]"
-		+ nl
-		+ "response_pattern <- double[gerade]"
-		+ nl
-		+ "pre_items_diff <- as.matrix(double[ungerade],length(response_pattern)) "
-		+ nl
-		+ "previous_items <- as.matrix(rep(0, length(response_pattern), length(response_pattern)))"
-		+ nl
-		+ "for(i in 1:length(response_pattern)) {"
-		+ nl
-		+ "for(j in 1:nrow(itembank)) {"
-		+ nl
-		+ "if(pre_items_diff[i,1]==itembank[j,2]) (previous_items[i,1] <-j)"
-		+ nl
-		+ "}"
-		+ nl
-		+ "}"
-		+ nl
-		+ "select_next_item <- nextItem(itembank, x = response_pattern, out = previous_items, criterion = \"MPWI\")"
-		+ nl
-		+ "next_item_parm <- c(itembank[select_next_item$item,2], "
-		+ nl
-		+ "thetaEst(itembank[previous_items,], response_pattern),"
-		+ nl
-		+ "eapSem(thetaEst(itembank[previous_items,], response_pattern), itembank[previous_items,], response_pattern))";
+				+ nl
+				+ inputMatrix
+				+ nl
+				+ "itembank <- unname(as.matrix(cbind(1, item_diff, 0, 1)))"
+				+ nl
+				+ "stellen <- 1:length(double)"
+				+ nl
+				+ "ungerade <- stellen[which(stellen %% 2 != 0)]"
+				+ nl
+				+ "gerade <- stellen[which(stellen %% 2 == 0)]"
+				+ nl
+				+ "response_pattern <- double[gerade]"
+				+ nl
+				+ "pre_items_diff <- as.matrix(double[ungerade],length(response_pattern)) "
+				+ nl
+				+ "previous_items <- as.matrix(rep(0, length(response_pattern), length(response_pattern)))"
+				+ nl
+				+ "for(i in 1:length(response_pattern)) {"
+				+ nl
+				+ "for(j in 1:nrow(itembank)) {"
+				+ nl
+				+ "if(pre_items_diff[i,1]==itembank[j,2]) (previous_items[i,1] <-j)"
+				+ nl
+				+ "}"
+				+ nl
+				+ "}"
+				+ nl
+				+ "select_next_item <- nextItem(itembank, x = response_pattern, out = previous_items, criterion = \"MPWI\")"
+				+ nl
+				+ "next_item_parm <- c(itembank[select_next_item$item,2], "
+				+ nl
+				+ "thetaEst(itembank[previous_items,], response_pattern),"
+				+ nl
+				+ "eapSem(thetaEst(itembank[previous_items,], response_pattern), itembank[previous_items,], response_pattern))";
+		//LogHelper.logInfo(RScript);
+		return RScript;
 	}
 
 	/**

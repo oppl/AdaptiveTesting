@@ -3,12 +3,8 @@ package at.jku.ce.adaptivetesting.topic.accounting;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
-import at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting.AccountingRecordInputFields;
-import at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting.AccountingRecordInputGrid;
 import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
-import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlAccountingQuestion;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlMultipleChoiceQuestion;
-import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlProfitQuestion;
 import com.vaadin.ui.*;
 
 import java.util.*;
@@ -101,14 +97,22 @@ public class MultipleChoiceQuestion extends VerticalLayout implements
 
     @Override
     public double checkUserAnswer() {
+        LogHelper.logInfo("Questionfile: " + id);
         MultipleChoiceDataStorage answer = getUserAnswer();
         MultipleChoiceDataStorage solution = getSolution();
         for (Integer checked: answer.getCorrectAnswers()) {
-            if (!solution.getCorrectAnswers().contains(checked)) return 0.0d;
+            if (!solution.getCorrectAnswers().contains(checked)) {
+                LogHelper.logInfo("Incorrect answer");
+                return 0.0d;
+            }
         }
         for (Integer unchecked: solution.getCorrectAnswers()) {
-            if (!answer.getCorrectAnswers().contains(unchecked)) return 0.0d;
+            if (!answer.getCorrectAnswers().contains(unchecked)) {
+                LogHelper.logInfo("Incorrect answer");
+                return 0.0d;
+            }
         }
+        LogHelper.logInfo("Correct answer");
         return 1.0d;
     }
 

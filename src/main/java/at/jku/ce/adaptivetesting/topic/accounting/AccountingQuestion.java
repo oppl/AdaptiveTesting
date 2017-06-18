@@ -89,14 +89,20 @@ public class AccountingQuestion extends AccountingRecordInputGrid implements
 
 	@Override
 	public double checkUserAnswer() {
+		LogHelper.logInfo("Questionfile: " + id);
 		AccountingDataStorage user = getUserAnswer(), solution = getSolution();
 		AccountRecordData[] uSoll = user.getSoll(), uHaben = user.getHaben(), sSoll = solution
 				.getSoll(), sHaben = solution.getHaben();
 		// Return if the answer is right
 		boolean correct = uSoll.length == sSoll.length && uHaben.length == sHaben.length
 				&& check(sSoll, uSoll) && check(sHaben, uHaben);
-		LogHelper.logInfo("Correctness: "+correct);
-		return correct ? 1d : 0d;
+		if (correct) {
+			LogHelper.logInfo("Correct answer");
+			return 1.0d;
+		} else {
+			LogHelper.logInfo("Incorrect answer");
+			return 0.0d;
+		}
 
 	}
 

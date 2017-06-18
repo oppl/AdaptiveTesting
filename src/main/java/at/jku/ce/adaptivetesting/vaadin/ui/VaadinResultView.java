@@ -24,7 +24,9 @@ import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ExternalResource;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.Sizeable;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickListener;
 import com.github.rcaller.exception.ExecutionException;
@@ -154,6 +156,19 @@ public class VaadinResultView extends VerticalLayout implements View,
 				"Dein Kompetenzniveau ist: <b>" + args.skillLevel + "</b>"));
 		addComponent(HtmlLabel.getCenteredLabel("Delta:  " + args.delta));
 		storeResults(args);
+
+		// get image path of application
+		String imagefolder = VaadinServlet.getCurrent().getServletConfig().
+				getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder");
+
+		// Image as a file resource
+		FileResource resource = new FileResource(new File(imagefolder + "/Kompetenzmodell.png"));
+
+		// Show the image in the application
+		Image image = new Image("", resource);
+
+		addComponent(image);
+		setComponentAlignment(image, Alignment.MIDDLE_CENTER);
 
 		Link link = new Link("Umfrage Adaptive Testing",
 				new ExternalResource("https://docs.google.com/forms/d/e/1FAIpQLSdg0GyIhMymJaLB6hCSkutV41WqJs09qCUSn9DMmSYJ3Lu_Pg/viewform?c=0&w=1"));

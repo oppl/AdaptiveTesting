@@ -3,6 +3,7 @@ package at.jku.ce.adaptivetesting.topic.accounting;
 /*This file is part of the project "Reisisoft Adaptive Testing",
  * which is licenced under LGPL v3+. You may find a copy in the source,
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
+import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlProfitQuestion;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
@@ -83,7 +84,14 @@ public class ProfitQuestion extends VerticalLayout implements
 
 	@Override
 	public double checkUserAnswer() {
-		return solution.equals(getUserAnswer()) ? 1d : 0d;
+		LogHelper.logInfo("Questionfile: " + id);
+		if ((solution.equals(getUserAnswer()) ? 1d : 0d) == 1d) {
+			LogHelper.logInfo("Correct answer");
+			return 1.0d;
+		} else {
+			LogHelper.logInfo("Incorrect answer");
+			return 0.0d;
+		}
 	}
 
 	@Override

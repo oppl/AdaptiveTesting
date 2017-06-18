@@ -1,12 +1,12 @@
 package at.jku.ce.adaptivetesting.topic.accounting;
 
 import at.jku.ce.adaptivetesting.core.IQuestion;
+import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlMultipleTaskTableQuestion;
 import com.vaadin.ui.*;
 
-import javax.xml.soap.Text;
 import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
@@ -129,13 +129,18 @@ public class MultipleTaskTableQuestion extends VerticalLayout implements
 
     @Override
     public double checkUserAnswer() {
+        LogHelper.logInfo("Questionfile: " + id);
         MultipleTaskTableDataStorage userAnswer = getUserAnswer();
         if (userAnswer.getCorrectAnswers().keySet().size() != this.solution.getCorrectAnswers().keySet().size()) return 0d;
         for (Integer answerID: userAnswer.getCorrectAnswers().keySet()) {
             int answer = Math.round(userAnswer.getCorrectAnswers().get(answerID).floatValue()*100);
             int solution = Math.round(this.solution.getCorrectAnswers().get(answerID).floatValue()*100);
-            if (answer != solution) return 0d;
+            if (answer != solution) {
+                LogHelper.logInfo("Incorrect answer");
+                return 0d;
+            }
         }
+        LogHelper.logInfo("Correct answer");
         return 1d;
     }
 
