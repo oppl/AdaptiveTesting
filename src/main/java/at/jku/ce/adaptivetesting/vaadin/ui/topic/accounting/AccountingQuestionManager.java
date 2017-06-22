@@ -27,6 +27,7 @@ import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.vaadin.ui.QuestionManager;
 import at.jku.ce.adaptivetesting.vaadin.ui.Calculator;
 import com.vaadin.shared.ui.label.ContentMode;
+import org.w3c.dom.html.HTMLLabelElement;
 
 public class AccountingQuestionManager extends QuestionManager {
 
@@ -273,94 +274,128 @@ public class AccountingQuestionManager extends QuestionManager {
 
 	private VerticalLayout assembleCompanyDescription() {
 		VerticalLayout layout = new VerticalLayout();
+		addComponent(layout);
 
-		layout.addComponent(
-				new Label("<table>\n" +
-				"\t<tbody>\n" +
-				"\t<caption style=\"font-size:25px\"><strong>Ausgangssituation</strong></caption>\n" +
-				"\t\n" +
-				"\t<tr>\n" +
-				"\t><td colspan=\\\"4\\\"><strong><br>Sie sind als selbständiger Steuerberater und Buchhalter tätig. <br> Zu deinen Kunden gehören die unten angeführten Unternehmen.<br> Für diese übernehmen Sie die Buchhaltung, d.h. Sie verbuchen die angeführten Geschäftsfälle aus deren Sicht.</strong></td>\n" +
-				"\t</tr>\n" +
-				"\t</tbody>\n" +
-				"</table>", ContentMode.HTML));
+		Label initSit = new Label("<table>" +
+				"<tbody>" +
+				"<caption style=\"font-size:25px\"><strong>Ausgangssituation</strong></caption>" +
+				"<tr>" +
+				"<td colspan=\\\"4\\\"><strong><br>Sie sind als selbständiger " +
+					"Steuerberater und Buchhalter tätig.<br>" +
+					"Zu deinen Kunden gehören die unten angeführten Unternehmen.<br>" +
+					"Für diese übernehmen Sie die Buchhaltung, d.h. Sie verbuchen die " +
+					"angeführten Geschäftsfälle aus deren Sicht.</strong></td>" +
+				"</tr>" +
+				"</tbody>" +
+				"</table>", ContentMode.HTML);
+		layout.addComponent(initSit);
 
-		layout.addComponent(
-				new Label("<table>\n" +
-				"\t<tbody>\n" +
-				"\t<tr>\n" +
-				"\t<td colspan=\"4\"><strong><br>Unternehmensbeschreibungen</strong></td>\n" +
-				"\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td>Firmenname:</td>\n" +
-				"\t\t<td><strong>World of Tabs GmbH</strong></td>\n" +
-				"\t\t<td><strong>Restaurant Sommer</strong></td>\n" +
-				"\t\t<td><strong>ATM GmbH</strong></td>\n" +
-				"\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td>Adresse:</td>\n" +
-				"\t\t<td>Unterfeld 15</td>\n" +
-				"\t\t<td>Am Berg 5</td>\n" +
-				"\t\t<td>Altenbergstr. 7</td>\n" +
-				"\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td></td>\n" +
-				"\t\t<td>4541 Adlwang</td>\n" +
-				"\t\t<td>4452 Ternberg</td>\n" +
-				"\t\t<td>4040 Linz</td>\n" +
-				"\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td>E-Mail:</td>\n" +
-				"\t\t<td>office@worldtabs.at</td>\n" +
-				"\t\t<td>office@summer.at</td>\n" +
-				"\t\t<td>office@atm.at</td>\n" +
-				"\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td>Internet:</td>\n" +
-				"\t\t<td>www.worldtabs.at</td>\n" +
-				"\t\t<td>www.sommer.at</td>\n" +
-				"\t\t<td>www.atm.at</td>\n" +
-				"\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td>UID-Nummer:</td>\n" +
-				"\t\t<td>ATU32589716</td>\n" +
-				"\t\t<td>ATU89716325</td>\n" +
-				"\t\t<td>ATU58932761</td>\n" +
-				"\t\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td> </td>\n" +
-				"\t\t<td> </td>\n" +
-				"\t\t<td> </td>\n" +
-				"\t\t<td> </td>\n" +
-				"\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td colspan=\"4\"><strong><br>Hinweise zu den laufenden und den Um- und Nachbuchungen</strong></td>\n" +
-				"\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td>Buchung:</td>\n" +
-				"\t\t<td colspan=\"3\">Sofern nichts Anderes angeführt ist, wird erfolgsorientiert und nicht <br> bestandsorientiert gebucht. D.h., sofern nichts anderes angeführt ist, wird <br> darauf abgezielt, den Gewinn niedrig zu halten, um Steuerabgaben gering <br> zu halten. </td>\n" +
-				"\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td>Abschlussjahr</td>\n" +
-				"\t\t<td colspan=\"3\">2016</td>\n" +
-				"\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td>Abschreibung</td>\n" +
-				"\t\t<td colspan=\"3\">Halbjahres- bzw. Ganzjahresabschreibung</td>\n" +
-				"\t</tr><tr>\n" +
-				"\t\t<td>Skonto</td>\n" +
-				"\t\t<td colspan=\"3\">Wird stets in Anspruch genommen.</td>\n" +
-				"\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td>Zeitliche<br> Abgrenzung</td>\n" +
-				"\t\t<td colspan=\"3\">Die Abgrenzung erfolgt am Jahresende im Rahmen der Um- und <br> Nachbuchungen.</td>\n" +
-				"\t</tr>\n" +
-				"\t<tr>\n" +
-				"\t\t<td>Geringwertig <br> Wirtschaftsgüter</td>\n" +
-				"\t\t<td colspan=\"3\">Sofern nichts Anderes angeführt ist, wird für geringwertige <br> Wirtschaftsgüter mit Anschaffungs- bzw. Herstellungskosten bis 400,00<br> die Bewertungsfreiheit nach § 13 EStG (Sofortabschreibung) in Anspruch<br> genommen.</td>\n" +
-				"\t</tr>\n" +
-				"\t</tbody>\n" +
-				"</table>", ContentMode.HTML));
+		Label contentTable = new Label("<table>" +
+				"<tbody>" +
+				"<tr>" +
+				"<td colspan=\"4\"><strong><br>Unternehmensbeschreibungen</strong></td>" +
+				"</tr>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<tr>" +
+				"<td>Firmenname:</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td><strong>World of Tabs GmbH</strong></td>" +
+				"<td><strong>Restaurant Sommer</strong></td>" +
+				"<td><strong>ATM GmbH</strong></td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td>Adresse:</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>Unterfeld 15</td>" +
+				"<td>Am Berg 5</td>" +
+				"<td>Altenbergstr. 7</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>4541 Adlwang</td>" +
+				"<td>4452 Ternberg</td>" +
+				"<td>4040 Linz</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td>E-Mail:</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>office@worldtabs.at</td>" +
+				"<td>office@summer.at</td>" +
+				"<td>office@atm.at</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td>Internet:</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>www.worldtabs.at</td>" +
+				"<td>www.sommer.at</td>" +
+				"<td>www.atm.at</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td>UID-Nummer:</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>ATU32589716</td>" +
+				"<td>ATU89716325</td>" +
+				"<td>ATU58932761</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td colspan=\"4\"><strong><br>Hinweise zu den laufenden " +
+					"und den Um- und Nachbuchungen</strong></td>" +
+				"</tr>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<tr>" +
+				"<td>Buchung:</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td colspan=\"3\">Sofern nichts Anderes angeführt ist, wird " +
+					"erfolgsorientiert und nicht <br> bestandsorientiert gebucht. " +
+					"D.h., sofern nichts anderes angeführt ist, wird<br>darauf " +
+					"abgezielt, den Gewinn niedrig zu halten, um Steuerabgaben " +
+					"gering<br>zu halten.</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td>Abschlussjahr:</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td colspan=\"3\">2016</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td>Abschreibung:</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td colspan=\"3\">Halbjahres- bzw. Ganzjahresabschreibung</td>" +
+				"</tr><tr>" +
+				"<td>Skonto:</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td colspan=\"3\">Wird stets in Anspruch genommen.</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td>Zeitliche:<br> Abgrenzung</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td colspan=\"3\">Die Abgrenzung erfolgt am Jahresende im Rahmen " +
+					"der Um- und<br>Nachbuchungen.</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td>Geringwertig <br> Wirtschaftsgüter</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td colspan=\"3\">Sofern nichts Anderes angeführt ist, wird für " +
+					"geringwertige <br> Wirtschaftsgüter mit Anschaffungs- bzw. " +
+					"Herstellungskosten bis 400,00<br>die Bewertungsfreiheit nach " +
+					"§ 13 EStG (Sofortabschreibung) in Anspruch<br>genommen.</td>" +
+				"</tr>" +
+				"</tbody>" +
+				"</table>", ContentMode.HTML);
+		layout.addComponent(contentTable);
 		/*
 		Label descr = new Label("<i>World of Tabs dient im Folgenden als Modellunternehmen, <b>aus dessen Sicht</b> Sie die Aufgabenstellungen bearbeiten sollen. Wir bitten dich die Aufgaben <b>alleine, ohne Hilfe</b> von Mitschüler/inne/n oder Lehrer/inne/n zu lösen. Sie können den Kontenplan und einen Taschenrechner verwenden.</i><p/>",ContentMode.HTML);
 		Label disclaimer = new Label("<b>Wichtig ist, dass Sie im Folgenden bei der Angabe der Kontennummer und des Kontennamens die genaue Nummer bzw. Bezeichnung verwenden. Bspw. wird eine Aufgabe falsch gewertet, wenn Sie die Nummer 30 anstatt 33 für das Lieferverbindlichkeiten wählen oder Sie den Kontennamen \"Lieferverbindlichkeiten\" anstatt \"AATech\" (bei personifiziertem Lieferantenkonto) für den Lieferanten wählen.<b>",ContentMode.HTML);
@@ -375,28 +410,37 @@ public class AccountingQuestionManager extends QuestionManager {
 
 		VerticalLayout layout = new VerticalLayout();
 		addComponent(layout);
-		layout.addComponent(
-				new Label("<table>\n" +
-				"\t<tbody>\n" +
-				"\t\t\t<caption style=\"font-size:25px\"><strong>Bearbeitungshinweise</strong></caption>\n" +
-				"\t\t<tr>\n" +
-				"\t\t\t<td valign=\"top\"><br>1. </td>\n" +
-				"\t\t\t<td><br>Wir bitten dich die Aufgaben <strong>alleine, ohne Hilfe</strong> von anderen Personen oder Unterlagen<br> zu lösen.</td>\n" +
-				"\t\t</tr>\n" +
-				"\t\t<tr>\n" +
-				"\t\t\t<td valign=\"top\">2.</td>\n" +
-				"\t\t\t<td>Sie können den <strong>Kontenplan</strong> und einen <strong>Taschenrechner</strong> verwenden.</td>\n" +
-				"\t\t</tr>\n" +
-				"\t\t<tr>\n" +
-				"\t\t\t<td valign=\"top\">3.</td>\n" +
-				"\t\t\t<td>Wichtig ist, dass Sie bei der Angabe der <strong>Kontennummer</strong> und des <strong>Kontennamens</strong> die<br> <strong>genaue Nummer bzw. Bezeichnung</strong> verwenden. Bspw. wird eine Aufgabe falsch<br> gewertet, <u>wenn Sie die Nummer 30 anstatt 33 für das Lieferverbindlichkeiten wählen oder<br> Sie den Kontennamen \"Lieferverbindlichkeiten\" anstatt \"AATech\"</u> (bei personifiziertem<br> Lieferantenkonto) für den Lieferanten wählen.</td>\n" +
-				"\t\t</tr>\n" +
-				"\t\t<tr>\n" +
-				"\t\t\t<td valign=\"top\">4.</td>\n" +
-				"\t\t\t<td>Die folgende Abbildung zeigt, wie das in diesem Test verwendete Onlineformular ausgefüllt <br> werden soll, um einen Geschäftsfall korrekt zu verbuchen.</td>\n" +
-				"\t\t</tr>\n" +
-				"\t</tbody>\n" +
-				"</table>", ContentMode.HTML));
+		Label hints_top = new Label("<table>" +
+				"<tbody>" +
+				"<caption style=\"font-size:25px\"><strong>Bearbeitungshinweise</strong></caption>" +
+				"<tr>" +
+				"<td valign=\"top\"><br>1.</td>" +
+				"<td><br>Wir bitten Sie die Aufgaben <strong>alleine, ohne Hilfe</strong> " +
+					"von anderen Personen oder Unterlagen<br> zu lösen.</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td valign=\"top\">2.</td>" +
+				"<td>Sie können den <strong>Kontenplan</strong> und einen <strong>" +
+					"Taschenrechner</strong> verwenden.</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td valign=\"top\">3.</td>" +
+				"<td>Wichtig ist, dass Sie bei der Angabe der <strong>" +
+					"Kontennummer</strong> und des <strong>Kontennamens</strong> die<br><strong>" +
+					"genaue Nummer bzw. Bezeichnung</strong> verwenden. Bspw. wird eine Aufgabe " +
+					"falsch<br>gewertet, <u>wenn Sie die Nummer 30 anstatt 33 für das " +
+					"Lieferverbindlichkeiten wählen oder<br> Sie den Kontennamen \"" +
+					"Lieferverbindlichkeiten\" anstatt \"AATech\"</u> (bei personifiziertem<br>" +
+					"Lieferantenkonto) für den Lieferanten wählen.</td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td valign=\"top\">4.</td>" +
+				"<td>Die <strong>folgende Abbildung</strong> zeigt, wie das in diesem Test verwendete Onlineformular " +
+					"ausgefüllt<br>werden soll, um einen Geschäftsfall korrekt zu verbuchen.</td>" +
+				"</tr>" +
+				"</tbody>" +
+				"</table>", ContentMode.HTML);
+		layout.addComponent(hints_top);
 
 		// get image path of application
 		String imagefolder = VaadinServlet.getCurrent().getServletConfig().
@@ -407,18 +451,17 @@ public class AccountingQuestionManager extends QuestionManager {
 
 		// Show the image in the application
 		Image image = new Image("", resource);
-
 		image.setWidth("50%");
 		layout.addComponent(image);
 
-		layout.addComponent(
-				new Label("<table >\n" +
-				"\t<tbody>\n" +
-				"\t\t<tr>\n" +
-				"\t\t\t<td colspan=\"2\"><strong><br>Viel Erfolg!</strong></td>\n" +
-				"\t\t</tr>\n" +
-				"\t</tbody>\n" +
-				"</table>", ContentMode.HTML));
+		Label hints_bottom = new Label("<table>" +
+				"<tbody>" +
+				"<tr>" +
+				"<td colspan=\"2\"><strong><br>Viel Erfolg!</strong></td>" +
+				"</tr>" +
+				"</tbody>" +
+				"</table>", ContentMode.HTML);
+		layout.addComponent(hints_bottom);
 
 		return layout;
 	}
