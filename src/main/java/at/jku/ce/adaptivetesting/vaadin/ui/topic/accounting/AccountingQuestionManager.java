@@ -119,22 +119,31 @@ public class AccountingQuestionManager extends QuestionManager {
 		layout.setSizeFull();
 
 		// get image path of application
-		String imagefolder = VaadinServlet.getCurrent().getServletConfig().
-				getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder");
+		String imagepath = VaadinServlet.getCurrent().getServletConfig().
+				getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagepath");
 
 		// Image as a file resource
-		FileResource resource = new FileResource(new File(imagefolder + "/Personalverrechnungstabelle.jpg"));
+		FileResource resource = new FileResource(new File(imagepath + "/Personalverrechnungstabelle.jpg"));
+		FileResource resource_2 = new FileResource(new File (imagepath + "/index.jpg"));
 
 		// Show the image in the application
-		Image image = new Image("", resource);
+		Image image = new Image("Personalverrechnungstabelle", resource);
+
+		Image image_2 = new Image("Success!!", resource_2);
 
 		image.setWidth("80%");
 		//image.setHeight(layout.getHeight(), Unit.PIXELS);
 
 		layout.addComponent(image);
 		layout.setComponentAlignment(
-				image, Alignment.MIDDLE_CENTER
+				image, Alignment.TOP_CENTER
 		);
+
+		layout.addComponent(image_2);
+		layout.setComponentAlignment(
+				image_2, Alignment.BOTTOM_CENTER
+		);
+
 
 		layout.setHeight(null);
 		return layout;
@@ -153,6 +162,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		// Create first page
 		VerticalLayout layout = new VerticalLayout();
 		addComponent(layout);
+
 
 		ComboBox gender = new ComboBox("Geschlecht");
 		String[] genderItems = {"männlich", "weiblich"};

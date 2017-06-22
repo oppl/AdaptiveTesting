@@ -41,6 +41,8 @@ public class ProfitQuestion extends VerticalLayout implements
 		answerSelector = new ComboBox("Wählen Sie die richtige Antwort:");
 		answerSelector.addItems((Object[]) ProfitPossibleAnswers.values());
 		answerSelector.setSizeFull();
+		answerSelector.setInputPrompt("Wählen Sie aus");
+		answerSelector.setTextInputAllowed(false);
 		answerSelector.setValue(prefilled.getValue());
 		answerSelector.setEnabled(prefilled.getValue() == null);
 		question = new HtmlLabel();
