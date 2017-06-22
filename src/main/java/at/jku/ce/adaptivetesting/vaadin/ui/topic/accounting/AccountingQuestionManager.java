@@ -38,6 +38,8 @@ public class AccountingQuestionManager extends QuestionManager {
 	private String studentClass = new String();
 	private String studentGender = new String();
 	private StudentData student;
+	private final String imageFolder = VaadinServlet.getCurrent().getServletConfig().
+			getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder") + "/";
 
 	public AccountingQuestionManager(String quizName) {
 		super(quizName);
@@ -119,32 +121,18 @@ public class AccountingQuestionManager extends QuestionManager {
 
 		layout.setSizeFull();
 
-		// get image path of application
-		String imagepath = VaadinServlet.getCurrent().getServletConfig().
-				getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagepath");
-
-		// Image as a file resource
-		FileResource resource = new FileResource(new File(imagepath + "/Personalverrechnungstabelle.jpg"));
-		FileResource resource_2 = new FileResource(new File (imagepath + "/index.jpg"));
-
-		// Show the image in the application
-		Image image = new Image("Personalverrechnungstabelle", resource);
-
-		Image image_2 = new Image("Success!!", resource_2);
-
+		Image image = new Image("",
+				new FileResource(new File(imageFolder + "Personalverrechnungstabelle.jpg")));
 		image.setWidth("80%");
-		//image.setHeight(layout.getHeight(), Unit.PIXELS);
-
 		layout.addComponent(image);
-		layout.setComponentAlignment(
-				image, Alignment.TOP_CENTER
-		);
+		layout.setComponentAlignment(image, Alignment.MIDDLE_CENTER);
 
+		// Für was ist das zweite Image?
+
+		/*Image image_2 = new Image("",
+		 		new FileResource(new File (imageFolder + "index.jpg")));
 		layout.addComponent(image_2);
-		layout.setComponentAlignment(
-				image_2, Alignment.BOTTOM_CENTER
-		);
-
+		layout.setComponentAlignment(image_2, Alignment.MIDDLE_CENTER);*/
 
 		layout.setHeight(null);
 		return layout;
@@ -452,16 +440,10 @@ public class AccountingQuestionManager extends QuestionManager {
 				"</table>", ContentMode.HTML);
 		layout.addComponent(hints_top);
 
-		// get image path of application
-		String imagefolder = VaadinServlet.getCurrent().getServletConfig().
-				getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder");
-
 		// Image as a file resource
-		FileResource resource = new FileResource(new File(imagefolder + "/Musterbeispiel_Buchungssatz.jpg"));
-
-		// Show the image in the application
-		Image image = new Image("", resource);
-		image.setWidth("50%");
+		Image image = new Image("",
+				new FileResource(new File(imageFolder + "Musterbeispiel_Buchungssatz.jpg")));
+		image.setWidth("60%");
 		layout.addComponent(image);
 
 		Label hints_bottom = new Label("<table>" +

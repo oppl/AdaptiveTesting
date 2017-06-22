@@ -27,7 +27,7 @@ public class AccountingRecordInputFields extends GridLayout {
 		setSpacing(true);
 		// Add AccountNumber
 		accountNumberInputField = new AccountNumberInputField();
-		accountNumberInputField.setCaption("Erste zwei Stellen der Kontennummer eingeben:");
+		accountNumberInputField.setCaption("Kontennr.:");
 		accountNumberInputField.setWidth("4em");
 		addComponent(accountNumberInputField, 0, 0);
 		// Add DD AccountNames

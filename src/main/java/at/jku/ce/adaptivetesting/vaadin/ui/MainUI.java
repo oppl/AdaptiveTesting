@@ -24,6 +24,8 @@ import com.vaadin.ui.Window.CloseListener;
 public class MainUI extends VerticalLayout implements View {
 
 	private static final long serialVersionUID = 4966805861748123750L;
+	private final String imageFolder = VaadinServlet.getCurrent().getServletConfig().
+			getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder") + "/";
 
 	public MainUI() {
 		// Make the web-app large
@@ -61,12 +63,9 @@ public class MainUI extends VerticalLayout implements View {
 				"Damit die Ergebnisse des Fragebogens denen des Tests zugeordnet werden können, " +
 				"ist es notwendig, den zuvor erstellen anonymen Benutzernamen anzugeben.");
 
-		String logoFolder = VaadinServlet.getCurrent().getServletConfig().
-				getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder");
-
-		FileResource resource = new FileResource(new File(logoFolder + "/ce_jku_copyright_logo.png"));
 		Image copyrightLogo = new Image("© Reisisoft & JKU 2014 - "
-				+ new GregorianCalendar().get(Calendar.YEAR), resource);
+				+ new GregorianCalendar().get(Calendar.YEAR),
+				new FileResource(new File(imageFolder + "ce_jku_copyright_logo.png")));
 		copyrightLogo.setHeight("50");
 		copyrightLogo.setWidth("200");
 

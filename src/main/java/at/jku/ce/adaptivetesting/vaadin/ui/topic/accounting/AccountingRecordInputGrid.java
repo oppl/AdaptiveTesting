@@ -16,7 +16,7 @@ public abstract class AccountingRecordInputGrid extends SingleComponentLayout {
 	private static final long serialVersionUID = 3423260539583285740L;
 	// Create all necessary layouts
 	private VerticalLayout outer = new VerticalLayout();
-	private GridLayout inner = new GridLayout(2, 1);
+	private GridLayout inner = new GridLayout(2, 2);
 	private GridLayout right = new GridLayout(1, 8);
 	private GridLayout left = new GridLayout(1, 8);
 	private Label questionText = new HtmlLabel();
@@ -30,8 +30,9 @@ public abstract class AccountingRecordInputGrid extends SingleComponentLayout {
 		outer.addComponent(questionText);
 		outer.addComponent(inner);
 		outer.setSpacing(true);
-		inner.addComponent(left, 0, 0);
-		inner.addComponent(right, 1, 0);
+		inner.addComponent(new Label("In den Eingabeboxen nur die ersten beiden Stellen der Kontonummer eingeben!"), 0,0);
+		inner.addComponent(left, 0, 1);
+		inner.addComponent(right, 1, 1);
 		// Make layout size full
 		inner.setSizeFull();
 		right.setSizeFull();
