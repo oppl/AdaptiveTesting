@@ -110,4 +110,28 @@ substring of user's answer -> 'cut' everything after the first two characters af
         userAnswer = userAnswer.substring(0, index + 3);
 ...
 
+===========================================================================================================
+
+AccountNumberInputField // AccountingRecordInputFields
+================
+allow 2 OR 4 digit input
+
++ change regex
+private final String regex = "^[0-9]{0,2}$"; -> private final String regex = "^[0-9]{0,4}$";
+
++ change field's width to 4em in order to see the whole number
+
++ change method AccountNumberInputField.isValidNumber - check if number's length is 2 OR 4
+
+private boolean isValidNumber(String s) {
+		// A number must not be NULL
+		if (s == null) {
+			return false;
+		}
+		// Ensure the number is valid
+		return (s.length() == 2 || s.length() == 4) && s.matches(regex);
+	}
+}
+
+
 

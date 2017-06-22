@@ -16,8 +16,8 @@ public class CurrencyTextBox extends TextField implements TextChangeListener {
 	private final List<ValidValueChangedListener<Float>> validValueChangedListeners = new ArrayList<>();
 	private float value = 0f;
 	private String lastValue = "0";
-	private final String regexNumber_DotSep = "^([0-9]{1,3}(((,[0-9]{3}){0,})|[0-9]{0,}))?(\\.[0-9]{1,2})?$",
-			regexNumber_ColonSep = "^([0-9]{1,3}(((\\.[0-9]{3}){0,})|[0-9]{0,}))?(,[0-9]{1,2})?$";
+	private final String regexNumber_DotSep = "^([0-9]{1,3}(((,[0-9]{3}){0,})|[0-9]{0,}))?(\\.|,[0-9]{1,2})?$",
+			regexNumber_ColonSep = 			  "^([0-9]{1,3}(((\\.[0-9]{3}){0,})|[0-9]{0,}))?(,[0-9]{1,2})?$";
 
 	public CurrencyTextBox() {
 		addTextChangeListener(this);

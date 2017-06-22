@@ -17,7 +17,7 @@ public class AccountNumberInputField extends TextField implements
 	private final List<ValidValueChangedListener<Integer>> validValueChangedListeners = new ArrayList<>();
 	private int value = 0;
 	private String lastValue = "00";
-	private final String regex = "^[0-9]{0,2}$";
+	private final String regex = "^[0-9]{0,4}$";
 
 	public AccountNumberInputField() {
 		addTextChangeListener(this);
@@ -63,6 +63,6 @@ public class AccountNumberInputField extends TextField implements
 			return false;
 		}
 		// Ensure the number is valid
-		return s.length() == 2 && s.matches(regex);
+		return (s.length() == 2 || s.length() == 4) && s.matches(regex);
 	}
 }
