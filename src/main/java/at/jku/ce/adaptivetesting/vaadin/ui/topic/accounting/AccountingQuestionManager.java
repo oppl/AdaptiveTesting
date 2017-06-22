@@ -160,21 +160,21 @@ public class AccountingQuestionManager extends QuestionManager {
 		//gender.setSizeFull();
 		gender.setEnabled(true);
 
-		Label gradeLastYear = new Label("<p/>Welche Note hattest du im letzten Zeugnis in ...", ContentMode.HTML);
+		Label gradeLastYear = new Label("<p/>Welche Note hatten Sie im letzten Zeugnis in ...", ContentMode.HTML);
 		TextField gradeLastYearRW = new TextField("Rechungswesen");
 		TextField gradeLastYearBWL = new TextField("BWL/BVW");
 		TextField gradeLastYearD = new TextField("Deutsch");
 		TextField gradeLastYearE = new TextField("Englisch");
 		TextField gradeLastYearM = new TextField("Mathematik");
 
-		Label gradeLastTest = new Label("<p/>Welche Note hattest du auf die letzte Schularbeit aus ...", ContentMode.HTML);
+		Label gradeLastTest = new Label("<p/>Welche Note hatten Sie auf die letzte Schularbeit aus ...", ContentMode.HTML);
 		TextField gradeLastTestRW = new TextField("Rechungswesen");
 		TextField gradeLastTestBWL = new TextField("BWL/BVW");
 		TextField gradeLastTestD = new TextField("Deutsch");
 		TextField gradeLastTestE = new TextField("Englisch");
 		TextField gradeLastTestM = new TextField("Mathematik");
 
-		Label classNameLabel = new Label("<p/>Welche Klasse besuchst du?",ContentMode.HTML);
+		Label classNameLabel = new Label("<p/>Welche Klasse besuchen Sie?",ContentMode.HTML);
 		TextField className = new TextField("(z.B. 4A)");
 
 		Label studentCode = new Label("<p/>Damit deine Antworten mit späteren Fragebogenergebnissen verknüpft werden können, ist es notwendig, einen anonymen Benutzernamen anzulegen. Erstelle deinen persönlichen Code nach folgendem Muster:",ContentMode.HTML);
@@ -274,28 +274,31 @@ public class AccountingQuestionManager extends QuestionManager {
 	private VerticalLayout assembleCompanyDescription() {
 		VerticalLayout layout = new VerticalLayout();
 
-		addComponent(layout);
-
-		Label companyData = new Label("\n" +
-				"<table >\n" +
-				"\t<caption style=\"font-size:25px\"><strong>Ausgangssituation</strong></caption>\n" +
+		layout.addComponent(
+				new Label("<table>\n" +
 				"\t<tbody>\n" +
+				"\t<caption style=\"font-size:25px\"><strong>Ausgangssituation</strong></caption>\n" +
 				"\t\n" +
 				"\t<tr>\n" +
-				"\t<td colspan=\"4\"><strong><br>Du bist als selbständiger Steuerberater und Buchhalter tätig. Zu deinen Kunden gehören die unten angeführten Unternehmen.<br> Für diese übernimmst du die Buchhaltung, d.h. du verbuchst die angeführten Geschäftsfälle aus deren Sicht. </strong></td>\n" +
+				"\t><td colspan=\\\"4\\\"><strong><br>Sie sind als selbständiger Steuerberater und Buchhalter tätig. <br> Zu deinen Kunden gehören die unten angeführten Unternehmen.<br> Für diese übernehmen Sie die Buchhaltung, d.h. Sie verbuchen die angeführten Geschäftsfälle aus deren Sicht.</strong></td>\n" +
 				"\t</tr>\n" +
-				"\t\n" +
+				"\t</tbody>\n" +
+				"</table>", ContentMode.HTML));
+
+		layout.addComponent(
+				new Label("<table>\n" +
+				"\t<tbody>\n" +
 				"\t<tr>\n" +
-				"\t<td colspan=\"4\"><strong><br>Unternehmensbeschreibungen></strong></td>\n" +
+				"\t<td colspan=\"4\"><strong><br>Unternehmensbeschreibungen</strong></td>\n" +
 				"\t</tr>\n" +
 				"\t<tr>\n" +
-				"\t\t<td>Firmenname: </td>\n" +
-				"\t\t\t<td><strong>World of Tabs GmbH  </strong></td>\n" +
-				"\t\t\t<td><strong>Restaurant Sommer  </strong></td>\n" +
-				"\t\t\t<td><strong>ATM GmbH  </strong></td>\n" +
+				"\t\t<td>Firmenname:</td>\n" +
+				"\t\t<td><strong>World of Tabs GmbH</strong></td>\n" +
+				"\t\t<td><strong>Restaurant Sommer</strong></td>\n" +
+				"\t\t<td><strong>ATM GmbH</strong></td>\n" +
 				"\t</tr>\n" +
 				"\t<tr>\n" +
-				"\t\t<td>Adresse: </td>\n" +
+				"\t\t<td>Adresse:</td>\n" +
 				"\t\t<td>Unterfeld 15</td>\n" +
 				"\t\t<td>Am Berg 5</td>\n" +
 				"\t\t<td>Altenbergstr. 7</td>\n" +
@@ -331,7 +334,7 @@ public class AccountingQuestionManager extends QuestionManager {
 				"\t\t<td> </td>\n" +
 				"\t</tr>\n" +
 				"\t<tr>\n" +
-				"\t\t<td colspan=\"4\"><strong><br>Hinweise zu den laufenden und den Um- und Nachbuchungen/strong></td>\n" +
+				"\t\t<td colspan=\"4\"><strong><br>Hinweise zu den laufenden und den Um- und Nachbuchungen</strong></td>\n" +
 				"\t</tr>\n" +
 				"\t<tr>\n" +
 				"\t\t<td>Buchung:</td>\n" +
@@ -357,13 +360,12 @@ public class AccountingQuestionManager extends QuestionManager {
 				"\t\t<td colspan=\"3\">Sofern nichts Anderes angeführt ist, wird für geringwertige <br> Wirtschaftsgüter mit Anschaffungs- bzw. Herstellungskosten bis 400,00<br> die Bewertungsfreiheit nach § 13 EStG (Sofortabschreibung) in Anspruch<br> genommen.</td>\n" +
 				"\t</tr>\n" +
 				"\t</tbody>\n" +
-				"</table><p/>", ContentMode.HTML);
+				"</table>", ContentMode.HTML));
 		/*
-		Label descr = new Label("<i>World of Tabs dient im Folgenden als Modellunternehmen, <b>aus dessen Sicht</b> du die Aufgabenstellungen bearbeiten sollst. Wir bitten dich die Aufgaben <b>alleine, ohne Hilfe</b> von Mitschüler/inne/n oder Lehrer/inne/n zu lösen. Du kannst den Kontenplan und einen Taschenrechner verwenden.</i><p/>",ContentMode.HTML);
-		Label disclaimer = new Label("<b>Wichtig ist, dass du im Folgenden bei der Angabe der Kontennummer und des Kontennamens die genaue Nummer bzw. Bezeichnung verwendest. Bspw. wird eine Aufgabe falsch gewertet, wenn du die Nummer 30 anstatt 33 für das Lieferverbindlichkeiten wählst oder du den Kontennamen \"Lieferverbindlichkeiten\" anstatt \"AATech\" (bei personifiziertem Lieferantenkonto) für den Lieferanten wählst.<b>",ContentMode.HTML);
+		Label descr = new Label("<i>World of Tabs dient im Folgenden als Modellunternehmen, <b>aus dessen Sicht</b> Sie die Aufgabenstellungen bearbeiten sollen. Wir bitten dich die Aufgaben <b>alleine, ohne Hilfe</b> von Mitschüler/inne/n oder Lehrer/inne/n zu lösen. Sie können den Kontenplan und einen Taschenrechner verwenden.</i><p/>",ContentMode.HTML);
+		Label disclaimer = new Label("<b>Wichtig ist, dass Sie im Folgenden bei der Angabe der Kontennummer und des Kontennamens die genaue Nummer bzw. Bezeichnung verwenden. Bspw. wird eine Aufgabe falsch gewertet, wenn Sie die Nummer 30 anstatt 33 für das Lieferverbindlichkeiten wählen oder Sie den Kontennamen \"Lieferverbindlichkeiten\" anstatt \"AATech\" (bei personifiziertem Lieferantenkonto) für den Lieferanten wählen.<b>",ContentMode.HTML);
 		layout.addComponent(HtmlLabel.getCenteredLabel("h1", "Unternehmensbeschreibung"));// Title of the quiz
 		*/
-		layout.addComponent(companyData);
 		//layout.addComponent(descr);
 		//layout.addComponent(disclaimer);
 		return layout;
@@ -373,7 +375,8 @@ public class AccountingQuestionManager extends QuestionManager {
 
 		VerticalLayout layout = new VerticalLayout();
 		addComponent(layout);
-		Label label = new Label("<table >\n" +
+		layout.addComponent(
+				new Label("<table>\n" +
 				"\t<tbody>\n" +
 				"\t\t\t<caption style=\"font-size:25px\"><strong>Bearbeitungshinweise</strong></caption>\n" +
 				"\t\t<tr>\n" +
@@ -382,19 +385,40 @@ public class AccountingQuestionManager extends QuestionManager {
 				"\t\t</tr>\n" +
 				"\t\t<tr>\n" +
 				"\t\t\t<td valign=\"top\">2.</td>\n" +
-				"\t\t\t<td>Du kannst den <strong>Kontenplan</strong> und einen <strong>Taschenrechner</strong> verwenden.</td>\n" +
+				"\t\t\t<td>Sie können den <strong>Kontenplan</strong> und einen <strong>Taschenrechner</strong> verwenden.</td>\n" +
 				"\t\t</tr>\n" +
 				"\t\t<tr>\n" +
 				"\t\t\t<td valign=\"top\">3.</td>\n" +
-				"\t\t\t<td>Wichtig ist, dass du bei der Angabe der <strong>Kontennummer</strong> und des <strong>Kontennamens</strong> die<br> <strong>genaue Nummer bzw. Bezeichnung</strong> verwendest. Bspw. wird eine Aufgabe falsch<br> gewertet, <u>wenn du die Nummer 30 anstatt 33 für das Lieferverbindlichkeiten wählst oder<br> du den Kontennamen \"Lieferverbindlichkeiten\" anstatt \"AATech\"</u> (bei personifiziertem<br> Lieferantenkonto) für den Lieferanten wählst.</td>\n" +
+				"\t\t\t<td>Wichtig ist, dass Sie bei der Angabe der <strong>Kontennummer</strong> und des <strong>Kontennamens</strong> die<br> <strong>genaue Nummer bzw. Bezeichnung</strong> verwenden. Bspw. wird eine Aufgabe falsch<br> gewertet, <u>wenn Sie die Nummer 30 anstatt 33 für das Lieferverbindlichkeiten wählen oder<br> Sie den Kontennamen \"Lieferverbindlichkeiten\" anstatt \"AATech\"</u> (bei personifiziertem<br> Lieferantenkonto) für den Lieferanten wählen.</td>\n" +
 				"\t\t</tr>\n" +
+				"\t\t<tr>\n" +
+				"\t\t\t<td valign=\"top\">4.</td>\n" +
+				"\t\t\t<td>Die folgende Abbildung zeigt, wie das in diesem Test verwendete Onlineformular ausgefüllt <br> werden soll, um einen Geschäftsfall korrekt zu verbuchen.</td>\n" +
+				"\t\t</tr>\n" +
+				"\t</tbody>\n" +
+				"</table>", ContentMode.HTML));
+
+		// get image path of application
+		String imagefolder = VaadinServlet.getCurrent().getServletConfig().
+				getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder");
+
+		// Image as a file resource
+		FileResource resource = new FileResource(new File(imagefolder + "/Musterbeispiel_Buchungssatz.jpg"));
+
+		// Show the image in the application
+		Image image = new Image("", resource);
+
+		image.setWidth("50%");
+		layout.addComponent(image);
+
+		layout.addComponent(
+				new Label("<table >\n" +
+				"\t<tbody>\n" +
 				"\t\t<tr>\n" +
 				"\t\t\t<td colspan=\"2\"><strong><br>Viel Erfolg!</strong></td>\n" +
 				"\t\t</tr>\n" +
 				"\t</tbody>\n" +
-				"</table>", ContentMode.HTML);
-
-		layout.addComponent(label);
+				"</table>", ContentMode.HTML));
 
 		return layout;
 	}
