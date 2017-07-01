@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <!--Set folder paths for the destinations server and the development environment-->
+    <context-param>
+        <param-name>at.jku.ce.adaptivetesting.questionfolder</param-name>
+        <param-value>${catalina.home}/temp/adaptiveTesting/questions</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>at.jku.ce.adaptivetesting.resultfolder</param-name>
+        <param-value>${catalina.home}/temp/adaptiveTesting/results</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>at.jku.ce.adaptivetesting.logfilepath</param-name>
+        <param-value>${catalina.home}/logs/AdaptiveTesting.log</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>at.jku.ce.adaptivetesting.imagefolder</param-name>
+        <param-value>${catalina.home}/temp/adaptiveTesting/images</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>widgetset</param-name>
+        <param-value>at.jku.ce.adaptivetesting.VaadinWidgetset</param-value>
+    </context-param>
+
+</web-app>

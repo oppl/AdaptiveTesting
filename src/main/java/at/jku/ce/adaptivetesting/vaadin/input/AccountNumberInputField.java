@@ -34,8 +34,25 @@ public class AccountNumberInputField extends TextField implements
 	}
 
 	public int getAccountNumber() {
+
+		if (Integer.toString(value).length() > 2){
+
+			return changeValue(value);
+		} else
+			return value;
+	}
+
+	private int changeValue (int num){
+
+		int value = 0;
+		String temp = Integer.toString(num);
+		temp = temp.substring(0, 2);
+
+		value = Integer.parseInt(temp);
+
 		return value;
 	}
+
 
 	private void fireValidValueChangedListener() {
 		Integer f = value;

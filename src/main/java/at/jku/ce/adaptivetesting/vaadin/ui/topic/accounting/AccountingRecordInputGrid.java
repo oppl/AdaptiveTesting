@@ -30,7 +30,7 @@ public abstract class AccountingRecordInputGrid extends SingleComponentLayout {
 		outer.addComponent(questionText);
 		outer.addComponent(inner);
 		outer.setSpacing(true);
-		inner.addComponent(new Label("In den Eingabeboxen nur die ersten beiden Stellen der Kontonummer eingeben!"), 0,0);
+		inner.addComponent(new Label("In den Eingabeboxen die vier Stellen der Kontonummer eingeben!"), 0,0);
 		inner.addComponent(left, 0, 1);
 		inner.addComponent(right, 1, 1);
 		// Make layout size full

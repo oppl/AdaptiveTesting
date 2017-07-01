@@ -341,6 +341,13 @@ public class AccountingQuestionManager extends QuestionManager {
 				"<td>ATU58932761</td>" +
 				"</tr>" +
 				"<tr>" +
+				"<td>Unternehmens-<br>gegenstand:</td>" +
+				"<td>&emsp;&emsp;&emsp;</td>" +
+				"<td>Handel mit Tablets<br>und Zubehör</td>" +
+				"<td>Restaurant mit<br>regionaler Küche</td>" +
+				"<td>Metallbearbeitung: Bohren,<br>Fräsen, Stanzen, Lasern, …</td>" +
+				"</tr>" +
+				"<tr>" +
 				"<td>&emsp;&emsp;&emsp;</td>" +
 				"<td>&emsp;&emsp;&emsp;</td>" +
 				"<td>&emsp;&emsp;&emsp;</td>" +

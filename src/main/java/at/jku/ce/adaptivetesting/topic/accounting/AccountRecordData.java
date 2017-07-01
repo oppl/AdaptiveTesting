@@ -65,6 +65,8 @@ public class AccountRecordData implements Serializable {
 			return false;
 		}
 		AccountRecordData other = (AccountRecordData) obj;
+
+
 		if (accountNumber != other.accountNumber) {
 			LogHelper.logInfo("Wrong Accountnumber "+accountNumber+" "+other.accountNumber);
 			return false;
