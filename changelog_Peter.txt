@@ -2,7 +2,7 @@ Sourcecode Changelog
 ===========================================================================================================
 Name:               Peter Baumann, BSc
 Matr. Nr.:          1155812
-Letzte Änderung:    04.06.2017
+Letzte Änderung:    01.07.2017
 ===========================================================================================================
 
 WEB-INF/web.xml
@@ -182,60 +182,129 @@ addLibraryLicence(new HtmlLink("https://cran.r-project.org/web/packages/catR/ind
 src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\topic.accounting\AccountingRecordInputGrid.java
 ============================================================================================================
 
+private GridLayout inner = new GridLayout(2, 2);
 private GridLayout right = new GridLayout(1, 8);
 private GridLayout left = new GridLayout(1, 8);
+
+inner.addComponent(new Label("In den Eingabeboxen nur die ersten beiden Stellen der Kontonummer eingeben!"), 0,0);
+inner.addComponent(left, 0, 1);
+inner.addComponent(right, 1, 1);
 
 ------------------------------------------------------------------------------------------------------------
 Rows von 4 auf 8 geändert, um Platz für MultiAccountingQuestions zu schaffen.
 Führt sonst zu einem Programmabsturz, da bei z.B.: 6 Kontenreihen nur 4 davon dargestellt werden
-können, und es so zu einem Programmabsturz kommt.
+können, und es so zu einem Programmabsturz kommt. Inner Grid von 1 auf 2 Reihen geändert, um Platz für
+den Informationstext zu schaffen.
 
 src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\topic.accounting\AccountingQuestionManager.java
 ============================================================================================================
-Taschenrechner-Button eingebaut
+Taschenrechner-Button eingebaut,
+De Button lädt den TR jedoch nicht und zeigt nur eine Infobox an, da die Kommataste noch nicht funktioniert.
 ------------------------------------------------------------------------------------------------------------
 public AccountingQuestionManager(String quizName) {
     ...
     Button openCalculator = new Button("Taschenrechner");
     openCalculator.addClickListener(e -> {
-        Calculator Calculator = new Calculator();
-        getUI().addWindow(Calculator.getWindow());
-        });
+        //Calculator Calculator = new Calculator();
+        //getUI().addWindow(Calculator.getWindow());
+        Notification.show("Zur Zeit nicht verfügbar:\nBitte eigenen Taschenrechner verwenden.");
     ...
     addHelpButton(openCalculator);
     ...
 }
 
 ------------------------------------------------------------------------------------------------------------
-Aufruf der Personalverrechnungstabelle ausgebessert, Speicherort befindet sich nun im TomCat-Verzeichnis
+Aufruf der Personalverrechnungstabelle ausgebessert, Speicherort befindet sich nun im TomCat-Verzeichnis.
+Anzeige des Musterbeispiel Buchungssatzes auf der 2ten Startseite.
 ------------------------------------------------------------------------------------------------------------
+private final String imageFolder = VaadinServlet.getCurrent().getServletConfig().
+getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder") + "/";
+
 private VerticalLayout assemblePersBilling() {
     ...
-    // get image path of application
-    String imagefolder = VaadinServlet.getCurrent().getServletConfig().
-	getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder");
-
-    // Image as a file resource
-    FileResource resource = new FileResource(new File(imagefolder + "/Personalverrechnungstabelle.jpg"));
-
-    // Show the image in the application
-    Image image = new Image("Personalverrechnungstabelle", resource);
+    Image image = new Image("",
+    new FileResource(new File(imageFolder + "Personalverrechnungstabelle.jpg")));
+    image.setWidth("80%");
+    layout.setComponentAlignment(image, Alignment.MIDDLE_CENTER);
     ...
 }
+
+assemleRules() {
+    ...
+    Image image = new Image("",
+    new FileResource(new File(imageFolder + "Musterbeispiel_Buchungssatz.jpg")));
+    image.setWidth("60%");
+    ...
+}
+
+------------------------------------------------------------------------------------------------------------
+Geladene Fragen haben nun eine Nummerierung und der Ausgabetext wurde verbessert. Falsche Kommentare wurden
+ausgebessert.
+------------------------------------------------------------------------------------------------------------
+
+public int loadQuestions(File containingFolder) throws JAXBException, IOException {
+    ...
+    // Profit Question
+    questionLoadedInfo(f, successfullyLoaded, ProfitQuestion.class.getName());
+    ...
+    // Accounting Question
+    questionLoadedInfo(f, successfullyLoaded, AccountingQuestion.class.getName());
+    ...
+    // Multi Accounting Question
+    questionLoadedInfo(f, successfullyLoaded, MultiAccountingQuestion.class.getName());
+    ...
+    // Multiple Choice Question
+    questionLoadedInfo(f, successfullyLoaded, MultipleChoiceQuestion.class.getName());
+    ...
+    // Multiple Task Table Question
+    questionLoadedInfo(f, successfullyLoaded, MultipleTaskTableQuestion.class.getName());
+    ...
+    // Open Answer Keyword Question
+    questionLoadedInfo(f, successfullyLoaded, OpenAnswerKeywordQuestion.class.getName());
+    ...
+}
+
+private static void questionLoadedInfo(File file, int counter, String questionType) {
+    counter++;
+    LogHelper.logInfo("(" + counter + ") Loading questionfile: " + file.getName());
+    LogHelper.logInfo("Type: " + questionType);
+}
+
+------------------------------------------------------------------------------------------------------------
+Aufruf der Personalverrechnungstabelle ausgebessert, Speicherort befindet sich nun im TomCat-Verzeichnis
+------------------------------------------------------------------------------------------------------------
+HTML-Code in den Methoden -> assembleCompanyDescription() / assemleRules() verbessert, alle informellen
+Wörter (du,...) auf formelle Wörter (Sie) geändert.
+
 src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\MainUI.java
 ============================================================================================================
 JKU CE Logo eingefügt
 ------------------------------------------------------------------------------------------------------------
+private final String imageFolder = VaadinServlet.getCurrent().getServletConfig().
+getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder") + "/";
 
-String logoFolder = VaadinServlet.getCurrent().getServletConfig().
-getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder");
-
-FileResource resource = new FileResource(new File(logoFolder + "/ce_jku_copyright_logo.png"));
 Image copyrightLogo = new Image("© Reisisoft & JKU 2014 - "
-+ new GregorianCalendar().get(Calendar.YEAR), resource);
+				+ new GregorianCalendar().get(Calendar.YEAR), resource);
+				+ new GregorianCalendar().get(Calendar.YEAR),
+				new FileResource(new File(imageFolder + "ce_jku_copyright_logo.png")));
 copyrightLogo.setHeight("50");
 copyrightLogo.setWidth("200");
 
+src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\VaadinResultView.java
+============================================================================================================
+Kompetenzmodellgrafik auf der Ergebnisseite eingefügt
+------------------------------------------------------------------------------------------------------------
+
+private final String imageFolder = VaadinServlet.getCurrent().getServletConfig().
+			getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder") + "/";
+
+public VaadinResultView(ResultFiredArgs args, String title) {
+    ...
+    Image image = new Image("", new FileResource(new File(imageFolder + "Kompetenzmodell.png")));
+    addComponent(image);
+    setComponentAlignment(image, Alignment.MIDDLE_CENTER);
+    ...
+}
 
 src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\Calculator.java
 ============================================================================================================
@@ -525,7 +594,8 @@ public UploadUI() {
 src\main\resources\log4j.properties
 ============================================================================================================
 
-Logger konfiguriert, Pfad des Log-files verweist nun auf das "Tomcat/log" Verzeichnis
+Logger konfiguriert, Pfad des Log-files verweist nun auf das "Tomcat/log" Verzeichnis.
+Nachtrag: MaxFileSize auf 15MB erhöht.
 ------------------------------------------------------------------------------------------------------------
 
 # Created by Baumann Peter
@@ -538,7 +608,7 @@ log4j.appender.file=org.apache.log4j.RollingFileAppender
 
 # Output to Tomcat home
 log4j.appender.file.File=${catalina.home}/logs/AdaptiveTesting.log
-log4j.appender.file.MaxFileSize=10MB
+log4j.appender.file.MaxFileSize=15MB
 log4j.appender.file.MaxBackupIndex=10
 log4j.appender.file.layout=org.apache.log4j.PatternLayout
 log4j.appender.file.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
@@ -662,16 +732,253 @@ if (!path.exists()) {
 	rProvider = new RProvider();
 }
 
+------------------------------------------------------------------------------------------------------------
+Von i > upperBounds.lenght auf < geändert, da dies zu einem vorzeitigen Abbruch der Itemauswahl geführt hat.
+Des wurde nicht ein Item aus dem berechneten Bag genommen, sondern das erste Item mit der geringsten
+Schwierigkeit.
+------------------------------------------------------------------------------------------------------------
+private int getArrayPositionFromWantedDifficulty(double wantedDifficulty) {
+ 		for (int i = 0; i < upperBounds.length - 1; i++) {
+            if (wantedDifficulty > upperBounds[i]) {
+			if (wantedDifficulty < upperBounds[i]) {
+ 				return i;
+ 			}
+ 		}
+}
+
 src\main\java\at\jku\ce\adaptivetesting\topic.accounting\OpenAnswerKeywordQuestion.java
 ============================================================================================================
-Errorhandling hinzugefügt
+Es wird der Name der gerade beantworteten Frage, sowie deren Richtigkeit im Log ausgegeben.
+Errorhandling hinzugefügt.
+Es werden nun Textantworten in ganzen Sätzen, sowie Zahlen-Antworten richtig erkannt.
 ------------------------------------------------------------------------------------------------------------
+
 public double checkUserAnswer() {
-    ...
+    LogHelper.logInfo("Questionfile: " + id);
+    String userAnswer = answer.getValue();
+    // change user's input to match xxx(x),yy
+
     // error handling
     if (userAnswer.equals("")) {
-        LogHelper.logInfo("The text input was empty");
+    LogHelper.logInfo("No answer: The text input was empty");
         return 0.0d;
     }
-    ...
+    boolean numberanswer = false;
+    String[] userAnswerParts;
+    try {
+        // convert TextNumbers into Double values
+        userAnswer = TextNumberToDouble (userAnswer);
+        // check if useranswer is a number
+        if(userAnswer.contains(",")) userAnswer = userAnswer.replaceAll(",", ".");
+        Double.valueOf(userAnswer);
+
+        if (userAnswer.charAt(0) != '+' && userAnswer.charAt(0) != '-')
+            userAnswer = "+" + userAnswer;
+
+        if (userAnswer.contains(".")) {
+            userAnswerParts = userAnswer.split("\\.");
+            if (userAnswerParts[1].charAt(0) == '-') userAnswerParts[0] = "00";
+            if (userAnswerParts[1].length() > 2) userAnswerParts[1] = userAnswerParts[1].substring(0, 2);
+            userAnswer = userAnswerParts[0] + "," + userAnswerParts[1];
+        }
+        else {
+            userAnswerParts = new String[2];
+            userAnswer = userAnswer + ",00";
+        }
+        numberanswer = true;
+    } catch (NumberFormatException e) {
+        //LogHelper.logInfo("The input was not a number");
+        if(userAnswer.contains(" "))
+            userAnswer = userAnswer.replaceAll(" ", ",");
+        if(userAnswer.contains(";"))
+            userAnswer = userAnswer.replaceAll(";", ",");
+        if(userAnswer.contains("."))
+            userAnswer = userAnswer.replaceAll(".", ",");
+
+        userAnswerParts = userAnswer.split(",");
+        for (int i = 0; i < userAnswerParts.length; i++) {
+            try {
+                userAnswerParts[i] = userAnswerParts[i].toLowerCase();
+                userAnswerParts[i] = userAnswerParts[i].substring(0, 1).toUpperCase() +
+                    userAnswerParts[i].substring(1, userAnswerParts[i].length());
+            } catch (Exception ex) {
+                userAnswerParts[i] = "_empty";
+            }
+        }
+    }
+
+    for (String[] requriedKeyword: solution.getAnswers()) {
+
+        int nrOfKeywords = 0;
+        for (int i = 0; i < requriedKeyword.length; i++) {
+            if (!requriedKeyword[i].equals("")) nrOfKeywords++;
+        }
+        boolean[]variantFoundParts = new boolean[nrOfKeywords];
+
+        boolean variantFound = false;
+        if (numberanswer) {
+        for (int k = 0; k < nrOfKeywords; k++) {
+            // check if the userAnswer contains the variant
+            if (StringUtils.equalsIgnoreCase(userAnswer, requriedKeyword[k]))
+                variantFound = true;
+            }
+        } else {
+            int x = 0;
+            for (int i = 0; i < userAnswerParts.length; i++) {
+                for (int j = 0; j < nrOfKeywords; j++) {
+                    if (StringUtils.equalsIgnoreCase(userAnswerParts[i],
+                        requriedKeyword[j].replaceAll(" ", ""))) {
+                            variantFoundParts[x] = true;
+                        x++;
+                        break;
+                    }
+                }
+            }
+            for (int i = 0; i < variantFoundParts.length; i++) {
+                variantFound = true && variantFoundParts[i];
+            }
+        }
+        if (!variantFound) {
+            LogHelper.logInfo("Incorrect answer");
+            return 0.0d;
+        }
+    }
+    LogHelper.logInfo("Correct answer");
+    return 1.0d;
 }
+
+------------------------------------------------------------------------------------------------------------
+Die Erkennung von als text eingegebenen Zahlen wurde in die Methode TextNumberToDouble() ausgelagert.
+------------------------------------------------------------------------------------------------------------
+
+private String TextNumberToDouble (String userAnswer) {
+    switch (userAnswer.toLowerCase()) {
+        case "eins":
+        userAnswer = "1.00";
+        break;
+    ...
+    }
+    return userAnswer;
+}
+
+src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\topic.accounting\AccountingQuestion.java
+============================================================================================================
+Es wird der Name der gerade beantworteten Frage, sowie deren Richtigkeit im Log ausgegeben.
+------------------------------------------------------------------------------------------------------------
+
+public double checkUserAnswer() {
+	LogHelper.logInfo("Questionfile: " + id);
+    ...
+    if (correct) {
+	    LogHelper.logInfo("Correct answer");
+		    return 1.0d;
+		} else {
+			LogHelper.logInfo("Incorrect answer");
+			return 0.0d;
+	    }
+}
+
+src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\topic.accounting\MultiAccountingQuestion.java
+============================================================================================================
+Es wird der Name der gerade beantworteten Frage, sowie deren Richtigkeit im Log ausgegeben.
+------------------------------------------------------------------------------------------------------------
+
+public double checkUserAnswer() {
+	LogHelper.logInfo("Questionfile: " + id);
+    ...
+    Vector<AccountRecordData[]>
+    uSoll = user.getSoll(),
+    uHaben = user.getHaben(),
+    sSoll = solution.getSoll(),
+    sHaben = solution.getHaben();
+
+    if ((UserInputExists(uSoll) + UserInputExists(uHaben)) == 0) {
+        LogHelper.logInfo("No user input exists -> incorrect answer");
+        return 0.0d;
+    } else {
+        if (check(sSoll, uSoll) && check(sHaben, uHaben)) {
+        LogHelper.logInfo("Correct answer");
+        return 1.0d;
+        } else {
+            LogHelper.logInfo("Incorrect answer");
+            return 0.0d;
+        }
+    }
+}
+
+------------------------------------------------------------------------------------------------------------
+Fehlerbehandlung: Bei keiner Eingabe wir die Frage als falsch beantwortet gewertet.
+------------------------------------------------------------------------------------------------------------
+
+private int UserInputExists(Vector<AccountRecordData[]> user) {
+    List<AccountRecordData> answerRecords = new LinkedList<>();
+    answerRecords.addAll(Arrays.asList(user.get(0)));
+    int counter = 0;
+    for (AccountRecordData answerRecord : answerRecords) {
+        if (answerRecord.toString().equals("(0) ??? 0.0€") == false)
+            counter++;
+    }
+    if (counter > 0) return 1;
+    else return 0;
+}
+
+src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\topic.accounting\MultipleChoiceQuestion.java
+============================================================================================================
+Es wird der Name der gerade beantworteten Frage, sowie deren Richtigkeit im Log ausgegeben.
+------------------------------------------------------------------------------------------------------------
+
+ublic double checkUserAnswer() {
+    LogHelper.logInfo("Questionfile: " + id);
+    ...
+    for (Integer checked: answer.getCorrectAnswers()) {
+        if (!solution.getCorrectAnswers().contains(checked)) return 0.0d;
+        if (!solution.getCorrectAnswers().contains(checked)) {
+        LogHelper.logInfo("Incorrect answer");
+            return 0.0d;
+        }
+    }
+    for (Integer unchecked: solution.getCorrectAnswers()) {
+        if (!answer.getCorrectAnswers().contains(unchecked)) return 0.0d;
+        if (!answer.getCorrectAnswers().contains(unchecked)) {
+        LogHelper.logInfo("Incorrect answer");
+            return 0.0d;
+        }
+    }
+    LogHelper.logInfo("Correct answer");
+    return 1.0d;
+}
+
+src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\topic.accounting\MultipleTaskTableQuestion.java
+============================================================================================================
+Es wird der Name der gerade beantworteten Frage, sowie deren Richtigkeit im Log ausgegeben.
+------------------------------------------------------------------------------------------------------------
+
+public double checkUserAnswer() {
+    LogHelper.logInfo("Questionfile: " + id);
+    ...
+    if (answer != solution) {
+        LogHelper.logInfo("Incorrect answer");
+        return 0d;
+    }
+    ...
+    LogHelper.logInfo("Correct answer");
+    return 1d;
+}
+
+src\main\java\at\jku\ce\adaptivetesting\vaadin\ui\topic.accounting\ProfitQuestion.java
+============================================================================================================
+Es wird der Name der gerade beantworteten Frage, sowie deren Richtigkeit im Log ausgegeben.
+------------------------------------------------------------------------------------------------------------
+
+public double checkUserAnswer() {
+    return solution.equals(getUserAnswer()) ? 1d : 0d;
+    LogHelper.logInfo("Questionfile: " + id);
+    if ((solution.equals(getUserAnswer()) ? 1d : 0d) == 1d) {
+        LogHelper.logInfo("Correct answer");
+        return 1.0d;
+    } else {
+        LogHelper.logInfo("Incorrect answer");
+        return 0.0d;
+    }
+}
+

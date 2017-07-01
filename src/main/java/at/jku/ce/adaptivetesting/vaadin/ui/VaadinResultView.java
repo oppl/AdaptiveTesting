@@ -36,6 +36,8 @@ public class VaadinResultView extends VerticalLayout implements View,
 		IResultView {
 
 	private static final long serialVersionUID = -6619938011293967055L;
+	private final String imageFolder = VaadinServlet.getCurrent().getServletConfig().
+			getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder") + "/";
 
 	public VaadinResultView(ResultFiredArgs args, String title) {
 		setSpacing(true);
@@ -157,15 +159,7 @@ public class VaadinResultView extends VerticalLayout implements View,
 		addComponent(HtmlLabel.getCenteredLabel("Delta:  " + args.delta));
 		storeResults(args);
 
-		// get image path of application
-		String imagefolder = VaadinServlet.getCurrent().getServletConfig().
-				getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder");
-
-		// Image as a file resource
-		FileResource resource = new FileResource(new File(imagefolder + "/Kompetenzmodell.png"));
-
-		// Show the image in the application
-		Image image = new Image("", resource);
+		Image image = new Image("", new FileResource(new File(imageFolder + "Kompetenzmodell.png")));
 
 		addComponent(image);
 		setComponentAlignment(image, Alignment.MIDDLE_CENTER);
