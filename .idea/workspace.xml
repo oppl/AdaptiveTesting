@@ -2,307 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="04fbb1eb-acec-458f-9bc3-a0f5636a529b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/images/Personalverrechnungstabelle.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1.war" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/VAADIN/themes/vaadin/Images/ev-end.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/VAADIN/themes/vaadin/Images/ev-st.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/VAADIN/themes/vaadin/Images/gw-cl.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/VAADIN/themes/vaadin/Images/gw-op.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/VAADIN/themes/vaadin/Images/task.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/333A66D5307B1C8C9935C59A877F1993.cache.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/51DCB1D3F3D956ACC80F89D3CF0AC5BE.cache.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/5729045B78A6D863D8E28D61FA81CA08.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/D03281BC3FDB49177B485D1DC10A13C4.cache.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/at.jku.ce.adaptivetesting.VaadinWidgetset.devmode.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/at.jku.ce.adaptivetesting.VaadinWidgetset.nocache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/clear.cache.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/1.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/2.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/3.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/4.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/5.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/6.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/7.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/8.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/9.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/drophere.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/easyuploads.css.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/swfupload.swf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/ProductData.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/core/AnswerStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/core/IQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/core/IResultView.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/core/LogHelper.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/core/StudentData.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/core/engine/EngineException.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/core/engine/HistoryEntry.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/core/engine/ICurrentQuestionChangeListener.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/core/engine/IEngine.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/core/engine/IResultFiredListener.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/core/engine/ResultFiredArgs.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/core/engine/SimpleEngine.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/html/HtmlLabel.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/html/HtmlLink.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/html/HtmlUtils.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/r/RProvider.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/r/RProviderOld.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/AccountRecordData.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/AccountingDataProvider.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/AccountingDataStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/AccountingQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/MultiAccountingDataStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/MultiAccountingQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/MultipleChoiceDataStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/MultipleChoiceQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/MultipleTaskTableDataStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/MultipleTaskTableQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/OpenAnswerKeywordDataStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/OpenAnswerKeywordQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitDataStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitPossibleAnswers.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/test/AccountingMockQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/test/ProfitMockQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/input/AccountNumberInputField.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/input/CurrencyTextBox.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/input/ValidValueChangedListener.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView$DeleteUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView$FullXMLUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView$QuestionPreviewUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView$QuestionTextUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView$UploadUI$1.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView$UploadUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/Calculator.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/LicenceWindow.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/LogView.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/MainUI$1$1.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/MainUI$1.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/MainUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/MockQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/QuestionManager.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/ResultView$ZIPFileUI$1.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/ResultView$ZIPFileUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/ResultView.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/SingleComponentLayout.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/VaadinResultView.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/VaadinUI$1.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/VaadinUI$Servlet.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/VaadinUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/Views.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingQuestionManager.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingRecordInputFields.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingRecordInputGrid$Side.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingRecordInputGrid.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/QuestionLoaderSingleton.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/xml/XmlQuestionData.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/AccountingXmlHelper.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/XmlAccountingQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/XmlMultiAccountingQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/XmlMultipleChoiceQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/XmlMultipleTaskTableQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/XmlOpenAnswerKeywordQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/XmlProfitQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/catR.zip" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/images/Personalverrechnungstabelle.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/RCaller-3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/atmosphere-runtime-2.2.9.vaadin2.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/commons-beanutils-1.9.2.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/commons-collections-3.2.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/commons-io-2.4.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/commons-lang-2.6.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/commons-lang3-3.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/commons-logging-1.1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/confirmdialog-2.1.3.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/easyuploads-7.4.10.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/flute-1.3.0.gg2.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/guava-20.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/javax.el-api-2.2.4.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/jsoup-1.8.3.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/log4j-1.2.17.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/markdown4j-2.2-cj-1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/sac-1.3.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/slf4j-api-1.6.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/slf4j-log4j12-1.6.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/vaadin-client-compiled-7.7.4.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/vaadin-push-7.7.4.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/vaadin-sass-compiler-0.9.13.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/vaadin-server-7.7.4.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/vaadin-shared-7.7.4.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/vaadin-slf4j-jdk14-1.6.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/vaadin-themes-7.7.4.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/viritin-1.53.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/lib/zip4j-1.3.2.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/333A66D5307B1C8C9935C59A877F1993.cache.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/51DCB1D3F3D956ACC80F89D3CF0AC5BE.cache.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/5729045B78A6D863D8E28D61FA81CA08.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/D03281BC3FDB49177B485D1DC10A13C4.cache.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/at.jku.ce.adaptivetesting.VaadinWidgetset.devmode.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/at.jku.ce.adaptivetesting.VaadinWidgetset.nocache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/clear.cache.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/1.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/2.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/3.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/4.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/5.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/6.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/7.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/8.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/9.cache.js.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/drophere.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/easyuploads.css.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/swfupload.swf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/ProductData.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/core/AnswerStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/core/IQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/core/IResultView.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/core/LogHelper.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/core/StudentData.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/core/engine/EngineException.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/core/engine/HistoryEntry.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/core/engine/ICurrentQuestionChangeListener.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/core/engine/IEngine.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/core/engine/IResultFiredListener.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/core/engine/ResultFiredArgs.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/core/engine/SimpleEngine.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/html/HtmlLabel.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/html/HtmlLink.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/html/HtmlUtils.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/r/RProvider.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/r/RProviderOld.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/AccountRecordData.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/AccountingDataProvider.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/AccountingDataStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/AccountingQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/MultiAccountingDataStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/MultiAccountingQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/MultipleChoiceDataStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/MultipleChoiceQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/MultipleTaskTableDataStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/MultipleTaskTableQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/OpenAnswerKeywordDataStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/OpenAnswerKeywordQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitDataStorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitPossibleAnswers.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/test/AccountingMockQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/test/ProfitMockQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/input/AccountNumberInputField.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/input/CurrencyTextBox.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/input/ValidValueChangedListener.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView$DeleteUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView$FullXMLUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView$QuestionPreviewUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView$QuestionTextUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView$UploadUI$1.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView$UploadUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/AdminView.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/Calculator.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/LicenceWindow.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/LogView.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/MainUI$1$1.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/MainUI$1.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/MainUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/MockQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/QuestionManager.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/ResultView$ZIPFileUI$1.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/ResultView$ZIPFileUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/ResultView.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/SingleComponentLayout.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/VaadinResultView.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/VaadinUI$1.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/VaadinUI$Servlet.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/VaadinUI.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/Views.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingQuestionManager.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingRecordInputFields.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingRecordInputGrid$Side.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingRecordInputGrid.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/QuestionLoaderSingleton.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/xml/XmlQuestionData.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/AccountingXmlHelper.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/XmlAccountingQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/XmlMultiAccountingQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/XmlMultipleChoiceQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/XmlMultipleTaskTableQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/XmlOpenAnswerKeywordQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/xml/topic/accounting/XmlProfitQuestion.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/catR.zip" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AdaptiveTesting.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/i18n/client/CurrencyList_.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/i18n/client/constants/NumberConstantsImpl_.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/i18n/client/impl/LocaleInfoImpl_.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/i18n/client/impl/LocaleInfoImpl_shared.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/lang/at_00046jku_00046ce_00046adaptivetesting_00046VaadinWidgetset__EntryMethodHolder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/user/client/DocumentModeAsserter_DocumentModeProperty.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/user/client/impl/WindowImplIE_Resources_default_InlineClientBundleGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/user/client/ui/FormPanel_IFrameTemplateImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/user/client/ui/MenuBar_Resources_default_InlineClientBundleGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/user/client/ui/impl/ClippedImageImpl_DraggableTemplateImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/user/client/ui/impl/ClippedImageImpl_TemplateImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/useragent/client/UserAgentImplGecko1_8.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/useragent/client/UserAgentImplIe10.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/useragent/client/UserAgentImplIe8.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/useragent/client/UserAgentImplIe9.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/google/gwt/useragent/client/UserAgentImplSafari.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/vaadin/client/debug/internal/theme/DebugWindowStyles_default_InlineClientBundleGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/vaadin/client/metadata/ConnectorBundleLoaderImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/vaadin/client/ui/dd/VAcceptCriterionFactoryImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/vaadin/client/ui/richtextarea/VRichTextToolbar_Images_default_InlineClientBundleGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/com/vaadin/client/ui/richtextarea/VRichTextToolbar_Strings_.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/.generated/org/swfupload/client/Resources_default_InlineClientBundleGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/META-INF/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/VAADIN/themes/vaadin/addons.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/VAADIN/themes/vaadin/styles.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/VAADIN/themes/vaadin/styles.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/VAADIN/themes/vaadin/vaadin.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/WEB-INF/deploy/at.jku.ce.adaptivetesting.VaadinWidgetset/rpcPolicyManifest/manifest.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/5729045B78A6D863D8E28D61FA81CA08.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/C81F8CA7CA7012F31BDE883DF6C99E61.cache.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/at.jku.ce.adaptivetesting.VaadinWidgetset.devmode.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/at.jku.ce.adaptivetesting.VaadinWidgetset.nocache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/compilation-mappings.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/1.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/2.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/3.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/4.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/5.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/6.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/7.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/8.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/9.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/easyuploads.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/VaadinWidgetset.gwt.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/log4j.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/web.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/WEB-INF/deploy/at.jku.ce.adaptivetesting.VaadinWidgetset/rpcPolicyManifest/manifest.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/5729045B78A6D863D8E28D61FA81CA08.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/C81F8CA7CA7012F31BDE883DF6C99E61.cache.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/at.jku.ce.adaptivetesting.VaadinWidgetset.devmode.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/at.jku.ce.adaptivetesting.VaadinWidgetset.nocache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/compilation-mappings.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/1.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/2.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/3.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/4.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/5.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/6.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/7.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/8.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/deferredjs/5729045B78A6D863D8E28D61FA81CA08/9.cache.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/VAADIN/widgetsets/at.jku.ce.adaptivetesting.VaadinWidgetset/easyuploads.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/VaadinWidgetset.gwt.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/log4j.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/AdaptiveTesting-1.1.war" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1.war" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitPossibleAnswers.class" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitPossibleAnswers.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.class" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/VaadinResultView.class" afterPath="$PROJECT_DIR$/target/AdaptiveTesting-1.1/WEB-INF/classes/at/jku/ce/adaptivetesting/vaadin/ui/VaadinResultView.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitPossibleAnswers.class" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitPossibleAnswers.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.class" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/VaadinResultView.class" afterPath="$PROJECT_DIR$/target/classes/at/jku/ce/adaptivetesting/vaadin/ui/VaadinResultView.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/changelog_Stela.txt" afterPath="$PROJECT_DIR$/changelog_Stela.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/AccountRecordData.java" afterPath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/AccountRecordData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/input/AccountNumberInputField.java" afterPath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/input/AccountNumberInputField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/input/CurrencyTextBox.java" afterPath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/input/CurrencyTextBox.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingQuestionManager.java" afterPath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingQuestionManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingRecordInputGrid.java" afterPath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingRecordInputGrid.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitPossibleAnswers.java" afterPath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitPossibleAnswers.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.java" afterPath="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -327,11 +37,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AccountingRecordInputFields.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AccountingRecordInputFields.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingRecordInputFields.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="81" column="56" lean-forward="false" selection-start-line="81" selection-start-column="56" selection-end-line="81" selection-end-column="56" />
+            <state relative-caret-position="1540">
+              <caret line="85" column="54" lean-forward="false" selection-start-line="85" selection-start-column="54" selection-end-line="85" selection-end-column="54" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProfitDataStorage.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitDataStorage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="920">
+              <caret line="59" column="20" lean-forward="false" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProfitQuestion.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="16" column="27" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProfitPossibleAnswers.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitPossibleAnswers.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -340,18 +82,18 @@
       <file leaf-file-name="CurrencyTextBox.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/input/CurrencyTextBox.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1100">
-              <caret line="66" column="45" lean-forward="false" selection-start-line="66" selection-start-column="45" selection-end-line="66" selection-end-column="45" />
+            <state relative-caret-position="440">
+              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AccountNumberInputField.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AccountNumberInputField.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/input/AccountNumberInputField.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="52" column="21" lean-forward="false" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
+            <state relative-caret-position="170">
+              <caret line="31" column="77" lean-forward="false" selection-start-line="31" selection-start-column="77" selection-end-line="31" selection-end-column="77" />
               <folding />
             </state>
           </provider>
@@ -360,8 +102,18 @@
       <file leaf-file-name="changelog_Stela.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/changelog_Stela.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3080">
-              <caret line="154" column="0" lean-forward="false" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+            <state relative-caret-position="3300">
+              <caret line="165" column="22" lean-forward="false" selection-start-line="165" selection-start-column="22" selection-end-line="165" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="changelog_Peter.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/changelog_Peter.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="440">
+              <caret line="22" column="15" lean-forward="false" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -382,26 +134,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="820">
               <caret line="44" column="4" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AccountRecordData.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/AccountRecordData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="940">
-              <caret line="57" column="26" lean-forward="false" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AccountingDataStorage.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/AccountingDataStorage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="700">
-              <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -447,13 +179,14 @@
         <option value="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/QuestionManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/MultiAccountingQuestion.java" />
         <option value="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingRecordInputFields.java" />
-        <option value="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.java" />
         <option value="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingRecordInputGrid.java" />
         <option value="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/AccountRecordData.java" />
         <option value="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/input/AccountNumberInputField.java" />
-        <option value="$PROJECT_DIR$/changelog_Stela.txt" />
         <option value="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingQuestionManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/input/CurrencyTextBox.java" />
+        <option value="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.java" />
+        <option value="$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitPossibleAnswers.java" />
+        <option value="$PROJECT_DIR$/changelog_Stela.txt" />
       </list>
     </option>
   </component>
@@ -542,9 +275,9 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
+    <option name="x" value="-4" />
+    <option name="y" value="10" />
+    <option name="width" value="1932" />
     <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
@@ -562,9 +295,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -852,117 +585,6 @@
       <recent name="C:\_UNI\IT-Projekt\AdaptiveTesting2\src\resources" />
       <recent name="C:\_UNI\IT-Projekt\AdaptiveTesting2\src\main\webapp\VAADIN\themes\vaadin\Images" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
-    <UpdatedFiles>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Updated from server" />
-        <option name="myStatusName" value="Changed on server" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="CHANGED_ON_SERVER" />
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated" />
-          <option name="myStatusName" value="Changed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/changelog_Peter.txt</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/VaadinResultView.java</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Created" />
-          <option name="myStatusName" value="Created" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CREATED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Deleted" />
-          <option name="myStatusName" value="Deleted" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="true" />
-          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Restored" />
-          <option name="myStatusName" value="Will be restored" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="RESTORED" />
-        </FILE-GROUP>
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Modified" />
-        <option name="myStatusName" value="Modified" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MODIFIED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Skipped" />
-        <option name="myStatusName" value="Skipped" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SKIPPED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with conflicts" />
-        <option name="myStatusName" value="Will be merged with conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_CONFLICTS" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with tree conflicts" />
-        <option name="myStatusName" value="Merged with tree conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with property conflicts" />
-        <option name="myStatusName" value="Will be merged with property conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged" />
-        <option name="myStatusName" value="Will be merged" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Not in repository" />
-        <option name="myStatusName" value="Not in repository" />
-        <option name="mySupportsDeletion" value="true" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="UNKNOWN" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally added" />
-        <option name="myStatusName" value="Locally added" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_ADDED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally removed" />
-        <option name="myStatusName" value="Locally removed" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_REMOVED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Switched" />
-        <option name="myStatusName" value="Switched" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SWITCHED" />
-      </FILE-GROUP>
-    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -1535,7 +1157,12 @@
       <workItem from="1498638478159" duration="598000" />
       <workItem from="1498653158443" duration="3988000" />
       <workItem from="1498725483307" duration="4933000" />
-      <workItem from="1498934109975" duration="117000" />
+      <workItem from="1498934109975" duration="764000" />
+      <workItem from="1498985702612" duration="5580000" />
+      <workItem from="1498999484673" duration="2156000" />
+      <workItem from="1499190224938" duration="938000" />
+      <workItem from="1500368653282" duration="2227000" />
+      <workItem from="1500547054135" duration="206000" />
     </task>
     <task id="LOCAL-00001" summary="Alter checkUserAnswer method">
       <created>1493627448527</created>
@@ -1558,11 +1185,18 @@
       <option name="project" value="LOCAL" />
       <updated>1498117054884</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="bugFixing 1 und 2">
+      <created>1498934234270</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1498934234270</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132385000" />
+    <option name="totallyTimeSpent" value="144139000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1574,11 +1208,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-4" y="10" width="1932" height="1056" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.54114366" sideWeight="0.5051414" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23411371" sideWeight="0.50747865" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11140725" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1594,10 +1229,10 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25195095" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11928651" sideWeight="0.49485862" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25195095" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23411371" sideWeight="0.49252138" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22761194" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18910256" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1648,7 +1283,8 @@
     <MESSAGE value="Ausgangssituation, Bearbeitungshinweise, Personalverrechnungstabelle, Verbesserungen" />
     <MESSAGE value="4-stellige Kontennummer, Verbesserungen Bugfixing 1 und 2" />
     <MESSAGE value="bugFixing 1 und 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugFixing 1 und 2" />
+    <MESSAGE value="small improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="small improvements" />
   </component>
   <component name="WindowStateProjectService">
     <state width="178" height="364" key="Git.Branch.Popup" />
@@ -1785,7 +1421,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
           <caret line="35" column="44" lean-forward="false" selection-start-line="35" selection-start-column="44" selection-end-line="35" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1840,13 +1475,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/changelog_Peter.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5980">
-          <caret line="22" column="15" lean-forward="true" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/core/IQuestion.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
@@ -1875,13 +1503,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitDataStorage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="30" column="13" lean-forward="false" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AdaptiveTesting.log">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1889,25 +1510,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="43" column="8" lean-forward="false" selection-start-line="43" selection-start-column="8" selection-end-line="44" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitPossibleAnswers.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="12" lean-forward="false" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/MultipleChoiceQuestion.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="28" column="30" lean-forward="false" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1915,7 +1521,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1980">
           <caret line="116" column="24" lean-forward="false" selection-start-line="116" selection-start-column="24" selection-end-line="116" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1930,15 +1535,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="700">
           <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/changelog_Stela.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3080">
-          <caret line="154" column="0" lean-forward="false" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1946,7 +1542,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="940">
           <caret line="57" column="26" lean-forward="false" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1958,27 +1553,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/input/AccountNumberInputField.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="52" column="21" lean-forward="false" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/QuestionManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2027">
           <caret line="65" column="34" lean-forward="true" selection-start-line="65" selection-start-column="34" selection-end-line="65" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/input/CurrencyTextBox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1100">
-          <caret line="66" column="45" lean-forward="false" selection-start-line="66" selection-start-column="45" selection-end-line="66" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1986,7 +1564,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-67">
           <caret line="36" column="76" lean-forward="true" selection-start-line="36" selection-start-column="76" selection-end-line="36" selection-end-column="76" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1994,7 +1571,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2147">
           <caret line="48" column="30" lean-forward="true" selection-start-line="48" selection-start-column="30" selection-end-line="48" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2010,14 +1586,71 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2573">
           <caret line="317" column="41" lean-forward="true" selection-start-line="317" selection-start-column="41" selection-end-line="317" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/ui/topic/accounting/AccountingRecordInputFields.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="81" column="56" lean-forward="false" selection-start-line="81" selection-start-column="56" selection-end-line="81" selection-end-column="56" />
+        <state relative-caret-position="1540">
+          <caret line="85" column="54" lean-forward="false" selection-start-line="85" selection-start-column="54" selection-end-line="85" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitDataStorage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="920">
+          <caret line="59" column="20" lean-forward="false" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitQuestion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="16" column="27" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/changelog_Peter.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="22" column="15" lean-forward="false" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/topic/accounting/ProfitPossibleAnswers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/input/CurrencyTextBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/changelog_Stela.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3300">
+          <caret line="165" column="22" lean-forward="false" selection-start-line="165" selection-start-column="22" selection-end-line="165" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/at/jku/ce/adaptivetesting/vaadin/input/AccountNumberInputField.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="31" column="77" lean-forward="false" selection-start-line="31" selection-start-column="77" selection-end-line="31" selection-end-column="77" />
           <folding />
         </state>
       </provider>

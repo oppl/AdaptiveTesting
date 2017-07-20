@@ -4,6 +4,7 @@ package at.jku.ce.adaptivetesting.topic.accounting;
  * which is licenced under LGPL v3+. You may find a copy in the source,
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
 public enum ProfitPossibleAnswers {
+
 	Increase("gewinnerhöhend"), Decrease("gewinnmindernd"), NO_Change(
 			"beeinflusst den Gewinn nicht");
 	String name;
