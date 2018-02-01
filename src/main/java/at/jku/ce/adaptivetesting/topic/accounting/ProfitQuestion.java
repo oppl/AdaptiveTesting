@@ -14,8 +14,10 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+import java.io.*;
+
 public class ProfitQuestion extends VerticalLayout implements
-		IQuestion<ProfitDataStorage> {
+		IQuestion<ProfitDataStorage>, Cloneable {
 
 	private static final long serialVersionUID = 6373936654529246422L;
 	private ProfitDataStorage solution;
@@ -27,7 +29,7 @@ public class ProfitQuestion extends VerticalLayout implements
 	private String id;
 
 	public ProfitQuestion(ProfitDataStorage solution, Float difficulty,
-			String questionText, Image questionImage, String id) {
+						  String questionText, Image questionImage, String id) {
 		this(solution, ProfitDataStorage.getEmptyDataStorage(), difficulty,
 				questionText, questionImage, id);
 	}
@@ -59,6 +61,33 @@ public class ProfitQuestion extends VerticalLayout implements
 	@Override
 	public String getQuestionID() {
 		return id;
+	}
+
+	public ProfitQuestion clone() throws CloneNotSupportedException {
+		ProfitQuestion objClone = (ProfitQuestion)super.clone();
+		return objClone;
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public static  ProfitQuestion cloneThroughSerialize(ProfitQuestion t) throws Exception {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		serializeToOutputStream(t, bos);
+		byte[] bytes = bos.toByteArray();
+		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+		return (ProfitQuestion)ois.readObject();
+	}
+
+	private static void serializeToOutputStream(Serializable ser, OutputStream os)
+			throws IOException {
+		ObjectOutputStream oos = null;
+		try {
+			oos = new ObjectOutputStream(os);
+			oos.writeObject(ser);
+			oos.flush();
+		} finally {
+			oos.close();
+		}
 	}
 
 	@Override
