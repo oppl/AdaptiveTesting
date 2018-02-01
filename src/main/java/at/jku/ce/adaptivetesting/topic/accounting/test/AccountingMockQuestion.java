@@ -4,9 +4,9 @@ package at.jku.ce.adaptivetesting.topic.accounting.test;
  * which is licenced under LGPL v3+. You may find a copy in the source,
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
 import at.jku.ce.adaptivetesting.topic.accounting.AccountingDataStorage;
+import at.jku.ce.adaptivetesting.topic.accounting.AccountingQuestion;
 import at.jku.ce.adaptivetesting.vaadin.ui.MockQuestion;
 import at.jku.ce.adaptivetesting.topic.accounting.AccountRecordData;
-import at.jku.ce.adaptivetesting.topic.accounting.AccountingQuestion;
 
 public class AccountingMockQuestion extends
         MockQuestion<AccountingQuestion, AccountingDataStorage> {

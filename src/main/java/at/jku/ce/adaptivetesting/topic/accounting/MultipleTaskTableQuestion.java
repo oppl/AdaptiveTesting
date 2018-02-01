@@ -7,6 +7,7 @@ import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlMultipleTaskTableQuestion;
 import com.vaadin.ui.*;
 
+import java.io.*;
 import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +17,7 @@ import java.util.Vector;
  * Created by oppl on 06/02/2017.
  */
 public class MultipleTaskTableQuestion extends VerticalLayout implements
-        IQuestion<MultipleTaskTableDataStorage> {
+        IQuestion<MultipleTaskTableDataStorage>, Cloneable {
 
     private static final long serialVersionUID = 6373936654529246432L;
     private MultipleTaskTableDataStorage solution;
@@ -29,7 +30,7 @@ public class MultipleTaskTableQuestion extends VerticalLayout implements
     private String id;
 
     public MultipleTaskTableQuestion(MultipleTaskTableDataStorage solution, Float difficulty,
-                          String questionText, Image questionImage, String id) {
+                                     String questionText, Image questionImage, String id) {
         this(solution, MultipleTaskTableDataStorage.getEmptyDataStorage(), difficulty,
                 questionText, questionImage, id);
     }
@@ -89,6 +90,33 @@ public class MultipleTaskTableQuestion extends VerticalLayout implements
     public String getQuestionID() {
         return id;
     }
+
+    public MultipleTaskTableQuestion clone() throws CloneNotSupportedException {
+        MultipleTaskTableQuestion objClone = (MultipleTaskTableQuestion)super.clone();
+        return objClone;
+    }
+
+    @SuppressWarnings("unchecked")
+    public MultipleTaskTableQuestion cloneThroughSerialize(MultipleTaskTableQuestion t) throws Exception {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        serializeToOutputStream(t, bos);
+        byte[] bytes = bos.toByteArray();
+        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+        return (MultipleTaskTableQuestion)ois.readObject();
+    }
+
+    private static void serializeToOutputStream(Serializable ser, OutputStream os)
+            throws IOException {
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(os);
+            oos.writeObject(ser);
+            oos.flush();
+        } finally {
+            oos.close();
+        }
+    }
+
 
     @Override
     public String getQuestionText() {

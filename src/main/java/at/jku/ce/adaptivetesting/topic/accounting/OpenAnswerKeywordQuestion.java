@@ -5,19 +5,20 @@ import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlOpenAnswerKeywordQuestion;
-import com.sun.jdi.FloatValue;
+//import com.sun.jdi.FloatValue;
 import com.vaadin.data.util.MethodProperty;
 import com.vaadin.event.ListenerMethod;
 import com.vaadin.ui.*;
 import org.apache.commons.lang.StringUtils;
 
+import java.io.*;
 import java.util.Vector;
 
 /**
  * Created by oppl on 07/02/2017.
  */
 public class OpenAnswerKeywordQuestion extends VerticalLayout implements
-        IQuestion<OpenAnswerKeywordDataStorage> {
+        IQuestion<OpenAnswerKeywordDataStorage>, Cloneable {
 
     private static final long serialVersionUID = 6373936654529246422L;
     private OpenAnswerKeywordDataStorage solution;
@@ -51,7 +52,7 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
             StringBuffer buffer = new StringBuffer();
             buffer.append("Ihre Antwort muss folgende Schlüsselwörter enthalten:\n");
             for (String[] keywords: prefilled.getAnswers()) {
-                buffer.append("Eines der folgdenden Wörter: ");
+                buffer.append("Eines der folgenden Wörter: ");
                 for (String keyword: keywords) {
                     buffer.append(keyword);
                     if (!keywords[keywords.length-1].equals(keyword)) buffer.append(" ODER ");
@@ -72,9 +73,36 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
     }
 
     @Override
-    public String getQuestionID() {
+    public String    getQuestionID() {
         return id;
     }
+
+    public OpenAnswerKeywordQuestion clone() throws CloneNotSupportedException {
+        OpenAnswerKeywordQuestion objClone = (OpenAnswerKeywordQuestion)super.clone();
+        return objClone;
+    }
+
+    @SuppressWarnings("unchecked")
+    public OpenAnswerKeywordQuestion cloneThroughSerialize(OpenAnswerKeywordQuestion t) throws Exception {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        serializeToOutputStream(t, bos);
+        byte[] bytes = bos.toByteArray();
+        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+        return (OpenAnswerKeywordQuestion)ois.readObject();
+    }
+
+    private static void serializeToOutputStream(Serializable ser, OutputStream os)
+            throws IOException {
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(os);
+            oos.writeObject(ser);
+            oos.flush();
+        } finally {
+            oos.close();
+        }
+    }
+
 
     @Override
     public String getQuestionText() {

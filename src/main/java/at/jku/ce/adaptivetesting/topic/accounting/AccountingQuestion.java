@@ -3,6 +3,7 @@ package at.jku.ce.adaptivetesting.topic.accounting;
 /*This file is part of the project "Reisisoft Adaptive Testing",
  * which is licenced under LGPL v3+. You may find a copy in the source,
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
+import java.io.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +17,7 @@ import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlAccountingQuestion;
 import com.vaadin.ui.Image;
 
 public class AccountingQuestion extends AccountingRecordInputGrid implements
-		IQuestion<AccountingDataStorage> {
+		IQuestion<AccountingDataStorage>, Cloneable {
 
 	private String id;
 	private static final long serialVersionUID = 5932474069705038565L;
@@ -67,6 +68,33 @@ public class AccountingQuestion extends AccountingRecordInputGrid implements
 	public AccountingDataStorage getSolution() {
 		return solution;
 	}
+
+	public AccountingQuestion clone() throws CloneNotSupportedException {
+		AccountingQuestion objClone = (AccountingQuestion)super.clone();
+		return objClone;
+	}
+
+	@SuppressWarnings("unchecked")
+	public  AccountingQuestion cloneThroughSerialize(AccountingQuestion t) throws Exception {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		serializeToOutputStream(t, bos);
+		byte[] bytes = bos.toByteArray();
+		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+		return (AccountingQuestion)ois.readObject();
+	}
+
+	private static void serializeToOutputStream(Serializable ser, OutputStream os)
+			throws IOException {
+		ObjectOutputStream oos = null;
+		try {
+			oos = new ObjectOutputStream(os);
+			oos.writeObject(ser);
+			oos.flush();
+		} finally {
+			oos.close();
+		}
+	}
+
 
 	@Override
 	public AccountingDataStorage getUserAnswer() {

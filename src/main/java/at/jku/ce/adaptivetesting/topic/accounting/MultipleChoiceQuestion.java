@@ -7,13 +7,14 @@ import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
 import at.jku.ce.adaptivetesting.xml.topic.accounting.XmlMultipleChoiceQuestion;
 import com.vaadin.ui.*;
 
+import java.io.*;
 import java.util.*;
 
 /**
  * Created by oppl on 06/02/2017.
  */
 public class MultipleChoiceQuestion extends VerticalLayout implements
-        IQuestion<MultipleChoiceDataStorage> {
+        IQuestion<MultipleChoiceDataStorage>, Cloneable {
 
     private static final long serialVersionUID = 6373936654529246423L;
     private MultipleChoiceDataStorage solution;
@@ -25,7 +26,7 @@ public class MultipleChoiceQuestion extends VerticalLayout implements
     private String id;
 
     public MultipleChoiceQuestion(MultipleChoiceDataStorage solution, Float difficulty,
-                          String questionText, Image questionImage, String id) {
+                                  String questionText, Image questionImage, String id) {
         this(solution, MultipleChoiceDataStorage.getEmptyDataStorage(), difficulty,
                 questionText, questionImage, id);
     }
@@ -120,6 +121,33 @@ public class MultipleChoiceQuestion extends VerticalLayout implements
     public float getDifficulty() {
         return difficulty;
     }
+
+    public MultipleChoiceQuestion clone() throws CloneNotSupportedException {
+        MultipleChoiceQuestion objClone = (MultipleChoiceQuestion)super.clone();
+        return objClone;
+    }
+
+    @SuppressWarnings("unchecked")
+    public MultipleChoiceQuestion cloneThroughSerialize(MultipleChoiceQuestion t) throws Exception {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        serializeToOutputStream(t, bos);
+        byte[] bytes = bos.toByteArray();
+        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+        return (MultipleChoiceQuestion)ois.readObject();
+    }
+
+    private static void serializeToOutputStream(Serializable ser, OutputStream os)
+            throws IOException {
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(os);
+            oos.writeObject(ser);
+            oos.flush();
+        } finally {
+            oos.close();
+        }
+    }
+
 
     @Override
     public XmlQuestionData<MultipleChoiceDataStorage> toXMLRepresentation() {

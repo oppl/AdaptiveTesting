@@ -1,4 +1,5 @@
 package at.jku.ce.adaptivetesting.vaadin.ui;
+//package at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting;
 
 /*This file is part of the project "Reisisoft Adaptive Testing",
  * which is licenced under LGPL v3+. You may find a copy in the source,
@@ -15,6 +16,7 @@ import at.jku.ce.adaptivetesting.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.html.HtmlUtils;
 import at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting.AccountingQuestionManager;
 
+import at.jku.ce.adaptivetesting.vaadin.ui.topic.accounting.QuestionLoaderSingleton;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -50,7 +52,7 @@ public class VaadinUI extends UI {
 		start.setHeight("30%");
 		//mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h1", "Willkommen zur " + productData)));
 		mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h2", "Bitte klicke auf den <b>" +
-						start.getCaption() + "</b> Button, um mit dem Rechnungswesentest zu beginnen!")));
+				start.getCaption() + "</b> Button, um mit dem Rechnungswesentest zu beginnen!")));
 		mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h3",
 				"<i>Hinweis: Während des Tests darf die <b>Zurück-Taste</b> nicht zur Navigation " +
 						"verwendet werden!</b>")));
@@ -60,8 +62,15 @@ public class VaadinUI extends UI {
 		navigator.addView(Views.DEFAULT.toString(), mainScreen);
 		// Question view
 		// Change this to the questionManager you like
+		//--old version:
 		manager = new AccountingQuestionManager("Rechnungswesentest");
+
+
+
+		//new Version
+		//manager = new StaticAccountingQuestionManager("Rechnungswesentest");
 		// initial load of questions for the student quiz
+		//da ist der fehler
 		manager.loadQuestions();
 		// add views
 		navigator.addView(Views.TEST.toString(), manager);
@@ -79,6 +88,7 @@ public class VaadinUI extends UI {
 		protected void servletInitialized() throws ServletException {
 			super.servletInitialized();
 			// Get the question folder as defined in WEB-INF/web.xml
+			//questionFolderName = "C:\\Users\\Anderas\\Documents\\CAT\\AdaptiveTesting2-rollout\\apache-tomcat-8.5.23\\temp\\adaptiveTesting\\questions";
 			questionFolderName = getServletConfig().getServletContext().getInitParameter(questionFolderKey);
 			File fQf = new File(questionFolderName);
 			boolean isWorking = fQf.exists() && fQf.isDirectory() || fQf.mkdirs();
@@ -86,6 +96,7 @@ public class VaadinUI extends UI {
 				questionFolderName = null;
 			}
 			// Get the result folder as defined in WEB-INF/web.xml
+			//resultFolderName = "C:\\Users\\Anderas\\Documents\\CAT\\AdaptiveTesting2-rollout\\apache-tomcat-8.5.23\\temp\\adaptiveTesting\\results";
 			resultFolderName = getServletConfig().getServletContext().getInitParameter(resultFolderKey);
 			File fRf = new File(resultFolderName);
 			isWorking = fRf.exists() && fRf.isDirectory() || fRf.mkdirs();
@@ -93,6 +104,7 @@ public class VaadinUI extends UI {
 				resultFolderName = null;
 			}
 			// Get the image folder as defined in WEB-INF/web.xml
+			//imageFolderName = "C:\\Users\\Anderas\\Documents\\CAT\\AdaptiveTesting2-rollout\\apache-tomcat-8.5.23\\temp\\adaptiveTesting\\images";
 			imageFolderName = getServletConfig().getServletContext().getInitParameter(imageFolderKey);
 			File fIf = new File(imageFolderName);
 			isWorking = fIf.exists() && fIf.isDirectory() || fIf.mkdirs();
@@ -100,6 +112,7 @@ public class VaadinUI extends UI {
 				imageFolderName = null;
 			}
 			// Get the log location as defined in WEB-INF/web.xml
+			//logLocation = "C:\\Users\\Anderas\\Documents\\CAT\\AdaptiveTesting2-rollout\\apache-tomcat-8.5.23\\temp\\adaptiveTesting\\logs\\AdaptiveTesting.log";
 			logLocation = getServletConfig().getServletContext().getInitParameter(logLocKey);
 			File fLog = new File(logLocation);
 			try {

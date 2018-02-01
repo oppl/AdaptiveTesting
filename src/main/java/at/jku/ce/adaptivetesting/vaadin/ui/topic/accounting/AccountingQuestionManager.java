@@ -44,6 +44,7 @@ public class AccountingQuestionManager extends QuestionManager {
 	public AccountingQuestionManager(String quizName) {
 		super(quizName);
 
+		//graphical Interface Kontenplan
 		Button openKontenplan = new Button("Kontenplan");
 		openKontenplan.addClickListener(e -> {
 			openKontenplan.setEnabled(false);
@@ -63,6 +64,7 @@ public class AccountingQuestionManager extends QuestionManager {
 
 		});
 
+		//graphical Interface Unternehmensbeschreibung
 		Button openCompanyDescription = new Button("Unternehmensbeschreibung");
 		openCompanyDescription.addClickListener(e -> {
 			Window window = new Window("Unternehmensbeschreibung");
@@ -82,6 +84,7 @@ public class AccountingQuestionManager extends QuestionManager {
 			getUI().addWindow(window);
 		});
 
+		//graphical Interface Personalverrechnungstabelle
 		Button openPersBilling = new Button("Personalverrechnungstabelle");
 		openPersBilling.addClickListener(e -> {
 			Window window = new Window("Personalverrechnungstabelle");
@@ -102,6 +105,7 @@ public class AccountingQuestionManager extends QuestionManager {
 			getUI().addWindow(window);
 		});
 
+		//graphical Interface Taschenrechner
 		Button openCalculator = new Button("Taschenrechner");
 		openCalculator.addClickListener(e -> {
 			//Calculator Calculator = new Calculator();
@@ -115,6 +119,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		addHelpButton(openCalculator);
 	}
 
+	//just a layout used for the Personalverrechnungstabelle.jpg
 	private VerticalLayout assemblePersBilling() {
 
 		VerticalLayout layout = new VerticalLayout();
@@ -138,6 +143,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		return layout;
 	}
 
+	//data of the students with the question asked at the beginning
 	@Override
 	public void startQuiz(StudentData student) {
 		LogHelper.logInfo("loading private questions");
@@ -146,6 +152,8 @@ public class AccountingQuestionManager extends QuestionManager {
 		final Component[] components = new Component[getComponentCount()];
 		for (int i = 0; i < components.length; i++) {
 			components[i] = getComponent(i);
+
+
 		}
 		removeAllComponents();
 		// Create first page
@@ -239,6 +247,7 @@ public class AccountingQuestionManager extends QuestionManager {
 //		layout.setComponentAlignment(components[0], Alignment.MIDDLE_CENTER);
 	}
 
+	//second page
 	public void displayCompanyInfo(Component[] components) {
 		// Create second page
 		VerticalLayout layout = assembleCompanyDescription();
@@ -253,6 +262,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		addComponent(layout);
 	}
 
+	//describes what happens, when you click on the weiter button
 	public void quizRules(Component[] components){
 
 		VerticalLayout layout = assemleRules();
@@ -270,6 +280,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		addComponent(layout);
 	}
 
+	//vertical layout of the description of the ausgangssituation
 	private VerticalLayout assembleCompanyDescription() {
 		VerticalLayout layout = new VerticalLayout();
 		addComponent(layout);
@@ -279,10 +290,10 @@ public class AccountingQuestionManager extends QuestionManager {
 				"<caption style=\"font-size:25px\"><strong>Ausgangssituation</strong></caption>" +
 				"<tr>" +
 				"<td colspan=\\\"4\\\"><strong><br>Sie sind als selbständiger " +
-					"Steuerberater und Buchhalter tätig.<br>" +
-					"Zu deinen Kunden gehören die unten angeführten Unternehmen.<br>" +
-					"Für diese übernehmen Sie die Buchhaltung, d.h. Sie verbuchen die " +
-					"angeführten Geschäftsfälle aus deren Sicht.</strong></td>" +
+				"Steuerberater und Buchhalter tätig.<br>" +
+				"Zu deinen Kunden gehören die unten angeführten Unternehmen.<br>" +
+				"Für diese übernehmen Sie die Buchhaltung, d.h. Sie verbuchen die " +
+				"angeführten Geschäftsfälle aus deren Sicht.</strong></td>" +
 				"</tr>" +
 				"</tbody>" +
 				"</table>", ContentMode.HTML);
@@ -356,7 +367,7 @@ public class AccountingQuestionManager extends QuestionManager {
 				"</tr>" +
 				"<tr>" +
 				"<td colspan=\"4\"><strong><br>Hinweise zu den laufenden " +
-					"und den Um- und Nachbuchungen</strong></td>" +
+				"und den Um- und Nachbuchungen</strong></td>" +
 				"</tr>" +
 				"<td>&emsp;&emsp;&emsp;</td>" +
 				"<td>&emsp;&emsp;&emsp;</td>" +
@@ -365,10 +376,10 @@ public class AccountingQuestionManager extends QuestionManager {
 				"<td>Buchung:</td>" +
 				"<td>&emsp;&emsp;&emsp;</td>" +
 				"<td colspan=\"3\">Sofern nichts Anderes angeführt ist, wird " +
-					"erfolgsorientiert und nicht <br> bestandsorientiert gebucht. " +
-					"D.h., sofern nichts anderes angeführt ist, wird<br>darauf " +
-					"abgezielt, den Gewinn niedrig zu halten, um Steuerabgaben " +
-					"gering<br>zu halten.</td>" +
+				"erfolgsorientiert und nicht <br> bestandsorientiert gebucht. " +
+				"D.h., sofern nichts anderes angeführt ist, wird<br>darauf " +
+				"abgezielt, den Gewinn niedrig zu halten, um Steuerabgaben " +
+				"gering<br>zu halten.</td>" +
 				"</tr>" +
 				"<tr>" +
 				"<td>Abschlussjahr:</td>" +
@@ -388,15 +399,15 @@ public class AccountingQuestionManager extends QuestionManager {
 				"<td>Zeitliche:<br> Abgrenzung</td>" +
 				"<td>&emsp;&emsp;&emsp;</td>" +
 				"<td colspan=\"3\">Die Abgrenzung erfolgt am Jahresende im Rahmen " +
-					"der Um- und<br>Nachbuchungen.</td>" +
+				"der Um- und<br>Nachbuchungen.</td>" +
 				"</tr>" +
 				"<tr>" +
 				"<td>Geringwertig <br> Wirtschaftsgüter</td>" +
 				"<td>&emsp;&emsp;&emsp;</td>" +
 				"<td colspan=\"3\">Sofern nichts Anderes angeführt ist, wird für " +
-					"geringwertige <br> Wirtschaftsgüter mit Anschaffungs- bzw. " +
-					"Herstellungskosten bis 400,00<br>die Bewertungsfreiheit nach " +
-					"§ 13 EStG (Sofortabschreibung) in Anspruch<br>genommen.</td>" +
+				"geringwertige <br> Wirtschaftsgüter mit Anschaffungs- bzw. " +
+				"Herstellungskosten bis 400,00<br>die Bewertungsfreiheit nach " +
+				"§ 13 EStG (Sofortabschreibung) in Anspruch<br>genommen.</td>" +
 				"</tr>" +
 				"</tbody>" +
 				"</table>", ContentMode.HTML);
@@ -411,6 +422,7 @@ public class AccountingQuestionManager extends QuestionManager {
 		return layout;
 	}
 
+	//vertical layout of the description of the Bearbeitungshinweise
 	private VerticalLayout assemleRules() {
 
 		VerticalLayout layout = new VerticalLayout();
@@ -421,27 +433,27 @@ public class AccountingQuestionManager extends QuestionManager {
 				"<tr>" +
 				"<td valign=\"top\"><br>1.</td>" +
 				"<td><br>Wir bitten Sie die Aufgaben <strong>alleine, ohne Hilfe</strong> " +
-					"von anderen Personen oder Unterlagen<br> zu lösen.</td>" +
+				"von anderen Personen oder Unterlagen<br> zu lösen.</td>" +
 				"</tr>" +
 				"<tr>" +
 				"<td valign=\"top\">2.</td>" +
 				"<td>Sie können den <strong>Kontenplan</strong> und einen <strong>" +
-					"Taschenrechner</strong> verwenden.</td>" +
+				"Taschenrechner</strong> verwenden.</td>" +
 				"</tr>" +
 				"<tr>" +
 				"<td valign=\"top\">3.</td>" +
 				"<td>Wichtig ist, dass Sie bei der Angabe der <strong>" +
-					"Kontennummer</strong> und des <strong>Kontennamens</strong> die<br><strong>" +
-					"genaue Nummer bzw. Bezeichnung</strong> verwenden. Bspw. wird eine Aufgabe " +
-					"falsch<br>gewertet, <u>wenn Sie die Nummer 30 anstatt 33 für das " +
-					"Lieferverbindlichkeiten wählen oder<br> Sie den Kontennamen \"" +
-					"Lieferverbindlichkeiten\" anstatt \"AATech\"</u> (bei personifiziertem<br>" +
-					"Lieferantenkonto) für den Lieferanten wählen.</td>" +
+				"Kontennummer</strong> und des <strong>Kontennamens</strong> die<br><strong>" +
+				"genaue Nummer bzw. Bezeichnung</strong> verwenden. Bspw. wird eine Aufgabe " +
+				"falsch<br>gewertet, <u>wenn Sie die Nummer 30 anstatt 33 für das " +
+				"Lieferverbindlichkeiten wählen oder<br> Sie den Kontennamen \"" +
+				"Lieferverbindlichkeiten\" anstatt \"AATech\"</u> (bei personifiziertem<br>" +
+				"Lieferantenkonto) für den Lieferanten wählen.</td>" +
 				"</tr>" +
 				"<tr>" +
 				"<td valign=\"top\">4.</td>" +
 				"<td>Die <strong>folgende Abbildung</strong> zeigt, wie das in diesem Test verwendete Onlineformular " +
-					"ausgefüllt<br>werden soll, um einen Geschäftsfall korrekt zu verbuchen.</td>" +
+				"ausgefüllt<br>werden soll, um einen Geschäftsfall korrekt zu verbuchen.</td>" +
 				"</tr>" +
 				"</tbody>" +
 				"</table>", ContentMode.HTML);
@@ -465,225 +477,29 @@ public class AccountingQuestionManager extends QuestionManager {
 		return layout;
 	}
 
-	public int loadQuestions(File containingFolder) throws JAXBException,
-			IOException {
-		assert containingFolder.exists() && containingFolder.isDirectory();
-		JAXBContext accountingJAXB = JAXBContext.newInstance(
-				XmlAccountingQuestion.class, AccountingDataStorage.class);
-		JAXBContext multiAccountingJAXB = JAXBContext.newInstance(
-				XmlMultiAccountingQuestion.class, MultiAccountingDataStorage.class);
-		JAXBContext profitJAXB = JAXBContext.newInstance(
-				XmlProfitQuestion.class, ProfitDataStorage.class);
-		JAXBContext multipleChoiceJAXB = JAXBContext.newInstance(
-				XmlMultipleChoiceQuestion.class, MultipleChoiceDataStorage.class);
-		JAXBContext multipleTaskTableJAXB = JAXBContext.newInstance(
-				XmlMultipleTaskTableQuestion.class, MultipleTaskTableDataStorage.class);
-		JAXBContext openAnswerKeywordJAXB = JAXBContext.newInstance(
-				XmlOpenAnswerKeywordQuestion.class, OpenAnswerKeywordDataStorage.class);
-
-
-		Unmarshaller accountingUnmarshaller = accountingJAXB
-				.createUnmarshaller();
-		Unmarshaller multiAccountingUnmarshaller = multiAccountingJAXB
-				.createUnmarshaller();
-		Unmarshaller profitUnmarshaller = profitJAXB.createUnmarshaller();
-		Unmarshaller multipleChoiceUnmarshaller = multipleChoiceJAXB.createUnmarshaller();
-		Unmarshaller multipleTaskTableUnmarshaller = multipleTaskTableJAXB.createUnmarshaller();
-		Unmarshaller openAnswerKeywordUnmarshaller = openAnswerKeywordJAXB.createUnmarshaller();
-
-		final List<AccountingQuestion> accountingList = new ArrayList<>();
-		final List<MultiAccountingQuestion> multiAccountingList = new ArrayList<>();
-		final List<ProfitQuestion> profitList = new ArrayList<>();
-		final List<MultipleChoiceQuestion> multipleChoiceList = new ArrayList<>();
-		final List<MultipleTaskTableQuestion> multipleTaskTableList = new ArrayList<>();
-		final List<OpenAnswerKeywordQuestion> openAnswerKeywordList = new ArrayList<>();
-
-		String accountingRootElement = XmlAccountingQuestion.class
-				.getAnnotation(XmlRootElement.class).name();
-		String multiAccountingRootElement = XmlMultiAccountingQuestion.class
-				.getAnnotation(XmlRootElement.class).name();
-		String profitRootElement = XmlProfitQuestion.class.getAnnotation(
-				XmlRootElement.class).name();
-		String multipleChoiceRootElement = XmlMultipleChoiceQuestion.class.getAnnotation(
-				XmlRootElement.class).name();
-		String multipleTaskTableRootElement = XmlMultipleTaskTableQuestion.class.getAnnotation(
-				XmlRootElement.class).name();
-		String openAnswerKeywordRootElement = XmlOpenAnswerKeywordQuestion.class.getAnnotation(
-				XmlRootElement.class).name();
-
-		File[] questions = containingFolder.listFiles(f -> f
-				.isFile()
-				&& (f.canRead() || f.setReadable(true))
-				&& f.getName().endsWith(".xml"));
-
-		// read all questions
-		LogHelper.logInfo("Found "+questions.length+" potential question(s)");
-		int successfullyLoaded = 0;
-		for (File f : questions) {
-			BufferedReader reader = null;
-			StringBuilder sb = new StringBuilder();
-			try {
-				reader = new BufferedReader(new InputStreamReader(
-						new BOMInputStream(new FileInputStream(f),
-								ByteOrderMark.UTF_8), "UTF8"));
-
-				String line = null;
-				while ((line = reader.readLine()) != null) {
-					sb.append(line);
-				}
-			} finally {
-				if (reader != null) {
-					reader.close();
-				}
-			}
-			String fileAsString = sb.toString().replaceAll("& ", "&amp; ");
-			File image = checkImageAvailable(containingFolder, f.getName());
-			if (fileAsString.contains(profitRootElement)) {
-				// Profit Question
-				questionLoadedInfo(f, successfullyLoaded, ProfitQuestion.class.getName());
-				XmlProfitQuestion question = (XmlProfitQuestion) profitUnmarshaller
-						.unmarshal(new StringReader(fileAsString));
-				ProfitQuestion pq = AccountingXmlHelper.fromXml(question, f.getName());
-				if (image!=null) pq.setQuestionImage(new Image("",new FileResource(image)));
-				profitList.add(pq);
-				successfullyLoaded++;
-			} else if (fileAsString.contains(accountingRootElement)) {
-				// Accounting Question
-				questionLoadedInfo(f, successfullyLoaded, AccountingQuestion.class.getName());
-				XmlAccountingQuestion question = (XmlAccountingQuestion) accountingUnmarshaller
-						.unmarshal(new StringReader(fileAsString));
-				AccountingQuestion aq = AccountingXmlHelper.fromXml(question, f.getName());
-				if (image != null) aq.setQuestionImage(new Image("", new FileResource(image)));
-				accountingList.add(aq);
-				successfullyLoaded++;
-			} else if (fileAsString.contains(multiAccountingRootElement)) {
-				// Multi Accounting Question
-				questionLoadedInfo(f, successfullyLoaded, MultiAccountingQuestion.class.getName());
-				XmlMultiAccountingQuestion question = (XmlMultiAccountingQuestion) multiAccountingUnmarshaller
-						.unmarshal(new StringReader(fileAsString));
-				MultiAccountingQuestion maq = AccountingXmlHelper.fromXml(question, f.getName());
-				if (image != null) maq.setQuestionImage(new Image("", new FileResource(image)));
-				multiAccountingList.add(maq);
-				successfullyLoaded++;
-			}
-			else if (fileAsString.contains(multipleChoiceRootElement)) {
-				// Multiple Choice Question
-				questionLoadedInfo(f, successfullyLoaded, MultipleChoiceQuestion.class.getName());
-				XmlMultipleChoiceQuestion question = (XmlMultipleChoiceQuestion) multipleChoiceUnmarshaller
-						.unmarshal(new StringReader(fileAsString));
-				MultipleChoiceQuestion mq = AccountingXmlHelper.fromXml(question, f.getName());
-				if (image!=null) mq.setQuestionImage(new Image("",new FileResource(image)));
-				multipleChoiceList.add(mq);
-				successfullyLoaded++;
-			}
-			else if (fileAsString.contains(multipleTaskTableRootElement)) {
-				// Multiple Task Table Question
-				questionLoadedInfo(f, successfullyLoaded, MultipleTaskTableQuestion.class.getName());
-				XmlMultipleTaskTableQuestion question = (XmlMultipleTaskTableQuestion) multipleTaskTableUnmarshaller
-						.unmarshal(new StringReader(fileAsString));
-				MultipleTaskTableQuestion mtt = AccountingXmlHelper.fromXml(question, f.getName());
-				if (image!=null) mtt.setQuestionImage(new Image("",new FileResource(image)));
-				multipleTaskTableList.add(mtt);
-				successfullyLoaded++;
-			}
-			else if (fileAsString.contains(openAnswerKeywordRootElement)) {
-				// Open Answer Keyword Question
-				questionLoadedInfo(f, successfullyLoaded, OpenAnswerKeywordQuestion.class.getName());
-				XmlOpenAnswerKeywordQuestion question = (XmlOpenAnswerKeywordQuestion) openAnswerKeywordUnmarshaller
-						.unmarshal(new StringReader(fileAsString));
-				OpenAnswerKeywordQuestion oak = AccountingXmlHelper.fromXml(question, f.getName());
-				if (image!=null) oak.setQuestionImage(new Image("",new FileResource(image)));
-				openAnswerKeywordList.add(oak);
-				successfullyLoaded++;
-			}
-			else {
-				LogHelper.logInfo("QuestionManager: item type not supported for "+f.getName()+", ignoring file.");
-				continue;
-			}
-		}
+	public int loadQuestions(File containingFolder) throws Exception {
 		// Add question to the question manager
+
+		KeeperOfQuestionsProvider prov = new KeeperOfQuestionsProvider();
+
+		List<AccountingQuestion> accountingList = prov.getAccountingList();
+		List<MultiAccountingQuestion> multiAccountingList = prov.getMultiAccountingList();
+		List<ProfitQuestion> profitList = prov.getProfitList();
+		List<MultipleChoiceQuestion> multipleChoiceList = prov.getMultipleChoiceList();
+		List<MultipleTaskTableQuestion> multipleTaskTableList = prov.getMultipleTaskTableList();
+		List<OpenAnswerKeywordQuestion> openAnswerKeywordList = prov.getOpenAnswerKeywordList();
+
 		accountingList.forEach(q -> addQuestion(q));
 		multiAccountingList.forEach(q -> addQuestion(q));
 		profitList.forEach(q -> addQuestion(q));
 		multipleChoiceList.forEach(q -> addQuestion(q));
 		multipleTaskTableList.forEach(q -> addQuestion(q));
 		openAnswerKeywordList.forEach(q -> addQuestion(q));
-		LogHelper.logInfo("Successfully loaded "+successfullyLoaded+" question(s).");
 
-		/*		MultipleChoiceDataStorage mds = new MultipleChoiceDataStorage();
-		HashMap<Integer,String> answerOptions = new HashMap<>();
-		answerOptions.put(new Integer(1),"gewinnerhöhend");
-		answerOptions.put(new Integer(2),"gewinnerniedrigend");
-		answerOptions.put(new Integer(3),"beeinflusst nicht");
-		mds.setAnswerOptions(answerOptions);
-		Vector<Integer> correctAnswers = new Vector<>();
-		correctAnswers.add(new Integer(1));
-		correctAnswers.add(new Integer(2));
-		mds.setCorrectAnswers(correctAnswers);
-		XmlMultipleChoiceQuestion xml = new XmlMultipleChoiceQuestion(mds,"test",1.0f);
-		Marshaller jaxbMarshaller = multipleChoiceJAXB.createMarshaller();
-		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		jaxbMarshaller.marshal(xml, System.out);
+		LogHelper.logInfo("!!!!!!!!!!!:"+ accountingList.isEmpty()  + accountingList.size());
+		LogHelper.logInfo("Successfully loaded existing question(s).");
 
-		MultiAccountingDataStorage ads = new MultiAccountingDataStorage();
-		AccountRecordData[] ard1 = new AccountRecordData[3];
-		ard1[0] = new AccountRecordData("test1-1",1.0f,10);
-		ard1[1] = new AccountRecordData("test1-2",1.0f,10);
-		ard1[2] = new AccountRecordData("test1-3",1.0f,10);
-		AccountRecordData[] ard2 = new AccountRecordData[3];
-		ard2[0] = new AccountRecordData("test2-1",1.0f,10);
-		ard2[1] = new AccountRecordData("test2-2",1.0f,10);
-		ard2[2] = new AccountRecordData("test2-3",1.0f,10);
-		ads.addHaben(ard1);
-		ads.addHaben(ard2);
-		ads.addSoll(ard1);
-		ads.addSoll(ard2);
-		XmlMultiAccountingQuestion xml = new XmlMultiAccountingQuestion(ads,"test",1.0f);
-		Marshaller jaxbMarshaller = multiAccountingJAXB.createMarshaller();
-		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		jaxbMarshaller.marshal(xml, System.out);
-
-		MultipleTaskTableDataStorage tts = new MultipleTaskTableDataStorage();
-		tts.addAnswerColumns(new Integer(1),"USt");
-		tts.addAnswerColumns(new Integer(2),"Nettobetrag");
-		tts.addAnswerColumns(new Integer(3), "Bruttobetrag");
-		tts.addTask(new Integer(1),"531,33 inkl. 20 % USt");
-		tts.addTask(new Integer(2),"1255,40 brutto (20 %)");
-		tts.addTask(new Integer(3),"163,50 + 10 % USt");
-		tts.addTask(new Integer(4),"800 exkl. 10 % USt");
-		tts.addCorrectAnswer(new Integer(11),86.89f);
-		tts.addCorrectAnswer(new Integer(12),434.44f);
-		tts.addCorrectAnswer(new Integer(13),521.33f);
-		tts.addCorrectAnswer(new Integer(21),209.23f);
-		tts.addCorrectAnswer(new Integer(22),1046.17f);
-		tts.addCorrectAnswer(new Integer(23),1255.40f);
-		tts.addCorrectAnswer(new Integer(31),16.35f);
-		tts.addCorrectAnswer(new Integer(32),163.50f);
-		tts.addCorrectAnswer(new Integer(33),179.85f);
-		tts.addCorrectAnswer(new Integer(41),80.00f);
-		tts.addCorrectAnswer(new Integer(42),800.00f);
-		tts.addCorrectAnswer(new Integer(43),880.00f);
-		XmlMultipleTaskTableQuestion xml = new XmlMultipleTaskTableQuestion(tts,"Berechnen Sie:",1.0f);
-		Marshaller jaxbMarshaller = multipleTaskTableJAXB.createMarshaller();
-		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		jaxbMarshaller.marshal(xml, System.out);
-
-		OpenAnswerKeywordDataStorage oak = new OpenAnswerKeywordDataStorage();
-		Vector<String> requiredKeyword = new Vector<>();
-		requiredKeyword.add("Test11");
-		requiredKeyword.add("Test12");
-		oak.addAnswer(requiredKeyword.toArray(new String[]{}));
-		Vector<String> requiredKeyword1 = new Vector<>();
-		requiredKeyword1.add("Test21");
-		requiredKeyword1.add("Test22");
-		requiredKeyword1.add("Test23");
-		oak.addAnswer(requiredKeyword1.toArray(new String[]{}));
-		XmlOpenAnswerKeywordQuestion xml = new XmlOpenAnswerKeywordQuestion(oak,"Dies ist ein Test.",0.5f);
-		Marshaller jaxbMarshaller = openAnswerKeywordJAXB.createMarshaller();
-		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		jaxbMarshaller.marshal(xml, System.out);*/
-
-		return questions.length;
+		return prov.getSize();
 	}
 
 	private File checkImageAvailable(File containingFolder, String fileName) {
@@ -707,9 +523,13 @@ public class AccountingQuestionManager extends QuestionManager {
 	@Override
 	public void loadQuestions() {
 		try {
+
 			loadQuestions(new File(VaadinUI.Servlet.getQuestionFolderName()));
+
 		} catch (JAXBException | IOException e1) {
 			LogHelper.logThrowable(e1);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

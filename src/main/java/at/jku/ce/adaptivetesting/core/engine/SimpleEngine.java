@@ -11,9 +11,7 @@ import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.r.RProvider;
-import at.jku.ce.adaptivetesting.r.RProviderOld;
-import com.github.rcaller.rstuff.RCaller;
-import com.github.rcaller.rstuff.RCode;
+import at.jku.ce.adaptivetesting.r.RServant;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
@@ -33,7 +31,8 @@ public class SimpleEngine implements IEngine {
 	private IQuestion<? extends AnswerStorage> question;
 	private String r_itemdiff, r_libFolder;
 	private RProvider rProvider;
-	private RProviderOld rProviderOld;
+	private RServant rServant;
+	//private RProviderOld rProviderOld;
 	private StudentData student;
 
 	/**
@@ -233,7 +232,8 @@ public class SimpleEngine implements IEngine {
 			// Execute R code and get result
 			// [0] -> next item's difficulty [1] -> current competence
 			// [2] ->Delta to result
-			double[] result = rProvider.execute(RCodeScript, rNameReturn);
+			double[] result = rServant.execute(RCodeScript, rNameReturn);
+			//geht: double[] result = rProvider.execute(RCodeScript, rNameReturn);
 			LogHelper.logInfo("StudentID: "+ student.getStudentIDCode() +
 					" - Calculation result:\tNext item: " + result[0]
 					+ "\tCurrent competence:\t" + result[1] + "\tDelta:\t"
@@ -277,6 +277,7 @@ public class SimpleEngine implements IEngine {
 		initR();
 		history.clear();
 		question = getQuestion((upperBounds.length + 1) / 2 - 1);
+		LogHelper.logInfo("---" + question + "---");
 		fireQuestionChangeListener(question);
 
 	}
@@ -328,7 +329,7 @@ public class SimpleEngine implements IEngine {
 				// 4. / 5. class (12. / 13. grade) - bag 10
 				question = getQuestion(setClass(9));
 				break;
-				// no choice or invalid grade (bag 3)
+			// no choice or invalid grade (bag 3)
 			default:
 				question = getQuestion(setClass(2));
 		}
@@ -338,7 +339,9 @@ public class SimpleEngine implements IEngine {
 
 	@Override
 	public void stop() {
-		rProvider.terminate();
+		//geht:		rProvider.terminate();
+		//nicht terminieren, da nur eine instanz laeuft und die noch gebraucht wird
+		// rServant.terminate();
 	}
 
 	private void initR() {
@@ -385,7 +388,8 @@ public class SimpleEngine implements IEngine {
 		}
 		r_libFolder = path.getPath().replace("\\", "\\\\");
 		// initialize RCaller
-		rProvider = new RProvider();
+		rServant = new RServant();
+		//geht: rProvider = new RProvider();
 		//rProviderOld = new RProviderOld();
 	}
 
