@@ -11,20 +11,20 @@ import java.util.Vector;
 
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.questions.accounting.util.AccountRecordData;
-import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.util.RecordInputFields;
+import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.util.AccountingRecordInputFields;
 import at.jku.ce.adaptivetesting.core.IQuestion;
-import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.util.RecordInputGrid;
+import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.util.AccountingRecordInputGrid;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 import com.vaadin.ui.Image;
 
-public class MultiAccountingQuestion extends RecordInputGrid implements
+public class MultiAccountingQuestion extends AccountingRecordInputGrid implements
         IQuestion<MultiAccountingDataStorage> {
 
     private String id;
     private static final long serialVersionUID = 5932474069705038565L;
     private float difficulty = 0;
     private MultiAccountingDataStorage solution;
-    private RecordInputFields[] soll, haben;
+    private AccountingRecordInputFields[] soll, haben;
 
     public MultiAccountingQuestion() {
         this(MultiAccountingDataStorage.getEmptyDataStorage(), 0f, "", null, "");
@@ -86,10 +86,10 @@ public class MultiAccountingQuestion extends RecordInputGrid implements
             iSoll = Math.max(iSoll, iHaben);
             iHaben = iSoll;
         }
-        soll = new RecordInputFields[iSoll];
-        haben = new RecordInputFields[iHaben];
+        soll = new AccountingRecordInputFields[iSoll];
+        haben = new AccountingRecordInputFields[iHaben];
         for (int row = 0; row < iSoll; row++) {
-            soll[row] = new RecordInputFields(
+            soll[row] = new AccountingRecordInputFields(
                     new AccountRecordData());
             if (prefilled.getSoll().size() > 0 && prefilled.getSoll().get(0).length > row) {
                 soll[row].setAccountRecordData(prefilled.getSoll().get(0)[row]);
@@ -97,7 +97,7 @@ public class MultiAccountingQuestion extends RecordInputGrid implements
             addComponent(soll[row], Side.Left, row);
         }
         for (int row = 0; row < iHaben; row++) {
-            haben[row] = new RecordInputFields(
+            haben[row] = new AccountingRecordInputFields(
                     new AccountRecordData());
             if (prefilled.getHaben().size() > 0 && prefilled.getHaben().get(0).length > row) {
                 haben[row].setAccountRecordData(prefilled.getHaben().get(0)[row]);

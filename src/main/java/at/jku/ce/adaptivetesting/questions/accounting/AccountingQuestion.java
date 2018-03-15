@@ -10,20 +10,20 @@ import java.util.List;
 
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.questions.accounting.util.AccountRecordData;
-import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.util.RecordInputFields;
+import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.util.AccountingRecordInputFields;
 import at.jku.ce.adaptivetesting.core.IQuestion;
-import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.util.RecordInputGrid;
+import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.util.AccountingRecordInputGrid;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 import com.vaadin.ui.Image;
 
-public class AccountingQuestion extends RecordInputGrid implements
+public class AccountingQuestion extends AccountingRecordInputGrid implements
 		IQuestion<AccountingDataStorage>, Cloneable {
 
 	private String id;
 	private static final long serialVersionUID = 5932474069705038565L;
 	private float difficulty = 0;
 	private AccountingDataStorage solution;
-	private RecordInputFields[] soll, haben;
+	private AccountingRecordInputFields[] soll, haben;
 
 	public AccountingQuestion() {
 		this(AccountingDataStorage.getEmptyDataStorage(), 0f, "", null, "");
@@ -49,15 +49,15 @@ public class AccountingQuestion extends RecordInputGrid implements
 		if (questionImage != null) setQuestionImage(questionImage);
 		// Fill grid
 		int iSoll = solution.getSoll().length, iHaben = solution.getHaben().length;
-		soll = new RecordInputFields[iSoll];
-		haben = new RecordInputFields[iHaben];
+		soll = new AccountingRecordInputFields[iSoll];
+		haben = new AccountingRecordInputFields[iHaben];
 		for (int row = 0; row < iSoll; row++) {
-			soll[row] = new RecordInputFields(
+			soll[row] = new AccountingRecordInputFields(
 					prefilled.getSoll()[row]);
 			addComponent(soll[row], Side.Left, row);
 		}
 		for (int row = 0; row < iHaben; row++) {
-			haben[row] = new RecordInputFields(
+			haben[row] = new AccountingRecordInputFields(
 					prefilled.getHaben()[row]);
 			addComponent(haben[row], Side.Right, row);
 		}
