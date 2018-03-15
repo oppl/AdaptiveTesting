@@ -118,6 +118,11 @@
             <artifactId>easyuploads</artifactId>
             <version>7.4.10</version>
         </dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.8-dmr</version>
+		</dependency>
 	</dependencies>
 
 	<build>

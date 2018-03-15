@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
+import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 
 /**
  *

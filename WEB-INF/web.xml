@@ -7,28 +7,39 @@
 
     <!--Set folder paths for the destinations server and the development environment-->
     <context-param>
+        <description>Question Folder</description>
         <param-name>at.jku.ce.adaptivetesting.questionfolder</param-name>
         <param-value>${catalina.home}/temp/adaptiveTesting/questions</param-value>
     </context-param>
 
     <context-param>
+        <description>Result Folder</description>
         <param-name>at.jku.ce.adaptivetesting.resultfolder</param-name>
         <param-value>${catalina.home}/temp/adaptiveTesting/results</param-value>
     </context-param>
 
     <context-param>
+        <description>Logfile</description>
         <param-name>at.jku.ce.adaptivetesting.logfilepath</param-name>
         <param-value>${catalina.home}/logs/AdaptiveTesting.log</param-value>
     </context-param>
 
     <context-param>
+        <description>Images Folder</description>
         <param-name>at.jku.ce.adaptivetesting.imagefolder</param-name>
         <param-value>${catalina.home}/temp/adaptiveTesting/images</param-value>
     </context-param>
 
     <context-param>
+        <description>Vaadin Widget Set</description>
         <param-name>widgetset</param-name>
         <param-value>at.jku.ce.adaptivetesting.VaadinWidgetset</param-value>
+    </context-param>
+
+    <context-param>
+        <description>Vaadin production mode</description>
+        <param-name>productionMode</param-name>
+        <param-value>true</param-value>
     </context-param>
 
 </web-app>

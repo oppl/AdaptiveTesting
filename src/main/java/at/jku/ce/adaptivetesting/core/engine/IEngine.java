@@ -5,7 +5,6 @@ package at.jku.ce.adaptivetesting.core.engine;
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
 import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
-import at.jku.ce.adaptivetesting.core.StudentData;
 
 import java.util.List;
 
@@ -60,21 +59,14 @@ public interface IEngine {
 	/**
 	 * Starts the test
 	 *
-	 * @throws EngineException
 	 */
-    void start() throws EngineException;
+    void start();
 
 	/**
 	 * Starts the test
 	 *
-	 * @throws EngineException
 	 */
-	void start(StudentData student) throws EngineException;
-
-	/**
-	 * Stops the R instance and deletes all temporary created files
-	 */
-	void stop();
+	void start(StudentData student);
 
 	/**
 	 * Deletes all questions stored in the Engine
