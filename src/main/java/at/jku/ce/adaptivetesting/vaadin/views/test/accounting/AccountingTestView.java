@@ -12,6 +12,7 @@ import at.jku.ce.adaptivetesting.core.engine.StudentData;
 import at.jku.ce.adaptivetesting.core.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.questions.accounting.*;
 import at.jku.ce.adaptivetesting.questions.accounting.util.AccountingDataProvider;
+import at.jku.ce.adaptivetesting.vaadin.views.Views;
 import at.jku.ce.adaptivetesting.vaadin.views.test.TestView;
 import com.vaadin.server.*;
 import com.vaadin.shared.ui.combobox.FilteringMode;
@@ -36,6 +37,13 @@ public class AccountingTestView extends TestView {
 		super(quizName);
 		QuestionProvider = new AccountingQuestionKeeperProvider();
 
+		Button cancel = new Button("Test abbrechen");
+		cancel.addClickListener(e -> {
+			getUI().getNavigator().navigateTo(Views.DEFAULT.toString());
+			LogHelper.logInfo("The test has been canceled by the student");
+		});
+		addHelpButton(cancel);
+
 		//graphical Interface Kontenplan
 		Button openKontenplan = new Button("Kontenplan");
 		openKontenplan.addClickListener(e -> {
@@ -53,7 +61,6 @@ public class AccountingTestView extends TestView {
 			window.setResizable(false);
 			window.addCloseListener(e1 -> openKontenplan.setEnabled(true));
 			getUI().addWindow(window);
-
 		});
 
 		//graphical Interface Unternehmensbeschreibung
@@ -146,7 +153,7 @@ public class AccountingTestView extends TestView {
 		ComboBox gender = new ComboBox("Geschlecht");
 		String[] genderItems = {defaultValue, "männlich", "weiblich"};
 		gender.addItems(genderItems);
-		gender.setWidth(15, UNITS_PERCENTAGE);
+		gender.setWidth(15, Unit.PERCENTAGE);
 		gender.setValue(defaultValue);
 		gender.setNullSelectionAllowed(false);
 		gender.setFilteringMode(FilteringMode.CONTAINS);

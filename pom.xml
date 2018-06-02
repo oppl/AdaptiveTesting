@@ -6,7 +6,7 @@
 	<groupId>at.jku.ce</groupId>
 	<artifactId>AdaptiveTesting</artifactId>
 	<packaging>war</packaging>
-	<version>1.1</version>
+	<version>1.1.2</version>
 	<name>AdaptiveTesting</name>
 
 	<prerequisites>
@@ -30,11 +30,11 @@
 			<id>vaadin-addons</id>
 			<url>http://maven.vaadin.com/vaadin-addons</url>
 		</repository>
-			<repository>
-				<id>project.local</id>
-				<name>AdaptiveTesting2</name>
-				<url>file:${project.basedir}/src/resources</url>
-			</repository>
+		<repository>
+			<id>project.local</id>
+			<name>AdaptiveTesting2</name>
+			<url>file:${project.basedir}/src/resources</url>
+		</repository>
 	</repositories>
 
 	<dependencyManagement>
@@ -50,6 +50,16 @@
 	</dependencyManagement>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.jdbi</groupId>
+			<artifactId>jdbi3-core</artifactId>
+			<version>3.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>expandingtextarea</artifactId>
+			<version>1.2.0</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -118,11 +128,6 @@
             <artifactId>easyuploads</artifactId>
             <version>7.4.10</version>
         </dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.8-dmr</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -141,6 +146,15 @@
 				<groupId>com.vaadin</groupId>
 				<artifactId>vaadin-maven-plugin</artifactId>
 				<version>${vaadin.plugin.version}</version>
+				<configuration>
+					<webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets</webappDirectory>
+					<hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets</hostedWebapp>
+					<noServer>true</noServer>
+					<draftCompile>false</draftCompile>
+					<style>OBF</style>
+					<compileReport>true</compileReport>
+					<runTarget>http://localhost:8080/</runTarget>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>

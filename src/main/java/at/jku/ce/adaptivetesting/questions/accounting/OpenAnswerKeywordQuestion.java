@@ -7,6 +7,7 @@ import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 //import com.sun.jdi.FloatValue;
 import com.vaadin.ui.*;
 import org.apache.commons.lang.StringUtils;
+import org.vaadin.hene.expandingtextarea.ExpandingTextArea;
 
 import java.io.*;
 
@@ -19,7 +20,7 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
     private static final long serialVersionUID = 6373936654529246422L;
     private OpenAnswerKeywordDataStorage solution;
     private float difficulty = 0;
-    private TextArea answer;
+    private ExpandingTextArea answer;
     private Label question;
     private Image questionImage = null;
 
@@ -33,13 +34,12 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
 
     public OpenAnswerKeywordQuestion(OpenAnswerKeywordDataStorage solution,
                                      OpenAnswerKeywordDataStorage prefilled, float difficulty, String questionText, Image questionImage, String id) {
-        // super(1, 2);
         this.difficulty = difficulty;
         this.id = id;
         this.questionImage = questionImage;
-        answer = new TextArea("Bitte geben Sie Ihre Antwort ein:");
-        answer.setColumns(50);
-        answer.setRows(10);
+        answer = new ExpandingTextArea("Bitte geben Sie Ihre Antwort ein:");
+        answer.setWidth(100, Unit.PERCENTAGE);
+
         if (prefilled.getEnteredText() != null) {
             answer.setValue(prefilled.getEnteredText());
             answer.setEnabled(false);
@@ -219,6 +219,11 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
         }
         LogHelper.logInfo("Correct answer");
         return 1.0d;
+    }
+
+    @Override
+    public double performQueryDiagnosis() {
+        return 0;
     }
 
     @Override

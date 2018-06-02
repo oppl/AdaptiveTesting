@@ -11,9 +11,9 @@ import java.util.Vector;
 
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.questions.accounting.util.AccountRecordData;
-import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.util.AccountingRecordInputFields;
+import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.misc.AccountingRecordInputFields;
 import at.jku.ce.adaptivetesting.core.IQuestion;
-import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.util.AccountingRecordInputGrid;
+import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.misc.AccountingRecordInputGrid;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 import com.vaadin.ui.Image;
 
@@ -152,6 +152,11 @@ public class MultiAccountingQuestion extends AccountingRecordInputGrid implement
                 return 0.0d;
             }
         }
+    }
+
+    @Override
+    public double performQueryDiagnosis() {
+        return 0;
     }
 
     private boolean check(Vector<AccountRecordData[]> solution, Vector<AccountRecordData[]> user) {

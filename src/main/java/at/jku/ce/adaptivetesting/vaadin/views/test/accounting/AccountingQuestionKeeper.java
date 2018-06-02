@@ -6,6 +6,7 @@ import at.jku.ce.adaptivetesting.questions.accounting.util.AccountingXmlHelper;
 import at.jku.ce.adaptivetesting.vaadin.views.def.DefaultView;
 import com.vaadin.server.FileResource;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Notification;
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
 import javax.xml.bind.JAXBContext;
@@ -241,6 +242,21 @@ public class AccountingQuestionKeeper {
             }
         }
         LogHelper.logInfo("Successfully loaded " + successfullyLoaded + " question(s).");
+        String notificationCaption, notificationDescription;
+        switch (successfullyLoaded) {
+            case 0:
+                notificationCaption = "Ladevorgang fehlgeschlagen";
+                notificationDescription = "Es wurden keine ladbaren Items gefunden";
+                break;
+            case 1:
+                notificationCaption = "Ladevorgang abgeschlossen";
+                notificationDescription = "Es wurde (" + successfullyLoaded + ") Frage erfolgreich geladen";
+                break;
+            default:
+                notificationCaption = "Ladevorgang abgeschlossen";
+                notificationDescription = "Es wurden (" + successfullyLoaded + ") Fragen erfolgreich geladen";
+        }
+        Notification.show(notificationCaption, notificationDescription, Notification.Type.TRAY_NOTIFICATION);
 
         return questions.length;
     }

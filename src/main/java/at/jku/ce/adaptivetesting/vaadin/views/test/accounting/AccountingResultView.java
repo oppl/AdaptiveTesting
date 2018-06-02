@@ -1,4 +1,4 @@
-package at.jku.ce.adaptivetesting.vaadin.views;
+package at.jku.ce.adaptivetesting.vaadin.views.test.accounting;
 
 /*This file is part of the project "Reisisoft Adaptive Testing",
  * which is licenced under LGPL v3+. You may find a copy in the source,
@@ -30,16 +30,16 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickListener;
 import com.github.rcaller.exception.ExecutionException;
-// import rcaller.exception.ExecutionException;
 
-public class ResultView extends VerticalLayout implements View,
-		IResultView {
+public class AccountingResultView extends VerticalLayout implements View, IResultView {
 
 	private static final long serialVersionUID = -6619938011293967055L;
 	private final String imageFolder = VaadinServlet.getCurrent().getServletConfig().
 			getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder") + "/";
+	private String resultsFolder;
 
-	public ResultView(ResultFiredArgs args, String title) {
+	public AccountingResultView(ResultFiredArgs args, String title, String resultsFolder) {
+		this.resultsFolder = resultsFolder;
 		setSpacing(true);
 		addComponent(new HtmlLabel(title));
 		//addComponent(HtmlLabel.getCenteredLabel("h2", "Test abgeschlossen"));
@@ -54,7 +54,7 @@ public class ResultView extends VerticalLayout implements View,
 
 		// Create HTML table of the history
 		Table table = new Table();
-		final String solution = "Korrekte Antwort", userAnswer = "Ihre Antwort";
+		final String solution = "Korrekte Antwort", userAnswer = "Deine Antwort";
 		table.addContainerProperty("#", Integer.class, null);
 		table.addContainerProperty("Schwierigkeitsgrad", Float.class, null);
 		table.addContainerProperty("Resultat", String.class, null);
@@ -87,6 +87,7 @@ public class ResultView extends VerticalLayout implements View,
 									entry.question.getUserAnswer(),
 									entry.question.getDifficulty(),
 									entry.question.getQuestionText(),null,"");
+
 					// Create the 2 needed click listeners
 					ClickListener clickListenerSol = event -> {
 						Window window = new Window(solution);
@@ -159,7 +160,7 @@ public class ResultView extends VerticalLayout implements View,
 		addComponent(HtmlLabel.getCenteredLabel("Delta:  " + args.delta));
 		storeResults(args);
 
-		Image image = new Image("", new FileResource(new File(imageFolder + "Kompetenzmodell.png")));
+		Image image = new Image("", new FileResource(new File(imageFolder + "accounting_Kompetenzmodell.png")));
 
 		addComponent(image);
 		setComponentAlignment(image, Alignment.MIDDLE_CENTER);
@@ -181,7 +182,7 @@ public class ResultView extends VerticalLayout implements View,
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
 			LocalDateTime now = LocalDateTime.now();
 			String fileName = new String(args.student.getStudentIDCode()+ "_" + dtf.format(now) + ".csv");
-			resultFile = new File(new File(DefaultView.Servlet.getResultFolderName()),fileName);
+			resultFile = new File(new File(resultsFolder),fileName);
 			BufferedWriter writer = new BufferedWriter(new FileWriter(resultFile));
 			writer.write(args.student.toString()+"\n");
 			writer.write(Double.toString(args.skillLevel)+"\n");
@@ -189,7 +190,12 @@ public class ResultView extends VerticalLayout implements View,
 			writer.write(Boolean.toString(args.outOfQuestions)+"\n");
 			writer.write(args.history.size()+"\n");
 			for (HistoryEntry entry : args.history) {
-				writer.write(entry.question.getQuestionText()+";"+entry.question.getDifficulty()+";"+entry.question.getSolution().toString()+";"+entry.question.getUserAnswer().toString()+";"+isCorrect(entry.points, entry.question.getMaxPoints())+"\n");
+				writer.write(
+						entry.question.getQuestionText() + ";" +
+						entry.question.getDifficulty() + ";" +
+						entry.question.getSolution().toString() + ";" +
+						entry.question.getUserAnswer().toString() + ";" +
+						isCorrect(entry.points, entry.question.getMaxPoints()) + "\n");
 			}
 			writer.close();
 		} catch (Exception var9) {

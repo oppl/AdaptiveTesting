@@ -3,8 +3,13 @@ package at.jku.ce.adaptivetesting.core;
 /*This file is part of the project "Reisisoft Adaptive Testing",
  * which is licenced under LGPL v3+. You may find a copy in the source,
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
+import org.apache.log4j.Appender;
+import org.apache.log4j.RollingFileAppender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.Enumeration;
 
 public class LogHelper {
 	private static Logger logger = LoggerFactory.getLogger("AdaptiveTesting"); {

@@ -5,11 +5,11 @@ package at.jku.ce.adaptivetesting.questions.accounting.test;
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
 import at.jku.ce.adaptivetesting.questions.accounting.AccountingDataStorage;
 import at.jku.ce.adaptivetesting.questions.accounting.AccountingQuestion;
-import at.jku.ce.adaptivetesting.vaadin.MockQuestion;
 import at.jku.ce.adaptivetesting.questions.accounting.util.AccountRecordData;
+import at.jku.ce.adaptivetesting.vaadin.views.MockQuestion;
 
 public class AccountingMockQuestion extends
-        MockQuestion<AccountingQuestion, AccountingDataStorage> {
+		MockQuestion<AccountingQuestion, AccountingDataStorage> {
 
 	public AccountingMockQuestion(AccountingDataStorage solution,
 			AccountingDataStorage dataStorage, float difficulty,
@@ -19,6 +19,11 @@ public class AccountingMockQuestion extends
 
 	public AccountingMockQuestion(int soll, int haben) {
 		super(new AccountingQuestion(getData(soll, haben), 0f, "",null,""));
+	}
+
+	@Override
+	public double performQueryDiagnosis() {
+		return 0;
 	}
 
 	@Override

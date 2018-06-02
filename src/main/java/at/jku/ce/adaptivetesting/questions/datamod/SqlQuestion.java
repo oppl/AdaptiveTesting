@@ -2,68 +2,73 @@ package at.jku.ce.adaptivetesting.questions.datamod;
 
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
+import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
 import at.jku.ce.adaptivetesting.core.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
-//import com.sun.jdi.FloatValue;
+import at.jku.ce.adaptivetesting.vaadin.views.test.datamod.TableWindow;
+import com.vaadin.server.Page;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
-import org.apache.commons.lang.StringUtils;
+import org.vaadin.hene.expandingtextarea.ExpandingTextArea;
+//import org.jooq.exception.DataAccessException;
 
 import java.io.*;
+import java.sql.SQLException;
 
 /**
- * Created by oppl on 07/02/2017.
+ * Created by Peter
  */
-public class SqlQuestion extends VerticalLayout implements
-        IQuestion<SqlDataStorage>, Cloneable {
+
+public class SqlQuestion extends VerticalLayout implements IQuestion<SqlDataStorage>, Cloneable {
 
     private static final long serialVersionUID = 6373936654529246422L;
-    private SqlDataStorage solution;
+    private SqlDataStorage solution, userAnswer;
     private float difficulty = 0;
-    private TextArea answer;
-    private Label question;
+    private ExpandingTextArea answer;
+    private Label question, infoTop, infoBottom;
     private Image questionImage = null;
-
     private String id;
+    private int tries, defaultTries;
 
-    public SqlQuestion(SqlDataStorage solution, Float difficulty,
-                       String questionText, Image questionImage, String id) {
-        this(solution, SqlDataStorage.getEmptyDataStorage(), difficulty,
-                questionText, questionImage, id);
+    public SqlQuestion(SqlDataStorage solution, Float difficulty, String questionText, Image questionImage, String id) {
+        this(solution, SqlDataStorage.getEmptyDataStorage(), difficulty, questionText, questionImage, id);
     }
 
-    public SqlQuestion(SqlDataStorage solution,
-                       SqlDataStorage prefilled, float difficulty, String questionText, Image questionImage, String id) {
-        // super(1, 2);
+    public SqlQuestion(SqlDataStorage solution, SqlDataStorage userAnswer, float difficulty, String questionText, Image questionImage, String id) {
         this.difficulty = difficulty;
         this.id = id;
         this.questionImage = questionImage;
-        answer = new TextArea("Bitte geben Sie Ihre Antwort ein:");
-        answer.setColumns(50);
-        answer.setRows(10);
-        if (prefilled.getEnteredText() != null) {
-            answer.setValue(prefilled.getEnteredText());
-            answer.setEnabled(false);
-        }
-        else if (prefilled.getAnswers().size() > 0) {
-            StringBuffer buffer = new StringBuffer();
-            buffer.append("Ihre Antwort muss folgende Schlüsselwörter enthalten:\n");
-            for (String[] keywords: prefilled.getAnswers()) {
-                buffer.append("Eines der folgenden Wörter: ");
-                for (String keyword: keywords) {
-                    buffer.append(keyword);
-                    if (!keywords[keywords.length-1].equals(keyword)) buffer.append(" ODER ");
-                }
-                if (!prefilled.getAnswers().lastElement().equals(keywords)) buffer.append(" UND\n");
-            }
-            answer.setValue(buffer.toString());
-            answer.setEnabled(false);
-        }
-        question = new HtmlLabel();
-        setQuestionText(questionText);
-
+        this.userAnswer = userAnswer;
         this.solution = solution;
+        defaultTries = solution.getTries();
+        tries = solution.getTries();
+
+        answer = new ExpandingTextArea("Bitte gib deine Antwort ein:");
+        answer.setWidth(100, Unit.PERCENTAGE);
+
+        if (userAnswer.getAnswerQuery() != null) {
+            answer.setValue(userAnswer.getAnswerQuery());
+            answer.setEnabled(false);
+        }
+        infoTop = new HtmlLabel();
+        setText(infoTop, "<p style=\"color:#FFFFFF\">" + id + "</p>" + solution.getInfoTop());
+        addComponent(infoTop);
+
+        solution.createTableWindows(this);
+
+        infoBottom = new HtmlLabel();
+        setText(infoBottom, solution.getInfoBottom());
+        addComponent(infoBottom);
+
+        question = new HtmlLabel();
+        setQuestionText(question, questionText);
         addComponent(question);
+
         if (questionImage != null) addComponent(this.questionImage);
+
+        addComponent(new HtmlLabel("<p style=\"color:#339933\">" +
+                "(<i><b>Hinweis:</b></i> Du kannst die Query Diagnose max. " + tries + " mal ausführen)</p>"));
+
         addComponent(answer);
         setSpacing(true);
     }
@@ -87,8 +92,7 @@ public class SqlQuestion extends VerticalLayout implements
         return (SqlQuestion)ois.readObject();
     }
 
-    private static void serializeToOutputStream(Serializable ser, OutputStream os)
-            throws IOException {
+    private static void serializeToOutputStream(Serializable ser, OutputStream os) throws IOException {
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(os);
@@ -99,14 +103,17 @@ public class SqlQuestion extends VerticalLayout implements
         }
     }
 
-
     @Override
     public String getQuestionText() {
         return question.getValue();
     }
 
-    public void setQuestionText(String questionText) {
-        question.setValue("<br />" + questionText + "<br />");
+    public void setText(Label label, String text) {
+        label.setValue(text);
+    }
+
+    public void setQuestionText(Label label, String text) {
+        label.setValue("<p style=\"color:#0099ff\">" + text + "</p>");
     }
 
     public void setDifficulty(float difficulty) {
@@ -115,110 +122,78 @@ public class SqlQuestion extends VerticalLayout implements
 
     @Override
     public SqlDataStorage getSolution() {
+        solution.setAnswer(solution.getAnswerQuery());
         return solution;
     }
 
     @Override
     public SqlDataStorage getUserAnswer() {
-        SqlDataStorage userAnswer = new SqlDataStorage();
-        userAnswer.setEnteredText(answer.getValue());
-        userAnswer.setAnswers(solution.getAnswers());
+        String userAnswerQuery = answer.getValue();
+        userAnswer.setAnswerQuery(userAnswerQuery);
+        userAnswer.setAnswer(userAnswerQuery);
+        userAnswer.setTries(tries);
         return userAnswer;
+    }
+
+    public double performQueryDiagnosis() {
+        LogHelper.logInfo("Questionfile: " + id);
+
+        if (answer.getValue().equals("")) {
+            createAndShowNotification("Keine Antwort eingegeben:" , "Das Textfeld ist leer!<br>" +
+                    "<p style=\"font-size:small\">(" + (tries-1) + " Versuche übrig)</p>", Notification.Type.WARNING_MESSAGE);
+            LogHelper.logInfo("Diagnosis: No answer (The text input was empty)");
+            return 0.0d;
+        }
+        double check;
+        try {
+            check = ConnectionProvider.compareResults(answer.getValue(), this.solution.getAnswerQuery());
+        } catch (Exception ex) {
+            createAndShowNotification("SQL-Syntax Fehler:", ex.getCause().getMessage() + "<br>" +
+                    "<p style=\"font-size:small\">(" + (tries-1) + " Versuche übrig)</p>", Notification.Type.ERROR_MESSAGE);
+            LogHelper.logError(ex.getCause().getMessage());
+            return 0.0d;
+        }
+        TableWindow tableWindow = new TableWindow();
+        tableWindow.setSizeUndefined();
+        tableWindow.drawResultTable(answer.getValue());
+        this.getUI().addWindow(tableWindow);
+
+        if (check == 1.0d) {
+            createAndShowNotification("<p style=\"color:#339933\">Ergebniss korrekt:</p>" , "Super gemacht!.<br>" +
+                    "<p style=\"font-size:small\" \"color:#339933\">(Beim " + (1 + (defaultTries - tries)) +
+                    ". Versuch geschafft)</p>", Notification.Type.HUMANIZED_MESSAGE);
+            LogHelper.logInfo("Diagnosis: Correct answer");
+            return 1.0d;
+        } else {
+            createAndShowNotification("Ergebnis inkorrekt:", "Abfragergebnis stimmt nicht mit der Lösung überein.<br>" +
+                    "<p style=\"font-size:small\">(" + (tries-1) + " Versuche übrig)</p>", Notification.Type.ERROR_MESSAGE);
+            LogHelper.logInfo("Diagnosis: Incorrect answer");
+            return 0.0d;
+        }
     }
 
     @Override
     public double checkUserAnswer() {
         LogHelper.logInfo("Questionfile: " + id);
-        String userAnswer = answer.getValue();
-        // change user's input to match xxx(x),yy
 
-        // error handling
-        if (userAnswer.equals("")) {
-            LogHelper.logInfo("No answer: The text input was empty");
+        if (answer.getValue().equals("")) {
+            LogHelper.logInfo("Submit: No answer (The text input was empty)");
             return 0.0d;
         }
-        boolean numberanswer = false;
-        String[] userAnswerParts;
+        double check;
         try {
-            // convert TextNumbers into Double values
-            userAnswer = TextNumberToDouble (userAnswer);
-            // check if useranswer is a number
-            if(userAnswer.contains(",")) userAnswer = userAnswer.replaceAll(",", ".");
-            Double.valueOf(userAnswer);
-
-            if (userAnswer.charAt(0) != '+' && userAnswer.charAt(0) != '-')
-                userAnswer = "+" + userAnswer;
-
-            if (userAnswer.contains(".")) {
-                userAnswerParts = userAnswer.split("\\.");
-                if (userAnswerParts[1].charAt(0) == '-') userAnswerParts[0] = "00";
-                if (userAnswerParts[1].length() > 2) userAnswerParts[1] = userAnswerParts[1].substring(0, 2);
-                userAnswer = userAnswerParts[0] + "," + userAnswerParts[1];
-            }
-            else {
-                userAnswerParts = new String[2];
-                userAnswer = userAnswer + ",00";
-            }
-            numberanswer = true;
-        } catch (NumberFormatException e) {
-            //LogHelper.logInfo("The input was not a number");
-            if(userAnswer.contains(" "))
-                userAnswer = userAnswer.replaceAll(" ", ",");
-            if(userAnswer.contains(";"))
-                userAnswer = userAnswer.replaceAll(";", ",");
-            if(userAnswer.contains("."))
-                userAnswer = userAnswer.replaceAll(".", ",");
-
-            userAnswerParts = userAnswer.split(",");
-            for (int i = 0; i < userAnswerParts.length; i++) {
-                try {
-                    userAnswerParts[i] = userAnswerParts[i].toLowerCase();
-                    userAnswerParts[i] = userAnswerParts[i].substring(0, 1).toUpperCase() +
-                            userAnswerParts[i].substring(1, userAnswerParts[i].length());
-                } catch (Exception ex) {
-                    userAnswerParts[i] = "_empty";
-                }
-            }
+            check = ConnectionProvider.compareResults(answer.getValue(), solution.getAnswerQuery());
+        } catch (Exception ex) {
+            LogHelper.logError(ex.getCause().getMessage());
+            return 0.0d;
         }
-
-        for (String[] requriedKeyword: solution.getAnswers()) {
-
-            int nrOfKeywords = 0;
-            for (int i = 0; i < requriedKeyword.length; i++) {
-                if (!requriedKeyword[i].equals("")) nrOfKeywords++;
-            }
-            boolean[]variantFoundParts = new boolean[nrOfKeywords];
-
-            boolean variantFound = false;
-            if (numberanswer) {
-                for (int k = 0; k < nrOfKeywords; k++) {
-                    // check if the userAnswer contains the variant
-                    if (StringUtils.equalsIgnoreCase(userAnswer, requriedKeyword[k]))
-                        variantFound = true;
-                }
-            } else {
-                int x = 0;
-                for (int i = 0; i < userAnswerParts.length; i++) {
-                    for (int j = 0; j < nrOfKeywords; j++) {
-                        if (StringUtils.equalsIgnoreCase(userAnswerParts[i],
-                                requriedKeyword[j].replaceAll(" ", ""))) {
-                            variantFoundParts[x] = true;
-                            x++;
-                            break;
-                        }
-                    }
-                }
-                for (int i = 0; i < variantFoundParts.length; i++) {
-                    variantFound = true && variantFoundParts[i];
-                }
-            }
-            if (!variantFound) {
-                LogHelper.logInfo("Incorrect answer");
-                return 0.0d;
-            }
+        if (check == 1.0d) {
+            LogHelper.logInfo("Submit: Correct answer");
+            return 1.0d;
+        } else {
+            LogHelper.logInfo("Submit: Incorrect answer");
+            return 0.0d;
         }
-        LogHelper.logInfo("Correct answer");
-        return 1.0d;
     }
 
     @Override
@@ -230,6 +205,18 @@ public class SqlQuestion extends VerticalLayout implements
     public XmlQuestionData<SqlDataStorage> toXMLRepresentation() {
         return new SqlQuestionXml(getSolution(), getQuestionText(),
                 getDifficulty());
+    }
+
+    public int getDefaultTries() {
+        return defaultTries;
+    }
+
+    public int getTries() {
+        return tries;
+    }
+
+    public void decreaseTries() {
+        tries--;
     }
 
     @Override
@@ -250,69 +237,11 @@ public class SqlQuestion extends VerticalLayout implements
         addComponent(answer);
     }
 
-    private String TextNumberToDouble (String userAnswer) {
-        switch (userAnswer.toLowerCase()) {
-            case "eins":
-                userAnswer = "1.00";
-                break;
-            case "zwei":
-                userAnswer = "2.00";
-                break;
-            case "drei":
-                userAnswer = "3.00";
-                break;
-            case "vier":
-                userAnswer = "4.00";
-                break;
-            case "fünf": case "fuenf":
-                userAnswer = "5.00";
-                break;
-            case "sechs":
-                userAnswer = "6.00";
-                break;
-            case "sieben":
-                userAnswer = "7.00";
-                break;
-            case "acht":
-                userAnswer = "8.00";
-                break;
-            case "neun":
-                userAnswer = "9.00";
-                break;
-            case "zehn":
-                userAnswer = "10.00";
-                break;
-            case "elf":
-                userAnswer = "11.00";
-                break;
-            case "zwölf": case "zwoelf":
-                userAnswer = "12.00";
-                break;
-            case "dreizehn":
-                userAnswer = "13.00";
-                break;
-            case "vierzehn":
-                userAnswer = "14.00";
-                break;
-            case "fünfzehn": case "fuenfzehn":
-                userAnswer = "15.00";
-                break;
-            case "sechszehn":
-                userAnswer = "16.00";
-                break;
-            case "siebzehn":
-                userAnswer = "17.00";
-                break;
-            case "achtzehn":
-                userAnswer = "18.00";
-                break;
-            case "neunzehn":
-                userAnswer = "19.00";
-                break;
-            case "zwanzig":
-                userAnswer = "20.00";
-                break;
-        }
-        return userAnswer;
+    // Custom Notification that stays on-screen until user presses it
+    private void createAndShowNotification(String caption, String description, Notification.Type type) {
+        description += "<span style=\"position:fixed;top:0;left:0;width:100%;height:100%\"></span>";
+        Notification notif = new Notification(caption, description, type, true);
+        notif.setDelayMsec(-1);
+        notif.show(Page.getCurrent());
     }
 }

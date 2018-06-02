@@ -7,7 +7,7 @@ package at.jku.ce.adaptivetesting.core.engine;
 import java.util.List;
 
 public class ResultFiredArgs {
-	// TODO implement
+
 	public final boolean outOfQuestions;
 	public final List<HistoryEntry> history;
 	public final double skillLevel;

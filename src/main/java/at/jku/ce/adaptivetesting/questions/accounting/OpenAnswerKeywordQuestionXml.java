@@ -16,8 +16,7 @@ public class OpenAnswerKeywordQuestionXml extends XmlQuestionData<OpenAnswerKeyw
 
     }
 
-    public OpenAnswerKeywordQuestionXml(OpenAnswerKeywordDataStorage solution, String questionText,
-                                        float difficulty) {
+    public OpenAnswerKeywordQuestionXml(OpenAnswerKeywordDataStorage solution, String questionText, float difficulty) {
         super(solution, questionText, difficulty);
     }
 

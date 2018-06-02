@@ -1,21 +1,29 @@
 package at.jku.ce.adaptivetesting.vaadin.views.test.datamod;
 
 import at.jku.ce.adaptivetesting.core.LogHelper;
+import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
 import at.jku.ce.adaptivetesting.core.engine.StudentData;
 import at.jku.ce.adaptivetesting.core.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.questions.datamod.*;
+import at.jku.ce.adaptivetesting.vaadin.views.Views;
 import at.jku.ce.adaptivetesting.vaadin.views.test.TestView;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import jdk.internal.org.objectweb.asm.Handle;
+import org.vaadin.hene.expandingtextarea.ExpandingTextArea;
 
 import javax.xml.bind.JAXBException;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
 /**
- * Created by Peter, 13.03.2018
+ * Created by Peter
  */
+
 public class DatamodTestView extends TestView {
 
     private static final long serialVersionUID = -4764723794449575244L;
@@ -23,20 +31,27 @@ public class DatamodTestView extends TestView {
     private String studentGender = new String();
     private String studentExperience = new String();
     private StudentData student;
-
     private final String imageFolder = VaadinServlet.getCurrent().getServletConfig().
             getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder") + "/";
     private DatamodQuestionKeeperProvider QuestionProvider;
+    //private int tries;
 
     public DatamodTestView(String quizName) {
         super(quizName);
         QuestionProvider = new DatamodQuestionKeeperProvider();
 
-        Button openInfo = new Button("Info");
-        openInfo.addClickListener(e -> {
-            Notification.show("Zur Zeit nicht verfügbar.");
+        Button cancel = new Button("Test abbrechen");
+        cancel.addClickListener(e -> {
+            getUI().getNavigator().navigateTo(Views.DEFAULT.toString());
+            LogHelper.logInfo("The test has been canceled by the student");
         });
-        addHelpButton(openInfo);
+        addHelpButton(cancel);
+
+        Button sqlTutorial = new Button("SQL Tutorial");
+        sqlTutorial.addClickListener(e -> {
+            sqlTutorial.getUI().getPage().open("https://www.w3schools.com/sql/default.asp", "_blank", false);
+        });
+        addHelpButton(sqlTutorial);
     }
 
     //data of the students with the question asked at the beginning
@@ -56,7 +71,7 @@ public class DatamodTestView extends TestView {
         ComboBox gender = new ComboBox("Geschlecht");
         String[] genderItems = {defaultValue, "männlich", "weiblich"};
         gender.addItems(genderItems);
-        gender.setWidth(15, UNITS_PERCENTAGE);
+        gender.setWidth(15, Unit.PERCENTAGE);
         gender.setValue(defaultValue);
         gender.setNullSelectionAllowed(false);
         gender.setFilteringMode(FilteringMode.CONTAINS);
@@ -65,7 +80,7 @@ public class DatamodTestView extends TestView {
         ComboBox experience = new ComboBox("Erfahrung mit SQL");
         String[] experienceItems = {defaultValue, "Anfänger", "Fortgeschritten", "Profi"};
         experience.addItems(experienceItems);
-        experience.setWidth(15, UNITS_PERCENTAGE);
+        experience.setWidth(15, Unit.PERCENTAGE);
         experience.setValue(defaultValue);
         experience.setNullSelectionAllowed(false);
         experience.setFilteringMode(FilteringMode.CONTAINS);
@@ -98,13 +113,72 @@ public class DatamodTestView extends TestView {
         layout.addComponent(studentCodeC3);
         layout.addComponent(thankYou);
         layout.addComponent(cont);
-
     }
 
     public void quizRules(Component[] components){
 
-        VerticalLayout layout = new VerticalLayout();
-        layout.setSpacing(true);
+        VerticalLayout verticalLayout = new VerticalLayout();
+
+        Image image_1 = new Image("Abb. 1", new FileResource(new File(imageFolder + "datamod_tutorial_img_1.png")));
+        Image image_2_1 = new Image("Abb. 2.1", new FileResource(new File(imageFolder + "datamod_tutorial_img_2_1.png")));
+        Image image_2_2 = new Image("Abb. 2.2", new FileResource(new File(imageFolder + "datamod_tutorial_img_2_2.png")));
+        Image image_3 = new Image("Abb. 3", new FileResource(new File(imageFolder + "datamod_tutorial_img_3.png")));
+        Image image_4_1 = new Image("Abb. 4.1", new FileResource(new File(imageFolder + "datamod_tutorial_img_4_1.png")));
+        Image image_4_2 = new Image("Abb. 4.2", new FileResource(new File(imageFolder + "datamod_tutorial_img_4_2.png")));
+        Image image_5_1 = new Image("Abb. 5.1", new FileResource(new File(imageFolder + "datamod_tutorial_img_5_1.png")));
+        Image image_5_2 = new Image("Abb. 5.2", new FileResource(new File(imageFolder + "datamod_tutorial_img_5_2.png")));
+        Image image_6_1 = new Image("Abb. 6.1", new FileResource(new File(imageFolder + "datamod_tutorial_img_6_1.png")));
+        Image image_6_2 = new Image("Abb 6.2", new FileResource(new File(imageFolder + "datamod_tutorial_img_6_2.png")));
+
+        verticalLayout.addComponent(new HtmlLabel("<h1>Anleitung:</h1><br>" +
+                "In Abb. 1 siehst du wie die Testbeispiele aufgebaut sind.<br><br>" +
+                "Fragen können in deutscher- oder englischer Sprache gestellt werden. Der oberste Teil des Beispiels<br>" +
+                "besteht aus einem ein- oder mehrzeiligen Erklärungstext, gefolgt von Schemainformationen. In der<br>" +
+                "folgenden Abbildung kann man z.B.: erkennen, dass die Tabelle <i>Hotel</i> aus drei Spalten besteht, wobei<br>" +
+                "die Spalte <b>HNo</b> der Primärschlüssel ist. Fremdschlüssel werden kursiv dargestellt.<br><br>"));
+        verticalLayout.addComponent(image_1);
+        verticalLayout.addComponent(new HtmlLabel("<br>" +
+                "Im unteren Teil werden weiterführende Informationen zu den Zusammenhängen der Tabellen untereinander gegeben.<br><br>" +
+                "Klickt man z.B.: auf den Button mit dem Namen <i>Hotel</i>, werden die<br><br>"));
+        verticalLayout.addComponent(image_2_1);
+        verticalLayout.addComponent(new HtmlLabel("<br>" +
+                "Tabelleninformationen zu dieser Tabelle in einem Fenster angezeigt.<br>" +
+                "(Es können alle Fenster aller Tabellen gleichzeitig offen sein und am Bildschirm verschoben werden.)<br><br>"));
+        verticalLayout.addComponent(image_2_2);
+        verticalLayout.addComponent(new HtmlLabel("<br>" +
+                "Braucht man bei der Queryeingabe Hilfe kann mit dem Button <b>SQL Tutorial</b> das w3schools.com SQL Tutorial<br>" +
+                "konsultiert werden. Wie in Abb. 1 ersichtlich, befindet sich dieser im unteren Teil jedes Testbeispieles.<br><br>"));
+        verticalLayout.addComponent(image_3);
+        verticalLayout.addComponent(new HtmlLabel("<br>" +
+                "Da zum Lösen mancher Aufgaben relativ lange SQL Queries eingegeben werden müssen, hast du die Möglichkeit<br>" +
+                "deine Eigaben vor den Abgaben ausgibig testen zu können. Durch drücken des <b>Query Diagnose</b> Buttons<br>" +
+                "erhältst du entsprechendes Feedback. Für jede Diagnose wird dir ein Versuch abgezogen. Hast du keine Versuche<br>" +
+                "mehr übrig, wird deine zuletzt eingegebene Antwort gewertet und das nächste Beispiel geladen. Die maximale<br>" +
+                "Anzahl an Versuchen für das gerade bearbeitete Beispiel wird durch den grünen Hinweistext (siehe Abb. 1)<br>" +
+                "verdeutlicht. Für das obige Beispiel hast du z.B.: max. 3 Versuche, um es zu lösen.<br><br>" +
+                "<h2>Mögliches Feedback vom CAT System:<br><br>"));
+        verticalLayout.addComponent(image_4_1);
+        verticalLayout.addComponent(new HtmlLabel("<br>" +
+                "Die Eigabe ist syntaktisch korrekt, aber das erhaltene Ergebnis stimmt nicht mit dem Geforderten überein.<br><br>"));
+        verticalLayout.addComponent(image_4_2);
+        verticalLayout.addComponent(new HtmlLabel("<br>" +
+                "Es wird ein Fehler, sowie die durch deine Eingabe erhalte Ergebnistabelle angezeigt.<br>(Ein Versuch wird abgezogen.)<br><br>"));
+        verticalLayout.addComponent(image_5_1);
+        verticalLayout.addComponent(new HtmlLabel("<br>" +
+                "Die Eingabe weist einen Syntaxfehler auf.<br><br>"));
+        verticalLayout.addComponent(image_5_2);
+        verticalLayout.addComponent(new HtmlLabel("<br>" +
+                "In diesem Fall werden die Exceptions der ORACLE Datenbank angezeigt. Diese beinhalten Fehlernummern und<br>" +
+                "werden rein in Englisch ausgegeben.<br>(Ein Versuch wird Abgezogen.)<br><br>"));
+        verticalLayout.addComponent(image_6_1);
+        verticalLayout.addComponent(new HtmlLabel("<br>" +
+                "Die Eigabe ist syntaktisch korrekt und stimmt mit dem geforderten Ergebnis überein.<br><br>"));
+        verticalLayout.addComponent(image_6_2);
+        verticalLayout.addComponent(new HtmlLabel("<br>" +
+                "Es wird angezeigt beim wievielten Versuch du die Aufgabe gelöst hast. Das erhaltene Ergebnis wird ebenfalls<br>" +
+                "angezeigt. Mehrmaliges drücken des <b>Query Diagnose</b> Buttons bei bereits richtigem Ergebnis beeinflusst<br>" +
+                "die Anzahlt der Versuche nicht mehr.<br><br>"));
+
         Button cont = new Button("Weiter", e -> {
 
             removeAllComponents();
@@ -114,13 +188,13 @@ public class DatamodTestView extends TestView {
             super.startQuiz(student);
         });
 
-        layout.addComponent(cont);
-        addComponent(layout);
+        verticalLayout.addComponent(cont);
+        addComponent(verticalLayout);
     }
 
     @Override
     public void loadQuestions() {
-
+        ConnectionProvider.initialize();
         try {
             QuestionProvider.initialize();
 

@@ -172,6 +172,11 @@ public class MultipleTaskTableQuestion extends VerticalLayout implements
     }
 
     @Override
+    public double performQueryDiagnosis() {
+        return 0;
+    }
+
+    @Override
     public float getDifficulty() {
         return difficulty;
     }

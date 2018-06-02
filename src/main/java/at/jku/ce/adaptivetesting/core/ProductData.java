@@ -8,9 +8,10 @@ public class ProductData {
 	private final int mjVers = 1;
 	private final int minVers = 1;
 	private final int micVers = 2;
-	private final String company = "JKU";
-	private final String product = "Computerized Adaptive Testing (CAT) Platform";
-	private final String productShort = "CAT Platform";
+	private final String company = "Johannes Kepler Universität";
+	private final String companyShort = "JKU";
+	private final String product = "Plattform für computerisiertes adaptives Testen (CAT)";
+	private final String productShort = "CAT Plattform";
 
 	public int getMajor() {
 		return mjVers;
@@ -34,6 +35,10 @@ public class ProductData {
 
 	public String getProductShort() {
 		return productShort;
+	}
+
+	public String getCompanyShort() {
+		return companyShort;
 	}
 
 	@Override

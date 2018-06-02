@@ -47,6 +47,12 @@ public interface IQuestion<DataStorage extends AnswerStorage> {
 
 	/**
 	 *
+	 * @return Validates the user answer. Only needed for Datamod Questions
+	 */
+	double performQueryDiagnosis();
+
+	/**
+	 *
 	 * @return The maximum number of points you can get with this question
 	 */
 	double getMaxPoints();
@@ -81,8 +87,7 @@ public interface IQuestion<DataStorage extends AnswerStorage> {
 		XmlQuestionData<DataStorage> xmlRepresentation = toXMLRepresentation();
 		Class<? extends AnswerStorage> dataStorageClass = xmlRepresentation
 				.getDataStorageClass();
-		JAXBContext context = JAXBContext.newInstance(
-				xmlRepresentation.getClass(), dataStorageClass);
+		JAXBContext context = JAXBContext.newInstance(xmlRepresentation.getClass(), dataStorageClass);
 		Marshaller marshaller = context.createMarshaller();
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		marshaller.marshal(xmlRepresentation, byteArrayOutputStream);

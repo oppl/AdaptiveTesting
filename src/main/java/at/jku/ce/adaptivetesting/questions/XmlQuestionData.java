@@ -15,8 +15,7 @@ import at.jku.ce.adaptivetesting.core.LogHelper;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "questionData")
-public abstract class XmlQuestionData<DataStorage extends AnswerStorage>
-		implements Serializable {
+public abstract class XmlQuestionData<DataStorage extends AnswerStorage> implements Serializable {
 
 	private static final long serialVersionUID = 5422318817914536294L;
 	@XmlElement(name = "dataStorage", nillable = true)
@@ -30,8 +29,7 @@ public abstract class XmlQuestionData<DataStorage extends AnswerStorage>
 		this(null, "", 0);
 	}
 
-	public XmlQuestionData(DataStorage dataStorage, String question,
-			float difficulty) {
+	public XmlQuestionData(DataStorage dataStorage, String question, float difficulty) {
 		if (dataStorage == null) {
 			try {
 				dataStorage = getDataStorageClass().newInstance();
@@ -87,5 +85,4 @@ public abstract class XmlQuestionData<DataStorage extends AnswerStorage>
 	// marshaller.marshal(new XMLQuestionData(), byteArrayOutputStream);
 	// System.out.println(new String(byteArrayOutputStream.toByteArray()));
 	// }
-
 }

@@ -1,5 +1,6 @@
-package at.jku.ce.adaptivetesting.vaadin.views.test.accounting.util;
+package at.jku.ce.adaptivetesting.vaadin.views.test.accounting.misc;
 
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -33,8 +34,8 @@ public class AccountingCalculator implements ClickListener {
         for (String caption : operations) {
             Button button = new Button(caption);
             button.addClickListener(this);
-            button.setHeight(25, AbstractComponent.UNITS_PIXELS);
-            button.setWidth(25, AbstractComponent.UNITS_PIXELS);
+            button.setHeight(25, AbstractComponent.Unit.PIXELS);
+            button.setWidth(25, AbstractComponent.Unit.PIXELS);
             gl.addComponent(button);
         }
     }

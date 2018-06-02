@@ -7,10 +7,11 @@ import java.io.File;
 import java.util.*;
 import javax.script.ScriptException;
 
+import at.jku.ce.adaptivetesting.core.TestVariants;
 import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
-import at.jku.ce.adaptivetesting.core.db.DBConnectionProvider;
+import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
 import at.jku.ce.adaptivetesting.core.r.RConnectionProvider;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -31,40 +32,33 @@ public class SimpleEngine implements IEngine {
 	private IQuestion<? extends AnswerStorage> question;
 	private String r_itemdiff, r_libFolder;
 	private RConnectionProvider rConn;
-	private DBConnectionProvider dbConn;
 	private StudentData student;
+	private ConnectionProvider dbCon;
 
 	/**
-	 * Using -1.6f, -0.2f, 1.2f, 2.5f as explicit upper bounds
+	 * @param quizName
+	 *			According to the choosen quizName (Test-type) a corresponding
+	 *			upper bound array is chosen.
 	 *
 	 * @throws EngineException
 	 */
-	public SimpleEngine() throws EngineException {
-		//this(-1.6f, -0.2f, 1.2f, 2.5f);
-		this(-2.715000f, -2.246250f, -2.049900f, -1.631000f,
-				-1.440625f, -1.316250f, -1.169125f, -0.832000f,
-				-0.710075f, -0.551250f, -0.443000f, -0.358900f,
-				-0.202650f, -0.079700f, 0.169000f, 0.251200f,
-				0.310700f, 0.411500f, 0.526175f, 0.610500f,
-				0.744375f, 0.805600f, 0.844675f, 0.927600f,
-				1.027125f, 1.170350f, 1.252075f, 1.377600f,
-				1.515100f, 1.600750f, 1.716900f, 1.946600f,
-				2.041800f, 2.262850f, 2.430500f, 2.619900f,
-				2.921600f, 3.103350f, 3.794900f, 4.937000f);
-	}
-
-	/**
-	 *
-	 * @param upperBounds
-	 *            : All upper bounds. Additionally a upper bound "+INF" is
-	 *            created. All upper bounds including
-	 * @throws EngineException
-	 */
-
-	@SuppressWarnings("unchecked")
-	public SimpleEngine (float... upperBounds) throws EngineException {
-		dbConn = new DBConnectionProvider();
-		dbConn.initialize();
+	public SimpleEngine(String quizName) throws EngineException {
+		dbCon = new ConnectionProvider();
+		float[] upperBounds = null;
+		if (quizName.equals(TestVariants.RW.toString())) {
+			upperBounds = new float[]{-2.715000f, -2.246250f, -2.049900f, -1.631000f,
+					-1.440625f, -1.316250f, -1.169125f, -0.832000f,
+					-0.710075f, -0.551250f, -0.443000f, -0.358900f,
+					-0.202650f, -0.079700f, 0.169000f, 0.251200f,
+					0.310700f, 0.411500f, 0.526175f, 0.610500f,
+					0.744375f, 0.805600f, 0.844675f, 0.927600f,
+					1.027125f, 1.170350f, 1.252075f, 1.377600f,
+					1.515100f, 1.600750f, 1.716900f, 1.946600f,
+					2.041800f, 2.262850f, 2.430500f, 2.619900f,
+					2.921600f, 3.103350f, 3.794900f, 4.937000f};
+		} else if (quizName.equals(TestVariants.SQL.toString())) {
+			upperBounds = new float[]{0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 1.1f};
+		}
 		Arrays.sort(upperBounds);
 		this.upperBounds = upperBounds;
 		LogHelper.logInfo(String.valueOf("Total number of question categories: " + upperBounds.length));
@@ -197,6 +191,10 @@ public class SimpleEngine implements IEngine {
 		return entry.points;
 	}
 
+	public IQuestion<? extends AnswerStorage> getQuestion() {
+		return question;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -215,7 +213,7 @@ public class SimpleEngine implements IEngine {
 			String RCodeScript = getRScript();
 			// Execute R code and get result
 			// [0] -> next item's difficulty [1] -> current competence
-			// [2] ->Delta to result
+			// [2] -> Delta to result
 			double[] result = rConn.execute(RCodeScript, rNameReturn);
 			//geht: double[] result = rProvider.execute(RCodeScript, rNameReturn);
 			LogHelper.logInfo("StudentID: "+ student.getStudentIDCode() +
@@ -266,7 +264,6 @@ public class SimpleEngine implements IEngine {
 	 */
 	@Override
 	public void start() {
-		dbConn = new DBConnectionProvider();
 		initR();
 		history.clear();
 		question = getQuestion((upperBounds.length + 1) / 2 - 1);
@@ -284,7 +281,7 @@ public class SimpleEngine implements IEngine {
 		initR();
 		history.clear();
 
-		if (student.getQuizName().equals("Rechnungswesentest")) {
+		if (student.getQuizName().equals(TestVariants.RW.toString())) {
 			String studentClass = student.getStudentClass();
 			int schoolClass;
 			try {
@@ -320,21 +317,20 @@ public class SimpleEngine implements IEngine {
 					question = getQuestion(setBag(2));
 			}
 		}
-		if (student.getQuizName().equals("SQL-Datenmodellierungstest")) {
+		if (student.getQuizName().equals(TestVariants.SQL.toString())) {
 			String studentExperience = student.getStudentExperience();
 			LogHelper.logInfo("Student experience: " + String.valueOf(studentExperience));
 			switch (studentExperience) {
+				default:
 				case "Anfänger":
-					question = getQuestion(setBag(2));
+					question = getQuestion(setBag(0));
 					break;
 				case "Fortgeschritten":
-					question = getQuestion(setBag(3));
+					question = getQuestion(setBag(1));
 					break;
 				case "Profi":
-					question = getQuestion(setBag(4));
-					break;
-				default:
 					question = getQuestion(setBag(2));
+					break;
 			}
 		}
 		LogHelper.logInfo(String.valueOf("Difficulty of chosen question: " + question.getDifficulty()));
@@ -370,19 +366,24 @@ public class SimpleEngine implements IEngine {
 		}
 		// Set R-variable itemdiff
 		r_itemdiff = sb.append(')').toString();
-		// Get library home
+		// Get library home -> C:\Users\%USER\AppData\Local\Temp
 		File path = new File(System.getProperty("java.io.tmpdir"), "r_lib");
-		if (!path.exists()) {
-			path.mkdirs();
+		File pathToCheck = new File(path, "catR");
+
+		if (!pathToCheck.exists()) {
 			// CatR 3.4 auto extract
 			try {
-				String sourcePath = getClass().getResource("/catR.zip").getPath();
+                pathToCheck.mkdirs();
+				String sourcePath = "CAT/resources/catR.zip";
 				ZipFile zipFile = new ZipFile(sourcePath);
 				zipFile.extractAll(path.getAbsolutePath());
+				LogHelper.logInfo("CatR extracted to " + path.getAbsolutePath());
 			} catch (ZipException e) {
+                pathToCheck.delete();
 				e.printStackTrace();
 			}
-		}
+		} else LogHelper.logInfo("CatR already exists at " + path.getAbsolutePath());
+
 		r_libFolder = path.getPath().replace("\\", "\\\\");
 		// initialize RCaller
 		rConn = new RConnectionProvider();

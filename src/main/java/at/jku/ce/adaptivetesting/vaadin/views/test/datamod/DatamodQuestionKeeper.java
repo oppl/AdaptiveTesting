@@ -1,11 +1,14 @@
 package at.jku.ce.adaptivetesting.vaadin.views.test.datamod;
 
 import at.jku.ce.adaptivetesting.core.LogHelper;
+import at.jku.ce.adaptivetesting.core.TestVariants;
+import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
 import at.jku.ce.adaptivetesting.questions.datamod.*;
 import at.jku.ce.adaptivetesting.questions.datamod.util.DatamodXmlHelper;
 import at.jku.ce.adaptivetesting.vaadin.views.def.DefaultView;
 import com.vaadin.server.FileResource;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Notification;
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
 import javax.xml.bind.JAXBContext;
@@ -15,6 +18,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Created by Peter
+ */
 
 public class DatamodQuestionKeeper {
 
@@ -36,7 +43,7 @@ public class DatamodQuestionKeeper {
 
     public void initialize() {
         try {
-            size = initialize(new File(DefaultView.Servlet.getQuestionFolderName() + "/datamod"));
+            size = initialize(new File(DefaultView.Servlet.getQuestionFolderName() + TestVariants.SQL.getFolderName()));
 
         } catch (JAXBException e) {
             //e.printStackTrace();
@@ -103,6 +110,22 @@ public class DatamodQuestionKeeper {
             }
         }
         LogHelper.logInfo("Successfully loaded " + successfullyLoaded + " question(s).");
+        String notificationCaption, notificationDescription;
+        switch (successfullyLoaded) {
+            case 0:
+                notificationCaption = "Ladevorgang fehlgeschlagen";
+                notificationDescription = "Es wurden keine ladbaren Items gefunden";
+                ConnectionProvider.closeConnection();
+                break;
+            case 1:
+                notificationCaption = "Ladevorgang abgeschlossen";
+                notificationDescription = "Es wurde (" + successfullyLoaded + ") Frage erfolgreich geladen";
+                break;
+            default:
+                notificationCaption = "Ladevorgang abgeschlossen";
+                notificationDescription = "Es wurden (" + successfullyLoaded + ") Fragen erfolgreich geladen";
+        }
+        Notification.show(notificationCaption, notificationDescription, Notification.Type.TRAY_NOTIFICATION);
 
         return questions.length;
     }

@@ -1,4 +1,4 @@
-package at.jku.ce.adaptivetesting.vaadin.views.test.accounting.util;
+package at.jku.ce.adaptivetesting.vaadin.views.test.accounting.misc;
 
 /*This file is part of the project "Reisisoft Adaptive Testing",
  * which is licenced under LGPL v3+. You may find a copy in the source,

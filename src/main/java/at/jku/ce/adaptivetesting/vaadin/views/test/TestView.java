@@ -3,9 +3,11 @@ package at.jku.ce.adaptivetesting.vaadin.views.test;
 /*This file is part of the project "Reisisoft Adaptive Testing",
  * which is licenced under LGPL v3+. You may find a copy in the source,
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import at.jku.ce.adaptivetesting.core.TestVariants;
 import at.jku.ce.adaptivetesting.core.*;
 import at.jku.ce.adaptivetesting.core.engine.SimpleEngine;
 import at.jku.ce.adaptivetesting.core.engine.EngineException;
@@ -16,9 +18,11 @@ import at.jku.ce.adaptivetesting.core.engine.ResultFiredArgs;
 import at.jku.ce.adaptivetesting.core.html.HtmlLabel;
 
 import at.jku.ce.adaptivetesting.core.engine.StudentData;
-import at.jku.ce.adaptivetesting.vaadin.SingleComponentLayout;
+import at.jku.ce.adaptivetesting.questions.datamod.SqlQuestion;
+import at.jku.ce.adaptivetesting.vaadin.views.SingleComponentLayout;
+import at.jku.ce.adaptivetesting.vaadin.views.test.datamod.DatamodResultView;
 import at.jku.ce.adaptivetesting.vaadin.views.def.DefaultView;
-import at.jku.ce.adaptivetesting.vaadin.views.ResultView;
+import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.AccountingResultView;
 import at.jku.ce.adaptivetesting.vaadin.views.Views;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -33,14 +37,17 @@ public abstract class TestView extends VerticalLayout implements
 	private static final long serialVersionUID = -4764723794449575244L;
 	private SingleComponentLayout questionHolder = new SingleComponentLayout();
 	private IEngine iEngine;
-	private GridLayout southLayout = new GridLayout(3, 1);
+	private GridLayout southLayout = new GridLayout(2, 1);
 	private HorizontalLayout helperRow = new HorizontalLayout();
+	private HorizontalLayout commandRow = new HorizontalLayout();
 	private final Button next;
 	private Component helpComponent = null;
 	private Label title;
 	private Class<? extends IResultView> resultViewClass = null;
 	private int questionNo;
 	public String quizName;
+	protected IQuestion<? extends AnswerStorage> question;
+	private int tries;
 
 	public TestView(String quizName) {
 		this(quizName, null);
@@ -53,29 +60,18 @@ public abstract class TestView extends VerticalLayout implements
 		title = HtmlLabel.getCenteredLabel("h1", quizName);
 		addComponent(title);
 		addComponent(questionHolder);
-
 		addComponent(southLayout);
 
 		next = new Button("Nächste Frage");
 		next.addClickListener(e -> {
 			e.getButton().setEnabled(false);
-			try {
-				iEngine.requestCalculation();
-			} catch (EngineException e1) {
-				Notification.show("Die nächste Frage konnte nicht ausgewählt werden.",
-						"Bitte wende dich an den Lehrenden.", Type.ERROR_MESSAGE);
-				LogHelper.logThrowable(e1);
-			}
+			displayNextQuestion();
 		});
-		southLayout.addComponent(next, 2, 0);
-		helperRow.setSpacing(true);
-		southLayout.addComponent(helperRow,1,0);
-		southLayout.setSizeFull();
-		southLayout.setMargin(true);
+
 		// Ensure we have an engine
 		if (engine == null) {
 			try {
-				iEngine = new SimpleEngine();
+				iEngine = new SimpleEngine(quizName);
 			} catch (EngineException e1) {
 				Notification.show("Test-System konnte nicht gestartet werden",
 						"Bitte wende dich an den Lehrenden.",
@@ -89,7 +85,47 @@ public abstract class TestView extends VerticalLayout implements
 		// Register to engine events
 		iEngine.addQuestionChangeListener(this);
 		iEngine.addResultFiredListener(this);
-		setResultView(ResultView.class);
+
+		if(quizName.equals(TestVariants.SQL.toString())) {
+			Button queryDiagnosis = new Button("Query Diagnose");
+			queryDiagnosis.addClickListener(e -> {
+				question = iEngine.getQuestion();
+				SqlQuestion sqlQuestion = (SqlQuestion) question;
+				double check = sqlQuestion.performQueryDiagnosis();
+				tries = sqlQuestion.getTries();
+				int tryNr = 1 + (sqlQuestion.getDefaultTries() - tries);
+				LogHelper.logInfo("Try (" + tryNr + ")");
+				if (check == 0.0d) {
+					sqlQuestion.decreaseTries();
+					tries = sqlQuestion.getTries();
+				}
+				if (tries == 0) displayNextQuestion();
+			});
+			commandRow.addComponent(queryDiagnosis);
+			setResultView(DatamodResultView.class);
+		} else {
+			setResultView(AccountingResultView.class);
+		}
+		commandRow.addComponent(next);
+
+		southLayout.addComponent(helperRow,0,0);
+		helperRow.setSpacing(true);
+		southLayout.addComponent(commandRow,1,0);
+		commandRow.setSpacing(true);
+
+		southLayout.setComponentAlignment(commandRow, Alignment.BOTTOM_RIGHT);
+		southLayout.setSizeFull();
+		southLayout.setMargin(true);
+	}
+
+	public void displayNextQuestion() {
+		try {
+			iEngine.requestCalculation();
+		} catch (EngineException e1) {
+			Notification.show("Die nächste Frage konnte nicht ausgewählt werden.",
+					"Bitte wende dich an den Lehrenden.", Type.ERROR_MESSAGE);
+			LogHelper.logThrowable(e1);
+		}
 	}
 
 	/**
@@ -100,11 +136,13 @@ public abstract class TestView extends VerticalLayout implements
 	public <QuestionComponent extends IQuestion<? extends AnswerStorage> & Component & Sizeable> void addQuestion(
 			QuestionComponent question) {
 		iEngine.addQuestionToPool(question);
+		this.question = question;
 	}
 
 	public IEngine getEngine() {
 		return iEngine;
 	}
+
 	protected final void addHelpButton(Component c) {
 		assert c != null;
 		helpComponent = c;
@@ -121,16 +159,14 @@ public abstract class TestView extends VerticalLayout implements
 		}
 		Constructor<? extends IResultView> resultConstructor;
 		try {
-			resultConstructor = resultViewClass.getConstructor(
-					ResultFiredArgs.class, String.class);
-			result = resultConstructor.newInstance(args, title.getValue());
+			title = HtmlLabel.getCenteredLabel("h1", quizName);
+			resultConstructor = resultViewClass.getConstructor(ResultFiredArgs.class, String.class, String.class);
+			result = resultConstructor.newInstance(args, title.getValue(), getResultsFolderName());
 		} catch (NoSuchMethodException | SecurityException
 				| InstantiationException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException
 				| NullPointerException e) {
-			LogHelper.logInfo(resultViewClass.getName()
-					+ " does not implement the constructors of "
-					+ IResultView.class.getName());
+			LogHelper.logInfo(resultViewClass.getName() + " does not implement the constructors of " + IResultView.class.getName());
 			throw new EngineException(e);
 		}
 
@@ -140,7 +176,6 @@ public abstract class TestView extends VerticalLayout implements
 		// Cast cannot fail, as the setResultView takes care, that it is a View as well
 		navigator.addView(Views.RESULT.toString(), (View) result);
 		navigator.navigateTo(Views.RESULT.toString());
-
 	}
 
 	// As AccountingTestView only listens to the engine, every Question is a Component as well
@@ -150,7 +185,8 @@ public abstract class TestView extends VerticalLayout implements
 		if (question != null) {
 			questionNo++;
 			Label newTitel = HtmlLabel.getCenteredLabel("h1", "Aufgabe " + questionNo);
-			replaceComponent(title,newTitel);
+
+			replaceComponent(title, newTitel);
 			title = newTitel;
 			Component c = (Component) question;
 			questionHolder.addComponent(c);
@@ -167,14 +203,14 @@ public abstract class TestView extends VerticalLayout implements
 
 	public void startQuiz(StudentData student) {
 		iEngine.setStudentData(student);
-		//try {
+		try {
 			// Start Quiz with consideration of student grade
 			iEngine.start(student);
-		/*} catch (EngineException e) {
+		} catch (Exception e) {
 			Notification.show("Das Test-System konnte nicht gestartet werden",
-					"Bitte wenden Sie sich an den Lehrenden.", Type.ERROR_MESSAGE);
+					"Bitte wende dich an den Lehrenden.", Type.ERROR_MESSAGE);
 			LogHelper.logThrowable(e);
-		}*/
+		}
 	}
 
 	@Override
@@ -190,5 +226,15 @@ public abstract class TestView extends VerticalLayout implements
 
 	public void resetQuestionNo() {
 		questionNo = 0;
+	}
+
+	private String getResultsFolderName() {
+		String testTypeFolder = "";
+		if (quizName.equals(TestVariants.RW.toString())) {
+			testTypeFolder = TestVariants.RW.getFolderName();
+		} else if (quizName.equals(TestVariants.SQL.toString())) {
+			testTypeFolder = TestVariants.SQL.getFolderName();
+		}
+		return DefaultView.Servlet.getResultFolderName() + testTypeFolder;
 	}
 }

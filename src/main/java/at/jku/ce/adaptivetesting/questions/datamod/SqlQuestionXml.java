@@ -4,8 +4,9 @@ import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by Peter, 13.03.2018
+ * Created by Peter
  */
+
 @XmlRootElement(name = "sqlQuestionDataStorage")
 public class SqlQuestionXml extends XmlQuestionData<SqlDataStorage> {
 
@@ -14,8 +15,7 @@ public class SqlQuestionXml extends XmlQuestionData<SqlDataStorage> {
     public SqlQuestionXml() {
     }
 
-    public SqlQuestionXml(SqlDataStorage solution, String questionText,
-                          float difficulty) {
+    public SqlQuestionXml(SqlDataStorage solution, String questionText, float difficulty) {
         super(solution, questionText, difficulty);
     }
 

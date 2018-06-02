@@ -1,9 +1,10 @@
-package at.jku.ce.adaptivetesting.vaadin.views;
+package at.jku.ce.adaptivetesting.vaadin.views.test.adm;
 
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.core.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.core.html.HtmlUtils;
 import at.jku.ce.adaptivetesting.vaadin.views.def.DefaultView;
+import at.jku.ce.adaptivetesting.vaadin.views.def.MenuWindow;
 import at.jku.ce.adaptivetesting.vaadin.views.test.TestView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -28,22 +29,56 @@ import java.util.zip.ZipOutputStream;
 /**
  * Created by oppl on 12/01/2017.
  */
+
 public class ResultsDownloadView extends VerticalLayout implements View {
 
         private TestView manager;
         private Table table;
+        private String testTypeFolder;
 
-        public ResultsDownloadView(TestView manager) {
+        public ResultsDownloadView(TestView manager, String testTypeFolder) {
+            this.testTypeFolder = testTypeFolder;
             this.setMargin(true);
             this.setSpacing(true);
             this.addComponent(new HtmlLabel(HtmlUtils.center("h1",
-                    "Test Results")));
+                    "Test-Ergebnis Download")));
+
+            GridLayout gridLayout = new GridLayout(2, 1);
+            gridLayout.setWidth("100%");
 
             Button zipDownload = new Button("Download ZIP-File");
             zipDownload.addClickListener( e -> {
                 this.getUI().addWindow(new ZIPFileUI());
             });
-            this.addComponent(zipDownload);
+
+            Button menu = new Button("Menü");
+            menu.addClickListener(new Button.ClickListener() {
+                private static final long serialVersionUID = 32642854872179636L;
+
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    LogHelper.logInfo("Opened MenuWindow");
+                    MenuWindow menuWindow = new MenuWindow();
+
+                    menuWindow.addCloseListener(new Window.CloseListener() {
+                        private static final long serialVersionUID = 7874342882437355680L;
+
+                        @Override
+                        public void windowClose(Window.CloseEvent e) {
+                            event.getButton().setEnabled(true);
+                        }
+                    });
+                    menuWindow.deactivateResultDlMenuButton();
+                    getUI().addWindow(menuWindow);
+                    event.getButton().setEnabled(false);
+                }
+            });
+
+            gridLayout.addComponent(zipDownload, 0, 0);
+            gridLayout.addComponent(menu, 1, 0);
+            gridLayout.setComponentAlignment(menu, Alignment.BOTTOM_RIGHT);
+
+            this.addComponent(gridLayout);
             this.manager = manager;
         }
 
@@ -53,11 +88,10 @@ public class ResultsDownloadView extends VerticalLayout implements View {
         }
 
         private void buildTable() {
-
-            List<File> resultFiles = loadResults(new File(DefaultView.Servlet.getResultFolderName()));
+            List<File> resultFiles = loadResults(new File(getResultFolderName()));
             if (table != null) this.removeComponent(table);
 
-            table = new Table("Available Results");
+            table = new Table("Verfügbare Ergebnisse");
             table.addContainerProperty("ResultName", String.class, null);
             table.addContainerProperty("ResultDate", String.class, null);
             table.addContainerProperty("ButtonDownload",  Button.class, null);
@@ -96,7 +130,7 @@ public class ResultsDownloadView extends VerticalLayout implements View {
                         downloadButton,
                         new Long(attr.lastModifiedTime().toMillis())
                 }, itemID);
-                LogHelper.logInfo("ResultsDownloadView: added "+result.getName());
+                LogHelper.logInfo("ResultsDownloadView: added " + result.getName());
                 itemID++;
             }
             table.sort();
@@ -126,7 +160,7 @@ public class ResultsDownloadView extends VerticalLayout implements View {
         public ZIPFileUI() {
             super("Download ZIP-File");
 
-            List<File> resultFiles = loadResults(new File(DefaultView.Servlet.getResultFolderName()));
+            List<File> resultFiles = loadResults(new File(getResultFolderName()));
 
             Date from = null;
             Date to = null;
@@ -150,7 +184,7 @@ public class ResultsDownloadView extends VerticalLayout implements View {
             this.center();
             gLayout.setWidth("100%");
             this.setWidth("600px");
-            Label titleLabel = new Label("<b>Please select date range:</b>", ContentMode.HTML);
+            Label titleLabel = new Label("<b>Bitte den Zeitraum auswählen:</b>", ContentMode.HTML);
 
             PopupDateField fromDate = new PopupDateField();
             fromDate.setResolution(Resolution.MINUTE);
@@ -232,5 +266,11 @@ public class ResultsDownloadView extends VerticalLayout implements View {
             gLayout.setSpacing(true);
             setContent(gLayout);
         }
+    }
+
+    private String getResultFolderName() {
+        String resultfolderName = DefaultView.Servlet.getResultFolderName();
+        resultfolderName = resultfolderName + testTypeFolder;
+        return resultfolderName;
     }
 }

@@ -77,5 +77,7 @@ public interface IEngine {
 
 	List<IQuestion<? extends AnswerStorage>> getQuestions();
 
+	IQuestion<? extends AnswerStorage> getQuestion();
+
 	boolean removeQuestion(IQuestion<? extends AnswerStorage> question);
 }

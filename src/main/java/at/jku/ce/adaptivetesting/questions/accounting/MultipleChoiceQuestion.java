@@ -45,7 +45,7 @@ public class MultipleChoiceQuestion extends VerticalLayout implements
         addComponent(question);
         if (questionImage != null) addComponent(this.questionImage);
 
-        addComponent(new Label("Wählen Sie die richtige(n) Option(en):"));
+        addComponent(new Label("Wähle die richtige(n) Option(en):"));
         HashMap<Integer,String> answerOptions = solution.getAnswerOptions();
         for (Integer i: answerOptions.keySet()) {
             CheckBox checkBox = new CheckBox(answerOptions.get(i));
@@ -114,6 +114,11 @@ public class MultipleChoiceQuestion extends VerticalLayout implements
         }
         LogHelper.logInfo("Correct answer");
         return 1.0d;
+    }
+
+    @Override
+    public double performQueryDiagnosis() {
+        return 0;
     }
 
     @Override
