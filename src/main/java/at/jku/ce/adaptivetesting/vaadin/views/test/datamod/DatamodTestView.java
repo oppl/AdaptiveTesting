@@ -12,8 +12,6 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import jdk.internal.org.objectweb.asm.Handle;
-import org.vaadin.hene.expandingtextarea.ExpandingTextArea;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
@@ -130,56 +128,56 @@ public class DatamodTestView extends TestView {
         Image image_6_1 = new Image("Abb. 6.1", new FileResource(new File(imageFolder + "datamod_tutorial_img_6_1.png")));
         Image image_6_2 = new Image("Abb 6.2", new FileResource(new File(imageFolder + "datamod_tutorial_img_6_2.png")));
 
-        verticalLayout.addComponent(new HtmlLabel("<h1>Anleitung:</h1><br>" +
+        verticalLayout.addComponent(new HtmlLabel("<h1>Anleitung</h1><br>" +
                 "In Abb. 1 siehst du wie die Testbeispiele aufgebaut sind.<br><br>" +
                 "Fragen können in deutscher- oder englischer Sprache gestellt werden. Der oberste Teil des Beispiels<br>" +
                 "besteht aus einem ein- oder mehrzeiligen Erklärungstext, gefolgt von Schemainformationen. In der<br>" +
-                "folgenden Abbildung kann man z.B.: erkennen, dass die Tabelle <i>Hotel</i> aus drei Spalten besteht, wobei<br>" +
+                "folgenden Abbildung kann man z.B. erkennen, dass die Tabelle <i>Hotel</i> aus drei Spalten besteht, wobei<br>" +
                 "die Spalte <b>HNo</b> der Primärschlüssel ist. Fremdschlüssel werden kursiv dargestellt.<br><br>"));
         verticalLayout.addComponent(image_1);
         verticalLayout.addComponent(new HtmlLabel("<br>" +
                 "Im unteren Teil werden weiterführende Informationen zu den Zusammenhängen der Tabellen untereinander gegeben.<br><br>" +
-                "Klickt man z.B.: auf den Button mit dem Namen <i>Hotel</i>, werden die<br><br>"));
+                "Klickt man z.B. auf den Button mit dem Namen <i>Hotel</i>, werden die<br><br>"));
         verticalLayout.addComponent(image_2_1);
         verticalLayout.addComponent(new HtmlLabel("<br>" +
                 "Tabelleninformationen zu dieser Tabelle in einem Fenster angezeigt.<br>" +
-                "(Es können alle Fenster aller Tabellen gleichzeitig offen sein und am Bildschirm verschoben werden.)<br><br>"));
+                "(Es können alle Fenster aller Tabellen gleichzeitig offen sein und am Bildschirm verschoben werden)<br><br>"));
         verticalLayout.addComponent(image_2_2);
         verticalLayout.addComponent(new HtmlLabel("<br>" +
-                "Braucht man bei der Queryeingabe Hilfe kann mit dem Button <b>SQL Tutorial</b> das w3schools.com SQL Tutorial<br>" +
-                "konsultiert werden. Wie in Abb. 1 ersichtlich, befindet sich dieser im unteren Teil jedes Testbeispieles.<br><br>"));
+                "Braucht man bei der Query-Eingabe Hilfe kann mit dem Button <b>SQL Tutorial</b> das w3schools.com SQL Tutorial<br>" +
+                "konsultiert werden. Wie in Abb. 1 ersichtlich, befindet sich dieser im unteren Teil jedes Testbeispiels.<br><br>"));
         verticalLayout.addComponent(image_3);
         verticalLayout.addComponent(new HtmlLabel("<br>" +
-                "Da zum Lösen mancher Aufgaben relativ lange SQL Queries eingegeben werden müssen, hast du die Möglichkeit<br>" +
-                "deine Eigaben vor den Abgaben ausgibig testen zu können. Durch drücken des <b>Query Diagnose</b> Buttons<br>" +
+                "Da zum Lösen mancher Aufgaben relativ lange SQL-Queries eingegeben werden müssen, hast du die Möglichkeit<br>" +
+                "deine Enigaben vor den Abgaben ausgiebig testen zu können. Durch Drücken des <b>Query Diagnose</b> Buttons<br>" +
                 "erhältst du entsprechendes Feedback. Für jede Diagnose wird dir ein Versuch abgezogen. Hast du keine Versuche<br>" +
                 "mehr übrig, wird deine zuletzt eingegebene Antwort gewertet und das nächste Beispiel geladen. Die maximale<br>" +
                 "Anzahl an Versuchen für das gerade bearbeitete Beispiel wird durch den grünen Hinweistext (siehe Abb. 1)<br>" +
-                "verdeutlicht. Für das obige Beispiel hast du z.B.: max. 3 Versuche, um es zu lösen.<br><br>" +
-                "<h2>Mögliches Feedback vom CAT System:<br><br>"));
+                "verdeutlicht. Für das obige Beispiel hast du z.B. max. 3 Versuche um es zu lösen.<br><br>" +
+                "<h2>Mögliches Feedback vom CAT System<br><br>"));
         verticalLayout.addComponent(image_4_1);
         verticalLayout.addComponent(new HtmlLabel("<br>" +
-                "Die Eigabe ist syntaktisch korrekt, aber das erhaltene Ergebnis stimmt nicht mit dem Geforderten überein.<br><br>"));
+                "Die Eingabe ist syntaktisch korrekt, aber das erhaltene Ergebnis stimmt nicht mit dem Geforderten überein.<br><br>"));
         verticalLayout.addComponent(image_4_2);
         verticalLayout.addComponent(new HtmlLabel("<br>" +
-                "Es wird ein Fehler, sowie die durch deine Eingabe erhalte Ergebnistabelle angezeigt.<br>(Ein Versuch wird abgezogen.)<br><br>"));
+                "Es wird ein Fehler, sowie die durch deine Eingabe erhalte Ergebnistabelle angezeigt.<br>(Ein Versuch wird abgezogen)<br><br>"));
         verticalLayout.addComponent(image_5_1);
         verticalLayout.addComponent(new HtmlLabel("<br>" +
                 "Die Eingabe weist einen Syntaxfehler auf.<br><br>"));
         verticalLayout.addComponent(image_5_2);
         verticalLayout.addComponent(new HtmlLabel("<br>" +
                 "In diesem Fall werden die Exceptions der ORACLE Datenbank angezeigt. Diese beinhalten Fehlernummern und<br>" +
-                "werden rein in Englisch ausgegeben.<br>(Ein Versuch wird Abgezogen.)<br><br>"));
+                "werden rein in Englisch ausgegeben. (Ein Versuch wird Abgezogen)<br><br>"));
         verticalLayout.addComponent(image_6_1);
         verticalLayout.addComponent(new HtmlLabel("<br>" +
-                "Die Eigabe ist syntaktisch korrekt und stimmt mit dem geforderten Ergebnis überein.<br><br>"));
+                "Die Eingabe ist syntaktisch korrekt und stimmt mit dem geforderten Ergebnis überein.<br><br>"));
         verticalLayout.addComponent(image_6_2);
         verticalLayout.addComponent(new HtmlLabel("<br>" +
                 "Es wird angezeigt beim wievielten Versuch du die Aufgabe gelöst hast. Das erhaltene Ergebnis wird ebenfalls<br>" +
-                "angezeigt. Mehrmaliges drücken des <b>Query Diagnose</b> Buttons bei bereits richtigem Ergebnis beeinflusst<br>" +
+                "angezeigt. Mehrmaliges Drücken des <b>Query Diagnose</b> Buttons bei bereits richtigem Antwort beeinflusst<br>" +
                 "die Anzahlt der Versuche nicht mehr.<br><br>"));
 
-        Button cont = new Button("Weiter", e -> {
+        Button cont = new Button("Test beginnen", e -> {
 
             removeAllComponents();
             for (Component c : components) {

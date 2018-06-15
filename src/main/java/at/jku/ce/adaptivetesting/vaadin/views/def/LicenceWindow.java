@@ -43,7 +43,7 @@ public class LicenceWindow extends Window {
 		addLibraryLicence(new HtmlLink("https://cran.r-project.org/web/packages/catR/index.html",
 				"catR 3.4", true), gpl3);
 		addLibraryLicence(new HtmlLink("http://jdbi.org/",
-				"JDBI 3.2.0", true), apache2);
+				"JDBI 3.3.0", true), apache2);
 		addLibraryLicence(new HtmlLink("https://vaadin.com/directory/component/expandingtextarea",
 				"ExpandingTextArea 1.2.0 (Vaadin Add-on)", true), apache2);
 		vLayout.addComponent(empty);

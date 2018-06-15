@@ -46,7 +46,8 @@ public class SimpleEngine implements IEngine {
 		dbCon = new ConnectionProvider();
 		float[] upperBounds = null;
 		if (quizName.equals(TestVariants.RW.toString())) {
-			upperBounds = new float[]{-2.715000f, -2.246250f, -2.049900f, -1.631000f,
+			upperBounds = new float[]{
+					-2.715000f, -2.246250f, -2.049900f, -1.631000f,
 					-1.440625f, -1.316250f, -1.169125f, -0.832000f,
 					-0.710075f, -0.551250f, -0.443000f, -0.358900f,
 					-0.202650f, -0.079700f, 0.169000f, 0.251200f,
@@ -57,7 +58,11 @@ public class SimpleEngine implements IEngine {
 					2.041800f, 2.262850f, 2.430500f, 2.619900f,
 					2.921600f, 3.103350f, 3.794900f, 4.937000f};
 		} else if (quizName.equals(TestVariants.SQL.toString())) {
-			upperBounds = new float[]{0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 1.1f};
+			upperBounds = new float[]{
+					-1.026080f, -0.861475f, -0.618365f, -0.479589f,
+					-0.312789f, -0.104288f, 0.080893f, 0.267251f,
+					0.492996f, 0.991516f, 1.426546f, 2.145324f,
+					2.836668f};
 		}
 		Arrays.sort(upperBounds);
 		this.upperBounds = upperBounds;
@@ -469,8 +474,10 @@ public class SimpleEngine implements IEngine {
 		List<IQuestion<? extends AnswerStorage>> list = bags[arrayIndex];
 		int listSize = list.size();
 		if (listSize == 0) {
-			int nextArrayIndex = (arrayIndex + 1) % bags.length;
-			return getQuestion(nextArrayIndex);
+			int nextArrayIndex = (arrayIndex + 1); //% bags.length;
+			if (nextArrayIndex >= bags.length) {
+				return null;
+			} else return getQuestion(nextArrayIndex);
 		}
 		int index = (int) Math.round(Math.random() * (listSize - 1));
 		IQuestion<? extends AnswerStorage> question = list.get(index);

@@ -51,7 +51,8 @@ public class SqlQuestion extends VerticalLayout implements IQuestion<SqlDataStor
             answer.setEnabled(false);
         }
         infoTop = new HtmlLabel();
-        setText(infoTop, "<p style=\"color:#FFFFFF\">" + id + "</p>" + solution.getInfoTop());
+        //setText(infoTop, "<p style=\"color:#FFFFFF\">" + id + "</p>" + solution.getInfoTop());
+        setText(infoTop, "<p>" + id + "</p>" + solution.getInfoTop());
         addComponent(infoTop);
 
         solution.createTableWindows(this);

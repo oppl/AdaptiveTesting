@@ -91,10 +91,15 @@ public abstract class TestView extends VerticalLayout implements
 			queryDiagnosis.addClickListener(e -> {
 				question = iEngine.getQuestion();
 				SqlQuestion sqlQuestion = (SqlQuestion) question;
-				double check = sqlQuestion.performQueryDiagnosis();
+
 				tries = sqlQuestion.getTries();
 				int tryNr = 1 + (sqlQuestion.getDefaultTries() - tries);
 				LogHelper.logInfo("Try (" + tryNr + ")");
+
+				double check;
+				if (tries > 1) check = sqlQuestion.performQueryDiagnosis();
+				else check = sqlQuestion.checkUserAnswer();
+
 				if (check == 0.0d) {
 					sqlQuestion.decreaseTries();
 					tries = sqlQuestion.getTries();
