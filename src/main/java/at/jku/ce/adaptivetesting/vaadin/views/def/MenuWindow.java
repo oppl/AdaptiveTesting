@@ -4,6 +4,7 @@ package at.jku.ce.adaptivetesting.vaadin.views.def;
  * Created by Peter
  */
 
+import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.core.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.vaadin.views.Views;
 import com.vaadin.navigator.Navigator;
@@ -12,11 +13,11 @@ import com.vaadin.ui.*;
 public class MenuWindow extends Window {
 
 	private static final long serialVersionUID = -7005783695341501851L;
-	private GridLayout gLayout = new GridLayout(7, 1);
-	Button adminMenu, resultDlMenu, log, start;
+	private GridLayout gLayout = new GridLayout(9, 1);
+	Button adminMenu, resultDlMenu, log, start, deletePw;
 
 	public MenuWindow() {
-		super("Menü");
+		super("Navigationsmenü");
 		center();
 		setContent(gLayout);
 		gLayout.setMargin(true);
@@ -49,6 +50,12 @@ public class MenuWindow extends Window {
 			close();
 		});
 
+		deletePw = new Button("Passwort löschen", (Button.ClickListener) event -> {
+			DefaultViewFooter.USERPWD = "";
+			LogHelper.logInfo("password was deleted by user");
+			close();
+		});
+
 		gLayout.addComponent(adminMenu,0, 0);
 		gLayout.addComponent(new HtmlLabel("&ensp;"),1, 0);
 		gLayout.addComponent(resultDlMenu,2, 0);
@@ -56,6 +63,8 @@ public class MenuWindow extends Window {
 		gLayout.addComponent(log,4, 0);
 		gLayout.addComponent(new HtmlLabel("&ensp;"),5, 0);
 		gLayout.addComponent(start,6, 0);
+		gLayout.addComponent(new HtmlLabel("&ensp;"),7, 0);
+		gLayout.addComponent(deletePw,8, 0);
 	}
 	public void deactivateAdminMenuButton() {
 		adminMenu.setEnabled(false);

@@ -180,6 +180,13 @@ public class DefaultView extends UI {
 			if (!isWorking) {
 				resultFolderName = null;
 			}
+			// Get the result folder as defined in WEB-INF/web.xml
+			resourcesFolderName = getServletConfig().getServletContext().getInitParameter(resourcesFolderKey);
+			File fRef = new File(resourcesFolderName);
+			isWorking = fRef.exists() && fRef.isDirectory() || fRef.mkdirs();
+			if (!isWorking) {
+				resourcesFolderName = null;
+			}
 			// Get the image folder as defined in WEB-INF/web.xml
 			imageFolderName = getServletConfig().getServletContext().getInitParameter(imageFolderKey);
 			File fIf = new File(imageFolderName);
@@ -203,10 +210,12 @@ public class DefaultView extends UI {
 		private static String
 				questionFolderName = null,
 				resultFolderName = null,
+				resourcesFolderName = null,
 				imageFolderName = null,
 				logLocation = null;
 		private final static String questionFolderKey = "at.jku.ce.adaptivetesting.questionfolder";
 		private final static String resultFolderKey = "at.jku.ce.adaptivetesting.resultfolder";
+		private final static String resourcesFolderKey = "at.jku.ce.adaptivetesting.resourcesfolder";
 		private final static String imageFolderKey = "at.jku.ce.adaptivetesting.imagefolder";
 		private final static String logLocKey = "at.jku.ce.adaptivetesting.logfilepath";
 
@@ -220,13 +229,28 @@ public class DefaultView extends UI {
 			return questionFolderName;
 		}
 
+		/**
+		 * Gets the result folder name
+		 *
+		 * @return NULL if not set, or the String is not a valid folder / a
+		 *         folder at this location could not be created.
+		 */
 		public static String getResultFolderName() {
 			return resultFolderName;
 		}
 
 		/**
-		 * Gets the Log location
+		 * Gets the resources folder name
 		 *
+		 * @return NULL if not set, or the String is not a valid folder / a
+		 *         folder at this location could not be created.
+		 */
+		public static String getResourcesFolderName() {
+			return resourcesFolderName;
+		}
+
+		/**
+		 * Gets the Log file name
 		 * @return NULL if not set, or the String is not a valid file / a file
 		 *         at this location could not be created.
 		 */

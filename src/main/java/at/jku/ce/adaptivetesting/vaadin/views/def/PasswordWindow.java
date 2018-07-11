@@ -30,14 +30,17 @@ public class PasswordWindow extends Window {
 		confirm = new Button("Bestätigen", (Button.ClickListener) event -> {
 			DefaultViewFooter.USERPWD = password;
 			if(password.equals(DefaultView.PASSWD)) {
-				createAndShowNotification("Passwort korrekt",
-						"<p style=\"color:#339933\">Du bist eingeloggt. Das Menü ist nun freigegeben.</p>", Notification.Type.HUMANIZED_MESSAGE);
-				LogHelper.logInfo("entered correct password");
+				createAndShowNotification("Passwort korrekt - Admin Modus aktiviert",
+						"<p style=\"color:#339933\">Navigationsmenü, Item Administration, Test-Ergebnis Download<br>" +
+								"und Live-Log sind nun systemweit freigegeben.<br><br>" +
+								"<span style=\"color:red\">Bitte nicht vergessen das eingegebene Passwort nach<br>" +
+								"Beendigung der Tätigkeiten zu löschen!</span></p>", Notification.Type.HUMANIZED_MESSAGE);
+				LogHelper.logInfo("correct password entered");
 				close();
 			} else {
 				createAndShowNotification("Passwort inkorrekt",
 						"Bitte erneut eingeben.", Notification.Type.ERROR_MESSAGE);
-				LogHelper.logError("entered incorrect password");
+				LogHelper.logError("incorrect password entered");
 			}
 		});
 		gLayout.addComponent(pwField,0, 0);

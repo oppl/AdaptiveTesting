@@ -50,7 +50,7 @@ public class DefaultViewFooter extends VerticalLayout implements View {
 				event.getButton().setEnabled(false);
 			}
 		});
-		menu = new Button("Menü");
+		menu = new Button("Navigationsmenü");
 		menu.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 32642854872179636L;
 

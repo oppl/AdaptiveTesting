@@ -454,7 +454,7 @@ public class AccountingTestView extends TestView {
 		// Image as a file resource
 		Image image = new Image("",
 				new FileResource(new File(imageFolder + "Musterbeispiel_Buchungssatz.jpg")));
-		image.setWidth("60%");
+		image.setWidth("55%");
 		layout.addComponent(image);
 
 		Label hints_bottom = new Label("<table>" +

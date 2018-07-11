@@ -21,6 +21,13 @@
     </context-param>
 
     <context-param>
+        <description>Resources Folder</description>
+        <param-name>at.jku.ce.adaptivetesting.resourcesfolder</param-name>
+        <param-value>CAT/resources</param-value>
+        <!--param-value>D:/Tools/JBoss_Wildfly/bin/CAT/resources</param-value-->
+    </context-param>
+
+    <context-param>
         <description>Logfile</description>
         <param-name>at.jku.ce.adaptivetesting.logfilepath</param-name>
         <param-value>CAT/AdaptiveTesting.log</param-value>

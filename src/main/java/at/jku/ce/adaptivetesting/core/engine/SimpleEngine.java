@@ -13,6 +13,7 @@ import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
 import at.jku.ce.adaptivetesting.core.r.RConnectionProvider;
+import at.jku.ce.adaptivetesting.vaadin.views.def.DefaultView;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
@@ -371,24 +372,22 @@ public class SimpleEngine implements IEngine {
 		}
 		// Set R-variable itemdiff
 		r_itemdiff = sb.append(')').toString();
-		// Get library home -> C:\Users\%USER\AppData\Local\Temp
-		File path = new File(System.getProperty("java.io.tmpdir"), "r_lib");
-		File pathToCheck = new File(path, "catR");
 
-		if (!pathToCheck.exists()) {
+		File path = new File(DefaultView.Servlet.getResourcesFolderName());
+		if (path.exists()) {
 			// CatR 3.4 auto extract
 			try {
-                pathToCheck.mkdirs();
-				String sourcePath = "CAT/resources/catR.zip";
+                path.mkdirs();
+				String sourcePath = DefaultView.Servlet.getResourcesFolderName() + "/catR.zip";
 				ZipFile zipFile = new ZipFile(sourcePath);
 				zipFile.extractAll(path.getAbsolutePath());
 				LogHelper.logInfo("CatR extracted to " + path.getAbsolutePath());
 			} catch (ZipException e) {
-                pathToCheck.delete();
+				LogHelper.logInfo("There was an error while extracting catR to " + path.getAbsolutePath());
+                path.delete();
 				e.printStackTrace();
 			}
-		} else LogHelper.logInfo("CatR already exists at " + path.getAbsolutePath());
-
+		}
 		r_libFolder = path.getPath().replace("\\", "\\\\");
 		// initialize RCaller
 		rConn = new RConnectionProvider();
