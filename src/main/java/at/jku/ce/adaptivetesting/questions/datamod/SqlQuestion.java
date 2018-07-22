@@ -3,17 +3,15 @@ package at.jku.ce.adaptivetesting.questions.datamod;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
-import at.jku.ce.adaptivetesting.core.html.HtmlLabel;
+import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
-import at.jku.ce.adaptivetesting.vaadin.views.test.datamod.TableWindow;
+import at.jku.ce.adaptivetesting.views.test.datamod.TableWindow;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea;
 //import org.jooq.exception.DataAccessException;
 
 import java.io.*;
-import java.sql.SQLException;
 
 /**
  * Created by Peter

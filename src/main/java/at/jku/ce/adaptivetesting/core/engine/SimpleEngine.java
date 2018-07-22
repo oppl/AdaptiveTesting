@@ -7,13 +7,12 @@ import java.io.File;
 import java.util.*;
 import javax.script.ScriptException;
 
-import at.jku.ce.adaptivetesting.core.TestVariants;
 import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
 import at.jku.ce.adaptivetesting.core.r.RConnectionProvider;
-import at.jku.ce.adaptivetesting.vaadin.views.def.DefaultView;
+import at.jku.ce.adaptivetesting.views.def.DefaultView;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 

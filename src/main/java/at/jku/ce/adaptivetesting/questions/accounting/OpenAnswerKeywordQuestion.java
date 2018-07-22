@@ -2,7 +2,7 @@ package at.jku.ce.adaptivetesting.questions.accounting;
 
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
-import at.jku.ce.adaptivetesting.core.html.HtmlLabel;
+import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 //import com.sun.jdi.FloatValue;
 import com.vaadin.ui.*;

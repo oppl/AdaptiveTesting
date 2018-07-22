@@ -5,7 +5,7 @@ package at.jku.ce.adaptivetesting.questions.accounting.test;
  * or obtain one at http://www.gnu.org/licenses/lgpl-3.0-standalone.html */
 import at.jku.ce.adaptivetesting.questions.accounting.ProfitDataStorage;
 import at.jku.ce.adaptivetesting.questions.accounting.ProfitQuestion;
-import at.jku.ce.adaptivetesting.vaadin.views.MockQuestion;
+import at.jku.ce.adaptivetesting.views.MockQuestion;
 
 public class ProfitMockQuestion extends
 		MockQuestion<ProfitQuestion, ProfitDataStorage> {

@@ -6,7 +6,7 @@ package at.jku.ce.adaptivetesting.questions.accounting.test;
 import at.jku.ce.adaptivetesting.questions.accounting.AccountingDataStorage;
 import at.jku.ce.adaptivetesting.questions.accounting.AccountingQuestion;
 import at.jku.ce.adaptivetesting.questions.accounting.util.AccountRecordData;
-import at.jku.ce.adaptivetesting.vaadin.views.MockQuestion;
+import at.jku.ce.adaptivetesting.views.MockQuestion;
 
 public class AccountingMockQuestion extends
 		MockQuestion<AccountingQuestion, AccountingDataStorage> {

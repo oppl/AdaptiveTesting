@@ -3,8 +3,8 @@ package at.jku.ce.adaptivetesting.questions.datamod;
 import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
-import at.jku.ce.adaptivetesting.core.html.HtmlLabel;
-import at.jku.ce.adaptivetesting.vaadin.views.test.datamod.TableWindow;
+import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
+import at.jku.ce.adaptivetesting.views.test.datamod.TableWindow;
 import com.vaadin.ui.*;
 
 import javax.xml.bind.annotation.XmlAccessType;

@@ -11,9 +11,9 @@ import java.util.Vector;
 
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.questions.accounting.util.AccountRecordData;
-import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.misc.AccountingRecordInputFields;
+import at.jku.ce.adaptivetesting.views.test.accounting.misc.AccountingRecordInputFields;
 import at.jku.ce.adaptivetesting.core.IQuestion;
-import at.jku.ce.adaptivetesting.vaadin.views.test.accounting.misc.AccountingRecordInputGrid;
+import at.jku.ce.adaptivetesting.views.test.accounting.misc.AccountingRecordInputGrid;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 import com.vaadin.ui.Image;
 
