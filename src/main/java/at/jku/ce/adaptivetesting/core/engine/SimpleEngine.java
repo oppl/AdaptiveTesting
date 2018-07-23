@@ -6,12 +6,13 @@ package at.jku.ce.adaptivetesting.core.engine;
 import java.io.File;
 import java.util.*;
 import javax.script.ScriptException;
-import at.jku.ce.adaptivetesting.core.StudentData;
+
 import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
-import at.jku.ce.adaptivetesting.r.RProvider;
-import at.jku.ce.adaptivetesting.r.RServant;
+import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
+import at.jku.ce.adaptivetesting.core.r.RConnectionProvider;
+import at.jku.ce.adaptivetesting.views.def.DefaultView;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
@@ -30,40 +31,39 @@ public class SimpleEngine implements IEngine {
 	private int questionNumber;
 	private IQuestion<? extends AnswerStorage> question;
 	private String r_itemdiff, r_libFolder;
-	private RProvider rProvider;
-	private RServant rServant;
-	//private RProviderOld rProviderOld;
+	private RConnectionProvider rConn;
 	private StudentData student;
+	private ConnectionProvider dbCon;
 
 	/**
-	 * Using -1.6f, -0.2f, 1.2f, 2.5f as explicit upper bounds
+	 * @param quizName
+	 *			According to the choosen quizName (Test-type) a corresponding
+	 *			upper bound array is chosen.
 	 *
 	 * @throws EngineException
 	 */
-	public SimpleEngine() throws EngineException {
-		//this(-1.6f, -0.2f, 1.2f, 2.5f);
-		this(-2.715000f, -2.246250f, -2.049900f, -1.631000f,
-				-1.440625f, -1.316250f, -1.169125f, -0.832000f,
-				-0.710075f, -0.551250f, -0.443000f, -0.358900f,
-				-0.202650f, -0.079700f, 0.169000f, 0.251200f,
-				0.310700f, 0.411500f, 0.526175f, 0.610500f,
-				0.744375f, 0.805600f, 0.844675f, 0.927600f,
-				1.027125f, 1.170350f, 1.252075f, 1.377600f,
-				1.515100f, 1.600750f, 1.716900f, 1.946600f,
-				2.041800f, 2.262850f, 2.430500f, 2.619900f,
-				2.921600f, 3.103350f, 3.794900f, 4.937000f);
-	}
-
-	/**
-	 *
-	 * @param upperBounds
-	 *            : All upper bounds. Additionally a upper bound "+INF" is
-	 *            created. All upper bounds including
-	 * @throws EngineException
-	 */
-
-	@SuppressWarnings("unchecked")
-	public SimpleEngine (float... upperBounds) throws EngineException {
+	public SimpleEngine(String quizName) throws EngineException {
+		dbCon = new ConnectionProvider();
+		float[] upperBounds = null;
+		if (quizName.equals(TestVariants.RW.toString())) {
+			upperBounds = new float[]{
+					-2.715000f, -2.246250f, -2.049900f, -1.631000f,
+					-1.440625f, -1.316250f, -1.169125f, -0.832000f,
+					-0.710075f, -0.551250f, -0.443000f, -0.358900f,
+					-0.202650f, -0.079700f, 0.169000f, 0.251200f,
+					0.310700f, 0.411500f, 0.526175f, 0.610500f,
+					0.744375f, 0.805600f, 0.844675f, 0.927600f,
+					1.027125f, 1.170350f, 1.252075f, 1.377600f,
+					1.515100f, 1.600750f, 1.716900f, 1.946600f,
+					2.041800f, 2.262850f, 2.430500f, 2.619900f,
+					2.921600f, 3.103350f, 3.794900f, 4.937000f};
+		} else if (quizName.equals(TestVariants.SQL.toString())) {
+			upperBounds = new float[]{
+					-1.026080f, -0.861475f, -0.618365f, -0.479589f,
+					-0.312789f, -0.104288f, 0.080893f, 0.267251f,
+					0.492996f, 0.991516f, 1.426546f, 2.145324f,
+					2.836668f};
+		}
 		Arrays.sort(upperBounds);
 		this.upperBounds = upperBounds;
 		LogHelper.logInfo(String.valueOf("Total number of question categories: " + upperBounds.length));
@@ -196,6 +196,10 @@ public class SimpleEngine implements IEngine {
 		return entry.points;
 	}
 
+	public IQuestion<? extends AnswerStorage> getQuestion() {
+		return question;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -210,35 +214,17 @@ public class SimpleEngine implements IEngine {
 		try {
 			String rNameReturn = "next_item_parm";
 
-			/*// --- OLD CODE BEGIN ---
-			RCaller caller = rProviderOld.getRCaller();
-			// Get r code
-			RCode rCode = rProviderOld.getRCode();
-			// Add script
-			rCode.addRCode(getRScript());
-			// Execute R code and get result
-			// [0] -> next item's difficulty [1] -> current competence
-			// [2] ->Delta to result
-			double[] resultOld = rProviderOld.execute(caller, rCode, rNameReturn).getAsDoubleArray(rNameReturn);
-			LogHelper.logInfo("StudentID: "+ student.getStudentIDCode() +
-					" - Calculation [OLD] result:\tNext item: " + resultOld[0]
-					+ "\tCurrent competence:\t" + resultOld[1] + "\tDelta:\t"
-					+ resultOld[2]);
-			// --- OLD CODE END ---*/
-
-			// --- NEW CODE BEGIN ---
 			// Get script
 			String RCodeScript = getRScript();
 			// Execute R code and get result
 			// [0] -> next item's difficulty [1] -> current competence
-			// [2] ->Delta to result
-			double[] result = rServant.execute(RCodeScript, rNameReturn);
+			// [2] -> Delta to result
+			double[] result = rConn.execute(RCodeScript, rNameReturn);
 			//geht: double[] result = rProvider.execute(RCodeScript, rNameReturn);
 			LogHelper.logInfo("StudentID: "+ student.getStudentIDCode() +
 					" - Calculation result:\tNext item: " + result[0]
 					+ "\tCurrent competence:\t" + result[1] + "\tDelta:\t"
 					+ result[2]);
-			// --- NEW CODE END ---
 
 			// Get array position of difficulty
 			IQuestion<? extends AnswerStorage> nextQuestion = getQuestion(getArrayPositionFromWantedDifficulty(result[0]));
@@ -267,28 +253,27 @@ public class SimpleEngine implements IEngine {
 		return upperBounds.length - 1;
 	}
 
+	private int setBag(int bagNr) {
+		float category = 0.0f;
+		for (int i = 0; i < upperBounds.length; i++) {
+			if (i == bagNr) category = upperBounds[bagNr];
+		}
+		LogHelper.logInfo("Set initial question category to: " + String.valueOf(category));
+		return bagNr;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
 	 * @see IEngine#start()
 	 */
 	@Override
-	public void start() throws EngineException {
+	public void start() {
 		initR();
 		history.clear();
 		question = getQuestion((upperBounds.length + 1) / 2 - 1);
 		LogHelper.logInfo("---" + question + "---");
 		fireQuestionChangeListener(question);
-
-	}
-
-	private int setClass(int schoolClass) {
-		float category = 0.0f;
-		for (int i = 0; i < upperBounds.length; i++) {
-			if (i == schoolClass) category = upperBounds[schoolClass];
-		}
-		LogHelper.logInfo("Set initial question category to: " + String.valueOf(category));
-		return schoolClass;
 	}
 
 	/*
@@ -297,51 +282,64 @@ public class SimpleEngine implements IEngine {
  	* @see IEngine#start(StudentData student)
  	*/
 	@Override
-	public void start(StudentData student) throws EngineException {
+	public void start(StudentData student) {
 		initR();
 		history.clear();
-		String studentClass = student.getStudentClass();
-		int schoolClass;
-		try {
-			schoolClass = Integer.parseInt(studentClass.substring(0, 1));
-			if (schoolClass > 0 && schoolClass < 6)
-				LogHelper.logInfo("Student class: " + String.valueOf(schoolClass));
-			else
-				LogHelper.logError("Invalid student class: " + String.valueOf(schoolClass));
-		} catch (Exception e) {
-			LogHelper.logError(e.toString());
-			schoolClass = 0;
+
+		if (student.getQuizName().equals(TestVariants.RW.toString())) {
+			String studentClass = student.getStudentClass();
+			int schoolClass;
+			try {
+				schoolClass = Integer.parseInt(studentClass.substring(0, 1));
+				if (schoolClass > 0 && schoolClass < 6)
+					LogHelper.logInfo("Student class: " + String.valueOf(schoolClass));
+				else
+					LogHelper.logError("Invalid student class: " + String.valueOf(schoolClass));
+			} catch (Exception e) {
+				LogHelper.logError("The student class was empty. Class was set to default value (0).");
+				schoolClass = 0;
+			}
+			switch (schoolClass) {
+				case 1:
+					// 1. class (9. grade) - bag 3
+					question = getQuestion(setBag(2));
+					break;
+				case 2:
+					// 2. class (10. grade) - bag 5
+					question = getQuestion(setBag(4));
+					break;
+				case 3:
+					// 3. class (11. grade) - bag 7
+					question = getQuestion(setBag(6));
+					break;
+				case 4:
+				case 5:
+					// 4. / 5. class (12. / 13. grade) - bag 10
+					question = getQuestion(setBag(9));
+					break;
+				// no choice or invalid grade (bag 3)
+				default:
+					question = getQuestion(setBag(2));
+			}
 		}
-		switch(schoolClass) {
-			case 1:
-				// 1. class (9. grade) - bag 3
-				question = getQuestion(setClass(2));
-				break;
-			case 2:
-				// 2. class (10. grade) - bag 5
-				question = getQuestion(setClass(4));
-				break;
-			case 3:
-				// 3. class (11. grade) - bag 7
-				question = getQuestion(setClass(6));
-				break;
-			case 4: case 5:
-				// 4. / 5. class (12. / 13. grade) - bag 10
-				question = getQuestion(setClass(9));
-				break;
-			// no choice or invalid grade (bag 3)
-			default:
-				question = getQuestion(setClass(2));
+		if (student.getQuizName().equals(TestVariants.SQL.toString())) {
+			String studentExperience = student.getStudentExperience();
+			LogHelper.logInfo("Student experience: " + String.valueOf(studentExperience));
+			switch (studentExperience) {
+				default:
+				case "Anfänger":
+					question = getQuestion(setBag(0));
+					break;
+				case "Fortgeschritten":
+					question = getQuestion(setBag(1));
+					break;
+				case "Profi":
+					question = getQuestion(setBag(2));
+					break;
+			}
 		}
 		LogHelper.logInfo(String.valueOf("Difficulty of chosen question: " + question.getDifficulty()));
 		fireQuestionChangeListener(question);
-	}
-
-	@Override
-	public void stop() {
-		//geht:		rProvider.terminate();
-		//nicht terminieren, da nur eine instanz laeuft und die noch gebraucht wird
-		// rServant.terminate();
 	}
 
 	private void initR() {
@@ -373,24 +371,25 @@ public class SimpleEngine implements IEngine {
 		}
 		// Set R-variable itemdiff
 		r_itemdiff = sb.append(')').toString();
-		// Get library home
-		File path = new File(System.getProperty("java.io.tmpdir"), "r_lib");
-		if (!path.exists()) {
-			path.mkdirs();
+
+		File path = new File(DefaultView.Servlet.getResourcesFolderName());
+		if (path.exists()) {
 			// CatR 3.4 auto extract
 			try {
-				String sourcePath = getClass().getResource("/catR.zip").getPath();
+                path.mkdirs();
+				String sourcePath = DefaultView.Servlet.getResourcesFolderName() + "/catR.zip";
 				ZipFile zipFile = new ZipFile(sourcePath);
 				zipFile.extractAll(path.getAbsolutePath());
+				LogHelper.logInfo("CatR extracted to " + path.getAbsolutePath());
 			} catch (ZipException e) {
+				LogHelper.logInfo("There was an error while extracting catR to " + path.getAbsolutePath());
+                path.delete();
 				e.printStackTrace();
 			}
 		}
 		r_libFolder = path.getPath().replace("\\", "\\\\");
 		// initialize RCaller
-		rServant = new RServant();
-		//geht: rProvider = new RProvider();
-		//rProviderOld = new RProviderOld();
+		rConn = new RConnectionProvider();
 	}
 
 	/**
@@ -457,7 +456,6 @@ public class SimpleEngine implements IEngine {
 				+ "thetaEst(itembank[previous_items,], response_pattern),"
 				+ nl
 				+ "eapSem(thetaEst(itembank[previous_items,], response_pattern), itembank[previous_items,], response_pattern))";
-		//LogHelper.logInfo(RScript);
 		return RScript;
 	}
 
@@ -474,8 +472,10 @@ public class SimpleEngine implements IEngine {
 		List<IQuestion<? extends AnswerStorage>> list = bags[arrayIndex];
 		int listSize = list.size();
 		if (listSize == 0) {
-			int nextArrayIndex = (arrayIndex + 1) % bags.length;
-			return getQuestion(nextArrayIndex);
+			int nextArrayIndex = (arrayIndex + 1); //% bags.length;
+			if (nextArrayIndex >= bags.length) {
+				return null;
+			} else return getQuestion(nextArrayIndex);
 		}
 		int index = (int) Math.round(Math.random() * (listSize - 1));
 		IQuestion<? extends AnswerStorage> question = list.get(index);

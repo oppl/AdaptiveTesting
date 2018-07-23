@@ -7,28 +7,55 @@
 
     <!--Set folder paths for the destinations server and the development environment-->
     <context-param>
+        <description>Question Folder</description>
         <param-name>at.jku.ce.adaptivetesting.questionfolder</param-name>
-        <param-value>${catalina.home}/temp/adaptiveTesting/questions</param-value>
+        <param-value>CAT/questions</param-value>
+        <!--param-value>D:/Tools/JBoss_Wildfly/bin/CAT/questions</param-value-->
     </context-param>
 
     <context-param>
+        <description>Result Folder</description>
         <param-name>at.jku.ce.adaptivetesting.resultfolder</param-name>
-        <param-value>${catalina.home}/temp/adaptiveTesting/results</param-value>
+        <param-value>CAT/results</param-value>
+        <!--param-value>D:/Tools/JBoss_Wildfly/bin/CAT/results</param-value-->
     </context-param>
 
     <context-param>
+        <description>Resources Folder</description>
+        <param-name>at.jku.ce.adaptivetesting.resourcesfolder</param-name>
+        <param-value>CAT/resources</param-value>
+        <!--param-value>D:/Tools/JBoss_Wildfly/bin/CAT/resources</param-value-->
+    </context-param>
+
+    <context-param>
+        <description>Logfile</description>
         <param-name>at.jku.ce.adaptivetesting.logfilepath</param-name>
-        <param-value>${catalina.home}/logs/AdaptiveTesting.log</param-value>
+        <param-value>CAT/AdaptiveTesting.log</param-value>
+        <!--param-value>D:/Tools/JBoss_Wildfly/bin/CAT/AdaptiveTesting.log</param-value-->
     </context-param>
 
     <context-param>
+        <description>Images Folder</description>
         <param-name>at.jku.ce.adaptivetesting.imagefolder</param-name>
-        <param-value>${catalina.home}/temp/adaptiveTesting/images</param-value>
+        <param-value>CAT/images</param-value>
+        <!--param-value>D:/Tools/JBoss_Wildfly/bin/CAT/images</param-value-->
     </context-param>
 
     <context-param>
+        <description>Vaadin Widget Set</description>
         <param-name>widgetset</param-name>
         <param-value>at.jku.ce.adaptivetesting.VaadinWidgetset</param-value>
     </context-param>
 
+    <!--The web.xml has the parameter productionMode=true which means the servlet
+    won't automatically compile the theme for each user individually (this would
+    lead to incredibly bad performance in production). Use the vaadin:compile-theme
+    in Maven to compile the theme.
+    ALREADY SET IN DEFAULTVIEW.JAVA: @VaadinServletConfiguration(productionMode = true, ui = DefaultView.class)
+    -->
+    <!--context-param>
+        <description>Vaadin production mode</description>
+        <param-name>productionMode</param-name>
+        <param-value>true</param-value>
+    </context-param-->
 </web-app>

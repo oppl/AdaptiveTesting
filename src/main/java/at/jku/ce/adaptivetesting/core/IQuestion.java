@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import at.jku.ce.adaptivetesting.xml.XmlQuestionData;
+import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 
 /**
  *
@@ -44,6 +44,12 @@ public interface IQuestion<DataStorage extends AnswerStorage> {
 	 *         points gained for this answer must be lower then getMaxPoints()
 	 */
 	double checkUserAnswer();
+
+	/**
+	 *
+	 * @return Validates the user answer. Only needed for Datamod Questions
+	 */
+	double performQueryDiagnosis();
 
 	/**
 	 *
@@ -81,8 +87,7 @@ public interface IQuestion<DataStorage extends AnswerStorage> {
 		XmlQuestionData<DataStorage> xmlRepresentation = toXMLRepresentation();
 		Class<? extends AnswerStorage> dataStorageClass = xmlRepresentation
 				.getDataStorageClass();
-		JAXBContext context = JAXBContext.newInstance(
-				xmlRepresentation.getClass(), dataStorageClass);
+		JAXBContext context = JAXBContext.newInstance(xmlRepresentation.getClass(), dataStorageClass);
 		Marshaller marshaller = context.createMarshaller();
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		marshaller.marshal(xmlRepresentation, byteArrayOutputStream);

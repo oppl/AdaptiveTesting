@@ -16,7 +16,7 @@
  * @param {number} $value - opacity value from 0 to 1
  * @param {bool} $important (false) - should the property value be declared with !important
  *
- * @group util
+ * @group html
  */
 
 @-webkit-keyframes valo-animate-in-fade {
@@ -312,7 +312,7 @@
  * @param {string} $align (middle) - The vertical-align value, e.g. top, middle, bottom
  * @param {string} $pseudo-element (after) - Which pseudo element to use for the vertical align guide
  * 
- * @group util
+ * @group html
  */
 
 @font-face {
