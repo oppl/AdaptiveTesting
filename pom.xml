@@ -6,7 +6,7 @@
 	<groupId>at.jku.ce</groupId>
 	<artifactId>AdaptiveTesting</artifactId>
 	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.1.2</version>
 	<name>AdaptiveTesting</name>
 
 	<prerequisites>
@@ -30,11 +30,11 @@
 			<id>vaadin-addons</id>
 			<url>http://maven.vaadin.com/vaadin-addons</url>
 		</repository>
-			<repository>
-				<id>project.local</id>
-				<name>AdaptiveTesting2</name>
-				<url>file:${project.basedir}/src/resources</url>
-			</repository>
+		<repository>
+			<id>project.local</id>
+			<name>AdaptiveTesting2</name>
+			<url>file:${project.basedir}/src/resources</url>
+		</repository>
 	</repositories>
 
 	<dependencyManagement>
@@ -46,10 +46,26 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.jdbi</groupId>
+				<artifactId>jdbi3-bom</artifactId>
+				<type>pom</type>
+				<version>3.3.0</version>
+				<scope>import</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.jdbi</groupId>
+			<artifactId>jdbi3-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>expandingtextarea</artifactId>
+			<version>1.2.0</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -67,10 +83,16 @@
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-client-compiled</artifactId>
+			<version>${vaadin.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-themes</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -79,7 +101,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
+			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4jVersion}</version>
 		</dependency>
 		<dependency>
@@ -98,9 +120,14 @@
 			<version>20.0</version>
 		</dependency>
 		<dependency>
-			<groupId>rcaller</groupId>
-			<artifactId>rcaller</artifactId>
-			<version>2.4</version>
+			<groupId>com.github.jbytecode</groupId>
+			<artifactId>RCaller</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.lingala.zip4j</groupId>
+			<artifactId>zip4j</artifactId>
+			<version>1.3.2</version>
 		</dependency>
         <dependency>
             <groupId>org.vaadin.addon</groupId>
@@ -125,6 +152,15 @@
 				<groupId>com.vaadin</groupId>
 				<artifactId>vaadin-maven-plugin</artifactId>
 				<version>${vaadin.plugin.version}</version>
+				<configuration>
+					<webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets</webappDirectory>
+					<hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets</hostedWebapp>
+					<noServer>true</noServer>
+					<draftCompile>false</draftCompile>
+					<style>OBF</style>
+					<compileReport>true</compileReport>
+					<runTarget>http://localhost:8080/</runTarget>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -210,5 +246,4 @@
 			</pluginRepositories>
 		</profile>
 	</profiles>
-
 </project>
