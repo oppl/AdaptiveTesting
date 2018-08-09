@@ -41,10 +41,11 @@ public class DefaultView extends UI {
 	private Navigator navigator;
 	private TestView manager;
 	protected static final String PASSWD = "cat2018ce";
+	private boolean testSelected = false;
+	private static ProductData productData = new ProductData();
 
 	public DefaultView() {
 		navigator = new Navigator(this, this);
-
 		navigator.addViewChangeListener(new ViewChangeListener() {
 
 			@Override
@@ -73,19 +74,13 @@ public class DefaultView extends UI {
 		// Create Welcome Screen
 		DefaultViewFooter mainScreen = new DefaultViewFooter();
 		mainScreen.setMargin(true);
-		Button start = new Button("Start", e -> {
-			navigator.navigateTo(Views.TEST.toString());
-		});
-		start.setWidth(25, Unit.PERCENTAGE);
-		start.setHeight(35, Unit.PERCENTAGE);
-		start.setEnabled(false);
 		Label empty = new Label("");
 		empty.setHeight("1em");
 
 		mainScreen.addComponent(empty);
 		mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h1", productData.toString())));
-		mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h2", "Bitte wähle einen Test aus und drücke auf den <b>" +
-				start.getCaption() + "</b> Button, um damit zu beginnen!")));
+		mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h2", "Bitte wähle einen Test aus und drücke auf den <b>Start</b>" +
+				" Button, um damit zu beginnen!")));
 		mainScreen.addComponent(new HtmlLabel(HtmlUtils.center("h3",
 				"<i>Hinweis: Während des Tests darf die <b>Zurück-Taste</b> nicht zur Navigation " +
 						"verwendet werden!</b>")));
@@ -98,9 +93,18 @@ public class DefaultView extends UI {
 
 		ComboBox box = new ComboBox("Testauswahl");
 		box.addItems(defaultValue, test1, test2);
-		box.addValueChangeListener(new Property.ValueChangeListener() {
 
-			boolean testSelected = false;
+		Button start = new Button("Start", e -> {
+			testSelected = false;
+			box.setValue(defaultValue);
+			navigator.navigateTo(Views.TEST.toString());
+		});
+		start.addStyleName("primary");
+		start.setWidth(25, Unit.PERCENTAGE);
+		start.setHeight(35, Unit.PERCENTAGE);
+		start.setEnabled(false);
+
+		box.addValueChangeListener(new Property.ValueChangeListener() {
 
 			@Override
 			public void valueChange(Property.ValueChangeEvent event) {
@@ -133,7 +137,6 @@ public class DefaultView extends UI {
 					navigator.addView(Views.ADMIN.toString(), new AdminView(manager, testTypeFolder));
 					navigator.addView(Views.RESULTSDL.toString(), new ResultsDownloadView(manager, testTypeFolder));
 					mainScreen.enableMenuButton();
-					testSelected = false;
 				}
 			}
 		});
@@ -255,8 +258,6 @@ public class DefaultView extends UI {
 			return logLocation;
 		}
 	}
-
-	private static ProductData productData = new ProductData();
 
 	public static ProductData getProductData() {
 		return productData;

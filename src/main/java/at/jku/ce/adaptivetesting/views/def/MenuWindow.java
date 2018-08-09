@@ -64,6 +64,7 @@ public class MenuWindow extends Window {
 			navigator.navigateTo(Views.DEFAULT.toString());
 			close();
 		});
+		deletePw.addStyleName("friendly");
 
 		gLayout.addComponent(adminMenu,0, 0);
 		gLayout.addComponent(new HtmlLabel("&ensp;"),1, 0);

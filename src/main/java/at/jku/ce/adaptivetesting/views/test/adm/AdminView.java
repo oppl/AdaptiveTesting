@@ -10,7 +10,9 @@ import at.jku.ce.adaptivetesting.views.def.DefaultView;
 import at.jku.ce.adaptivetesting.views.test.TestView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.server.Sizeable;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.easyuploads.MultiFileUpload;
@@ -48,15 +50,18 @@ public class AdminView extends VerticalLayout implements View {
     private String testTypeFolder;
 
     public AdminView(TestView manager, String testTypeFolder) {
+        String title = "Item Administration";
         this.testTypeFolder = testTypeFolder;
         this.setMargin(true);
         this.setSpacing(true);
-        this.addComponent(new HtmlLabel(HtmlUtils.center("h1", "Item Administration")));
+        this.addComponent(new HtmlLabel(HtmlUtils.center("h1", title)));
 
         GridLayout gridLayout = new GridLayout(2, 1);
         gridLayout.setWidth("100%");
 
         Button upload = new Button("Neue Items hinzufügen");
+        upload.addStyleName("friendly");
+        upload.setIcon(new ThemeResource("Images/document.png"));
         upload.addClickListener( e -> {
             this.getUI().addWindow(new UploadUI());
         });
@@ -148,6 +153,7 @@ public class AdminView extends VerticalLayout implements View {
                 closeAllWindows ();
                 this.getUI().addWindow(new DeleteUI(question));
             });
+            deleteButton.addStyleName("danger");
 
             table.addItem(new Object[]{
                     question.getQuestionID(),
@@ -162,7 +168,7 @@ public class AdminView extends VerticalLayout implements View {
 
     }
 
-    private void closeAllWindows () {
+    private void closeAllWindows() {
         Collection<Window> windows = this.getUI().getWindows();
         if (windows.size() != 0) {
             for (Window w : windows) {
@@ -277,7 +283,9 @@ public class AdminView extends VerticalLayout implements View {
             this.setWidth("400px");
             Label titleLabel = new Label(question.getQuestionID(), ContentMode.HTML);
             Label descrLabel = new Label("<p style=\"color:red\"><b>Diese Aktion ist unumkehrbar!</b></p>", ContentMode.HTML);
-            Button delete = new Button("Entfernen");
+            Button delete = new Button("Endgültig entfernen");
+            delete.addStyleName("danger");
+            delete.setIcon(new ThemeResource("Images/delete.png"));
             delete.addClickListener( e -> {
                 manager.getEngine().removeQuestion(question);
                 File questionFolder = new File(getQuestionFolderName());

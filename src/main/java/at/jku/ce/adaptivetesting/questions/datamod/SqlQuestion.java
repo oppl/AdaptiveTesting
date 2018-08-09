@@ -3,15 +3,16 @@ package at.jku.ce.adaptivetesting.questions.datamod;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
+import at.jku.ce.adaptivetesting.views.def.ErrorInfoWindow;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 import at.jku.ce.adaptivetesting.views.test.datamod.TableWindow;
 import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea;
-//import org.jooq.exception.DataAccessException;
 
 import java.io.*;
+import java.sql.SQLSyntaxErrorException;
 
 /**
  * Created by Peter
@@ -27,6 +28,7 @@ public class SqlQuestion extends VerticalLayout implements IQuestion<SqlDataStor
     private Image questionImage = null;
     private String id;
     private int tries, defaultTries;
+    private HtmlLabel triesLeft;
 
     public SqlQuestion(SqlDataStorage solution, Float difficulty, String questionText, Image questionImage, String id) {
         this(solution, SqlDataStorage.getEmptyDataStorage(), difficulty, questionText, questionImage, id);
@@ -49,8 +51,9 @@ public class SqlQuestion extends VerticalLayout implements IQuestion<SqlDataStor
             answer.setEnabled(false);
         }
         infoTop = new HtmlLabel();
-        //setText(infoTop, "<p style=\"color:#FFFFFF\">" + id + "</p>" + solution.getInfoTop());
+        //Shows Question ID
         setText(infoTop, "<p>" + id + "</p>" + solution.getInfoTop());
+        //setText(infoTop, solution.getInfoTop());
         addComponent(infoTop);
 
         solution.createTableWindows(this);
@@ -65,9 +68,9 @@ public class SqlQuestion extends VerticalLayout implements IQuestion<SqlDataStor
 
         if (questionImage != null) addComponent(this.questionImage);
 
-        addComponent(new HtmlLabel("<p style=\"color:#339933\">" +
-                "(<i><b>Hinweis:</b></i> Du kannst die Query Diagnose max. " + tries + " mal ausführen)</p>"));
-
+        triesLeft = new HtmlLabel("<p style=\"color:#339933\">Du kannst die Query Diagnose max. <b>" + defaultTries +
+                "</b> Mal ausführen! [<b>" + defaultTries + "</b> Versuch(e) übrig]</p>");
+        addComponent(triesLeft);
         addComponent(answer);
         setSpacing(true);
     }
@@ -138,19 +141,32 @@ public class SqlQuestion extends VerticalLayout implements IQuestion<SqlDataStor
         LogHelper.logInfo("Questionfile: " + id);
 
         if (answer.getValue().equals("")) {
-            createAndShowNotification("Keine Antwort eingegeben:" , "Das Textfeld ist leer!<br>" +
-                    "<p style=\"font-size:small\">(" + (tries-1) + " Versuche übrig)</p>", Notification.Type.WARNING_MESSAGE);
+            createAndShowNotification("Keine Antwort eingegeben:" , "Das Textfeld ist leer!<br>", Notification.Type.WARNING_MESSAGE);
             LogHelper.logInfo("Diagnosis: No answer (The text input was empty)");
-            return 0.0d;
+            //running a query diagnosis on an empty answer does not decrease the amount of available tries
+            return -1.0d;
         }
         double check;
         try {
             check = ConnectionProvider.compareResults(answer.getValue(), this.solution.getAnswerQuery());
         } catch (Exception ex) {
-            createAndShowNotification("SQL-Syntax Fehler:", ex.getCause().getMessage() + "<br>" +
-                    "<p style=\"font-size:small\">(" + (tries-1) + " Versuche übrig)</p>", Notification.Type.ERROR_MESSAGE);
-            LogHelper.logError(ex.getCause().getMessage());
-            return 0.0d;
+            try {
+                String errorMessage = ex.getCause().getMessage();
+                if (errorMessage.equals("Invalid SQL type: sqlKind = UNINITIALIZED")) {
+                    showSqlKindUnitializedError();
+                } else {
+                    String errorId = errorMessage.substring(0, errorMessage.indexOf(":")).replace("-", "");
+                    ErrorInfoWindow errorInfoWindow = new ErrorInfoWindow(errorId, errorMessage);
+                    getUI().addWindow(errorInfoWindow);
+                }
+                LogHelper.logError(errorMessage);
+                // a syntax error is often not related to the comprehension of the task
+                return -1.0d;
+            } catch (NullPointerException ex1) {
+                showSqlKindUnitializedError();
+                LogHelper.logError("Invalid SQL type: sqlKind = UNINITIALIZED");
+                return  -1.0d;
+            }
         }
         TableWindow tableWindow = new TableWindow();
         tableWindow.setSizeUndefined();
@@ -158,7 +174,7 @@ public class SqlQuestion extends VerticalLayout implements IQuestion<SqlDataStor
         this.getUI().addWindow(tableWindow);
 
         if (check == 1.0d) {
-            createAndShowNotification("<p style=\"color:#339933\">Ergebniss korrekt:</p>" , "Super gemacht!.<br>" +
+            createAndShowNotification("<p style=\"color:#339933\">Ergebnis korrekt:</p>" , "Super gemacht!.<br>" +
                     "<p style=\"font-size:small\" \"color:#339933\">(Beim " + (1 + (defaultTries - tries)) +
                     ". Versuch geschafft)</p>", Notification.Type.HUMANIZED_MESSAGE);
             LogHelper.logInfo("Diagnosis: Correct answer");
@@ -171,19 +187,25 @@ public class SqlQuestion extends VerticalLayout implements IQuestion<SqlDataStor
         }
     }
 
+    private void showSqlKindUnitializedError() {
+        createAndShowNotification("SQL-Syntax Fehler",
+                "SQL Abfragen müssen mit \"SELECT\" oder \"(SELECT\" beginnen", Notification.Type.ERROR_MESSAGE);
+    }
+
     @Override
     public double checkUserAnswer() {
         LogHelper.logInfo("Questionfile: " + id);
 
         if (answer.getValue().equals("")) {
             LogHelper.logInfo("Submit: No answer (The text input was empty)");
+            //submitting an empty answer is considered as wrong answer
             return 0.0d;
         }
         double check;
         try {
             check = ConnectionProvider.compareResults(answer.getValue(), solution.getAnswerQuery());
         } catch (Exception ex) {
-            LogHelper.logError(ex.getCause().getMessage());
+            LogHelper.logError(ex.getMessage());
             return 0.0d;
         }
         if (check == 1.0d) {
@@ -242,5 +264,19 @@ public class SqlQuestion extends VerticalLayout implements IQuestion<SqlDataStor
         Notification notif = new Notification(caption, description, type, true);
         notif.setDelayMsec(-1);
         notif.show(Page.getCurrent());
+    }
+
+    private double submitInfo (double checkValue) {
+        if (checkValue == 1.0d) {
+            createAndShowNotification("<p style=\"color:#339933\">Das Ergebnis war korrekt!</p>" , "", Notification.Type.HUMANIZED_MESSAGE);
+        } else if (checkValue == 0.0d) {
+            createAndShowNotification("Das Ergebnis war inkorrekt!", "", Notification.Type.ERROR_MESSAGE);
+        }
+        return checkValue;
+    }
+
+    public void updateTriesLeftLabel() {
+        triesLeft.setValue("<p style=\"color:#339933\">Du kannst die Query Diagnose max. <b>" +
+                defaultTries + "</b> Mal ausführen! [<b>" + getTries() + "</b> Versuch(e) übrig]</p>");
     }
 }

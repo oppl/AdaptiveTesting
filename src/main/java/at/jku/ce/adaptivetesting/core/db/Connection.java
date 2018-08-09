@@ -9,6 +9,7 @@ import at.jku.ce.adaptivetesting.core.LogHelper;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Table;
 import org.jdbi.v3.core.Handle;
+import org.jdbi.v3.core.Handles;
 import org.jdbi.v3.core.Jdbi;
 
 /**
@@ -32,7 +33,7 @@ public class Connection {
         try {
             con = DriverManager.getConnection(CONNECT_URL, USER, PASSWD);
             handle = Jdbi.open(con);
-
+            handle.getConfig(Handles.class).setForceEndTransactions(false);
             // Change schema to ADAPTIVETESTING
             handle.execute("ALTER SESSION SET CURRENT_SCHEMA = " + SCHEMA);
             LogHelper.logInfo("Connection to database schema " + SCHEMA + " established");
@@ -66,6 +67,8 @@ public class Connection {
             sql = "SELECT * FROM " + tableName;
         }
         Table table = new Table();
+        // disabled sorting to prevent cheating
+        table.setSortEnabled(false);
         con = getConnection();
         PreparedStatement ps = null;
 
@@ -101,6 +104,7 @@ public class Connection {
             }
         }
         table.setPageLength(table.size());
+
         return table;
     }
 

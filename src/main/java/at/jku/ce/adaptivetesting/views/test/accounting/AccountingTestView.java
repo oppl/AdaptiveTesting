@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.*;
 import javax.xml.bind.JAXBException;
 
+import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
 import at.jku.ce.adaptivetesting.core.engine.StudentData;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.questions.accounting.*;
@@ -32,17 +33,12 @@ public class AccountingTestView extends TestView {
 	private final String imageFolder = VaadinServlet.getCurrent().getServletConfig().
 			getServletContext().getInitParameter("at.jku.ce.adaptivetesting.imagefolder") + "/";
 	private AccountingQuestionKeeperProvider QuestionProvider;
+	private HtmlLabel space = new HtmlLabel("&ensp;");
 
 	public AccountingTestView(String quizName) {
 		super(quizName);
 		QuestionProvider = new AccountingQuestionKeeperProvider();
-
-		Button cancel = new Button("Test abbrechen");
-		cancel.addClickListener(e -> {
-			getUI().getNavigator().navigateTo(Views.DEFAULT.toString());
-			LogHelper.logInfo("The test has been canceled by the student");
-		});
-		addHelpButton(cancel);
+		addHelpButton(getCancelButton());
 
 		//graphical Interface Kontenplan
 		Button openKontenplan = new Button("Kontenplan");
@@ -235,8 +231,11 @@ public class AccountingTestView extends TestView {
 		layout.addComponent(studentCodeC3);
 
 		layout.addComponent(thankYou);
-		layout.addComponent(cont);
-//		layout.setComponentAlignment(components[0], Alignment.MIDDLE_CENTER);
+		HorizontalLayout hlay = new HorizontalLayout();
+		hlay.addComponent(getCancelButton());
+		hlay.addComponent(space);
+		hlay.addComponent(cont);
+		layout.addComponent(hlay);
 	}
 
 	//second page
@@ -249,17 +248,19 @@ public class AccountingTestView extends TestView {
 			removeAllComponents();
 			quizRules(components);
 		});
-		layout.addComponent(cont);
-//		layout.setComponentAlignment(components[0], Alignment.MIDDLE_CENTER);
+		HorizontalLayout hlay = new HorizontalLayout();
+		hlay.addComponent(getCancelButton());
+		hlay.addComponent(space);
+		hlay.addComponent(cont);
+		layout.addComponent(hlay);
 		addComponent(layout);
 	}
 
-	//describes what happens, when you click on the weiter button
 	public void quizRules(Component[] components){
 
 		VerticalLayout layout = assemleRules();
 		layout.setSpacing(true);
-		Button cont = new Button("Weiter", e -> {
+		Button cont = new Button("Test beginnen", e -> {
 
 			removeAllComponents();
 			for (Component c : components) {
@@ -267,8 +268,12 @@ public class AccountingTestView extends TestView {
 			}
 			super.startQuiz(student);
 		});
-
-		layout.addComponent(cont);
+		cont.addStyleName("primary");
+		HorizontalLayout hlay = new HorizontalLayout();
+		hlay.addComponent(getCancelButton());
+		hlay.addComponent(space);
+		hlay.addComponent(cont);
+		layout.addComponent(hlay);
 		addComponent(layout);
 	}
 
@@ -494,5 +499,15 @@ public class AccountingTestView extends TestView {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private Button getCancelButton() {
+		Button cancel = new Button("Test abbrechen");
+		cancel.addStyleName("danger");
+		cancel.addClickListener(e -> {
+			getUI().getNavigator().navigateTo(Views.DEFAULT.toString());
+			LogHelper.logInfo("The test has been canceled by the student");
+		});
+		return cancel;
 	}
 }

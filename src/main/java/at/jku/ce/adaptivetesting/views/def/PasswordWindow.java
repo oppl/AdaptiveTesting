@@ -43,6 +43,7 @@ public class PasswordWindow extends Window {
 				LogHelper.logError("incorrect password entered");
 			}
 		});
+		confirm.addStyleName("primary");
 		gLayout.addComponent(pwField,0, 0);
 		gLayout.addComponent(new HtmlLabel("&ensp;"),1, 0);
 		gLayout.addComponent(confirm,2, 0);

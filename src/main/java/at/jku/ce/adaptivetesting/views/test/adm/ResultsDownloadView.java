@@ -8,9 +8,7 @@ import at.jku.ce.adaptivetesting.views.def.MenuWindow;
 import at.jku.ce.adaptivetesting.views.test.TestView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FileDownloader;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.StreamResource;
+import com.vaadin.server.*;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -37,16 +35,18 @@ public class ResultsDownloadView extends VerticalLayout implements View {
         private String testTypeFolder;
 
         public ResultsDownloadView(TestView manager, String testTypeFolder) {
+            String title = "Test-Ergebnis Download";
             this.testTypeFolder = testTypeFolder;
             this.setMargin(true);
             this.setSpacing(true);
-            this.addComponent(new HtmlLabel(HtmlUtils.center("h1",
-                    "Test-Ergebnis Download")));
+            this.addComponent(new HtmlLabel(HtmlUtils.center("h1", title)));
 
             GridLayout gridLayout = new GridLayout(2, 1);
             gridLayout.setWidth("100%");
 
             Button zipDownload = new Button("Download ZIP-File");
+            zipDownload.addStyleName("friendly");
+            zipDownload.setIcon(new ThemeResource("Images/download_all.png"));
             zipDownload.addClickListener( e -> {
                 this.getUI().addWindow(new ZIPFileUI());
             });
@@ -112,6 +112,7 @@ public class ResultsDownloadView extends VerticalLayout implements View {
 
                 FileDownloader fd = new FileDownloader(new FileResource(result));
                 Button downloadButton = new Button ("download");
+                downloadButton.addStyleName("primary");
 
                 fd.extend(downloadButton);
 
@@ -202,6 +203,7 @@ public class ResultsDownloadView extends VerticalLayout implements View {
             });
 
             Button download = new Button("Download");
+            download.addStyleName("primary");
 
             StreamResource resource = new StreamResource(new StreamResource.StreamSource() {
                 @Override

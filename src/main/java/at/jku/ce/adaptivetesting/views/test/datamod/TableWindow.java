@@ -15,14 +15,14 @@ public class TableWindow extends Window {
 	private GridLayout gLayout = new GridLayout(2, 1);
 
 	public TableWindow(String tableName) {
-		super("Tabelle: " + tableName);
+		super("Daten der Tabelle: " + tableName);
 		doBefore();
 		gLayout.addComponent(ConnectionProvider.drawTable(tableName),0, 0);
 		doAfter();
 	}
 
 	public TableWindow() {
-		super("Ergebnistabelle");
+		super("Daten der Abfrageergebnis-Tabelle");
 		doBefore();
 	}
 

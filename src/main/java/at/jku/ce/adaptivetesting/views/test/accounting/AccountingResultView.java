@@ -17,8 +17,10 @@ import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.IResultView;
 import at.jku.ce.adaptivetesting.core.LogHelper;
+import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
 import at.jku.ce.adaptivetesting.core.engine.HistoryEntry;
 import at.jku.ce.adaptivetesting.core.engine.ResultFiredArgs;
+import at.jku.ce.adaptivetesting.views.Views;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 
 import at.jku.ce.adaptivetesting.views.def.DefaultView;
@@ -154,16 +156,18 @@ public class AccountingResultView extends VerticalLayout implements View, IResul
 		table.setPageLength(size);
 		addComponent(table);
 		setComponentAlignment(table, Alignment.MIDDLE_CENTER);
-
 		addComponent(HtmlLabel.getCenteredLabel("h3",
 				"Dein Kompetenzniveau ist: <b>" + args.skillLevel + "</b>"));
 		addComponent(HtmlLabel.getCenteredLabel("Delta:  " + args.delta));
 		storeResults(args);
-
 		Image image = new Image("", new FileResource(new File(imageFolder + "accounting_Kompetenzmodell.png")));
-
 		addComponent(image);
 		setComponentAlignment(image, Alignment.MIDDLE_CENTER);
+		addComponent(new Label(""));
+		Button backButton = getBackButton();
+		addComponent(backButton);
+		setComponentAlignment(backButton, Alignment.MIDDLE_CENTER);
+		addComponent(new Label(""));
 
 		/*Link link = new Link("Umfrage Adaptive Testing",
 				new ExternalResource("https://docs.google.com/forms/d/e/1FAIpQLSdg0GyIhMymJaLB6hCSkutV41WqJs09qCUSn9DMmSYJ3Lu_Pg/viewform?c=0&w=1"));
@@ -213,4 +217,13 @@ public class AccountingResultView extends VerticalLayout implements View, IResul
 		DefaultView.setCurrentPageTitle(event);
 	}
 
+    private Button getBackButton() {
+        Button back = new Button("Zurück zur Startseite");
+        back.addStyleName("friendly");
+        back.addClickListener(e -> {
+            getUI().getNavigator().navigateTo(Views.DEFAULT.toString());
+            LogHelper.logInfo("The student left the result view");
+        });
+        return back;
+    }
 }
