@@ -12,6 +12,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -51,6 +52,7 @@ public class DefaultViewFooter extends VerticalLayout implements View {
 			}
 		});
 		menu = new Button("Navigationsmenü");
+		menu.setIcon(new ThemeResource("Images/gear.png"));
 		menu.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 32642854872179636L;
 

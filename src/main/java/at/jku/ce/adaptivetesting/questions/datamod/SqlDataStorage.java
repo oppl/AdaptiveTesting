@@ -65,11 +65,12 @@ public class SqlDataStorage extends AnswerStorage {
     }
 
     public String getInfoTop() {
-        return infoTop + "<br><br>" + infoKeys;
+        return infoTop + "<br><br><b><u>Schemainformationen:</u></b><br><br>" + infoKeys + "<br>";
     }
 
     public String getInfoBottom() {
-        return infoBottom;
+        if (infoBottom.equals(" ")) return infoBottom;
+        else return "<b><u>Zusatzinformationen:</u></b><br><br>" + infoBottom;
     }
 
     @Override
@@ -84,7 +85,7 @@ public class SqlDataStorage extends AnswerStorage {
         GridLayout southLayout = new GridLayout(tables.size()*2, 1);
         int counter = 0;
         HtmlLabel text = new HtmlLabel();
-        text.setValue("<b><i>Tabelleninformationen:</i><b>");
+        text.setValue("<b><u>Tabelleninhalte:</u></b>");
         layout.addComponent(text);
         for (String table : tables) {
             final Button tableButton = new Button(table);

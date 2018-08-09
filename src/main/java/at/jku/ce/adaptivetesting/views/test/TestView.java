@@ -6,6 +6,7 @@ package at.jku.ce.adaptivetesting.views.test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 
 import at.jku.ce.adaptivetesting.core.engine.TestVariants;
 import at.jku.ce.adaptivetesting.core.*;
@@ -27,7 +28,9 @@ import at.jku.ce.adaptivetesting.views.Views;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.server.Sizeable;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Notification.Type;
 
@@ -63,6 +66,8 @@ public abstract class TestView extends VerticalLayout implements
 		addComponent(southLayout);
 
 		next = new Button("Nächste Frage");
+		next.setIcon(new ThemeResource("Images/right_arrow.png"));
+		next.addStyleName("primary");
 		next.addClickListener(e -> {
 			e.getButton().setEnabled(false);
 			displayNextQuestion();
@@ -88,6 +93,8 @@ public abstract class TestView extends VerticalLayout implements
 
 		if(quizName.equals(TestVariants.SQL.toString())) {
 			Button queryDiagnosis = new Button("Query Diagnose");
+			queryDiagnosis.setIcon(new ThemeResource("Images/magnifyling_glass.png"));
+			queryDiagnosis.addStyleName("friendly");
 			queryDiagnosis.addClickListener(e -> {
 				question = iEngine.getQuestion();
 				SqlQuestion sqlQuestion = (SqlQuestion) question;
@@ -97,14 +104,15 @@ public abstract class TestView extends VerticalLayout implements
 				LogHelper.logInfo("Try (" + tryNr + ")");
 
 				double check;
-				if (tries > 1) check = sqlQuestion.performQueryDiagnosis();
+				if (tries >= 0 ) check = sqlQuestion.performQueryDiagnosis();
 				else check = sqlQuestion.checkUserAnswer();
 
 				if (check == 0.0d) {
 					sqlQuestion.decreaseTries();
 					tries = sqlQuestion.getTries();
+					sqlQuestion.updateTriesLeftLabel();
 				}
-				if (tries == 0) displayNextQuestion();
+				if (tries == -1) displayNextQuestion();
 			});
 			commandRow.addComponent(queryDiagnosis);
 			setResultView(DatamodResultView.class);

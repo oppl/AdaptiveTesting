@@ -37,4 +37,24 @@
     .v-label{
         font-weight: normal;
     }
+
+    .v-label-mylabelstyle {
+      color: white;
+      text-align: center;
+      background-color: black;
+      border-color: white;
+      font-weight: bold;
+  }
+
+  .v-button-mystyle {
+    background-color: lightblue;
+    font-size: 12pt;
+    font-weight: bold;
+    color: red;
+    border-color: black;
+    border-radius: 0px;
+    border-width: 4px;
+    background-image: none;
+  }
+
 }

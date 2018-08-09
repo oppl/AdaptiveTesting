@@ -4,8 +4,10 @@ import at.jku.ce.adaptivetesting.core.AnswerStorage;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.IResultView;
 import at.jku.ce.adaptivetesting.core.LogHelper;
+import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
 import at.jku.ce.adaptivetesting.core.engine.HistoryEntry;
 import at.jku.ce.adaptivetesting.core.engine.ResultFiredArgs;
+import at.jku.ce.adaptivetesting.views.Views;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.questions.datamod.SqlDataStorage;
 import at.jku.ce.adaptivetesting.questions.datamod.SqlQuestion;
@@ -14,6 +16,7 @@ import com.github.rcaller.exception.ExecutionException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.Page;
 import com.vaadin.server.Sizeable;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
@@ -44,8 +47,7 @@ public class DatamodResultView extends VerticalLayout implements View, IResultVi
 		this.resultsFolder = resultsFolder;
 		setSpacing(true);
 		addComponent(new HtmlLabel(title));
-		//addComponent(HtmlLabel.getCenteredLabel("h2", "Test abgeschlossen"));
-		addComponent(HtmlLabel.getCenteredLabel("Der Test wurde beendet, da "
+		addComponent(HtmlLabel.getCenteredLabel("h2","Der Test wurde beendet, da "
 				+ (args.outOfQuestions ? "keine weiteren Fragen verfügbar sind."
 						: "dein Kompetenzniveau bestimmt wurde.")));
 
@@ -128,7 +130,11 @@ public class DatamodResultView extends VerticalLayout implements View, IResultVi
 						getUI().addWindow(window);
 					};
 					resultDetails = new Button(showResult, clickListener);
-
+					if(entry.points == 1.0d) {
+						resultDetails.addStyleName("friendly");
+					} else if (entry.points == 0.0d) {
+						resultDetails.addStyleName("danger");
+					}
 				} catch (Exception e) {
 					LogHelper.logError(e.toString());
 				}
@@ -147,16 +153,17 @@ public class DatamodResultView extends VerticalLayout implements View, IResultVi
 		table.setWidthUndefined();
 		addComponent(table);
 		setComponentAlignment(table, Alignment.MIDDLE_CENTER);
-
-		addComponent(HtmlLabel.getCenteredLabel("h3",
-				"Dein Kompetenzniveau ist: <b>" + args.skillLevel + "</b>"));
-		addComponent(HtmlLabel.getCenteredLabel("Delta:  " + args.delta));
+		addComponent(HtmlLabel.getCenteredLabel("h3", "Dein Kompetenzniveau ist: <b>" + args.skillLevel + "</b>"));
+		//addComponent(HtmlLabel.getCenteredLabel("Delta:  " + args.delta));
 		storeResults(args);
-
 		Image image = new Image("", new FileResource(new File(imageFolder + "datamod_Kompetenzmodell.png")));
-
 		addComponent(image);
 		setComponentAlignment(image, Alignment.MIDDLE_CENTER);
+		addComponent(new Label(""));
+		Button backButton = getBackButton();
+		addComponent(backButton);
+		setComponentAlignment(backButton, Alignment.MIDDLE_CENTER);
+		addComponent(new Label(""));
 	}
 
 	private void storeResults(ResultFiredArgs args) {
@@ -193,5 +200,18 @@ public class DatamodResultView extends VerticalLayout implements View, IResultVi
 	@Override
 	public void enter(ViewChangeEvent event) {
 		DefaultView.setCurrentPageTitle(event);
+	}
+
+	private Button getBackButton() {
+		Button back = new Button("Zurück zur Startseite");
+		back.addStyleName("friendly");
+		back.addClickListener(e -> {
+			if (ConnectionProvider.connectionEstablished()) {
+				ConnectionProvider.closeConnection();
+			}
+			getUI().getNavigator().navigateTo(Views.DEFAULT.toString());
+			LogHelper.logInfo("The student left the result view");
+		});
+		return back;
 	}
 }
