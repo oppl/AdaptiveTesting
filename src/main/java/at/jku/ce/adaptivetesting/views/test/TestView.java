@@ -239,6 +239,8 @@ public abstract class TestView extends VerticalLayout implements
 			testTypeFolder = TestVariants.RW.getFolderName();
 		} else if (quizName.equals(TestVariants.SQL.toString())) {
 			testTypeFolder = TestVariants.SQL.getFolderName();
+		} else if (quizName.equals(TestVariants.MATH.toString())) {
+			testTypeFolder = TestVariants.MATH.getFolderName();
 		}
 		return DefaultView.Servlet.getResultFolderName() + testTypeFolder;
 	}

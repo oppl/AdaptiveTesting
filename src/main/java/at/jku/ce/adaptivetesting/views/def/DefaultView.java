@@ -19,6 +19,7 @@ import at.jku.ce.adaptivetesting.views.test.*;
 import at.jku.ce.adaptivetesting.views.test.adm.*;
 import at.jku.ce.adaptivetesting.views.test.accounting.*;
 import at.jku.ce.adaptivetesting.views.test.datamod.*;
+import at.jku.ce.adaptivetesting.views.test.math.MathTestView;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -95,9 +96,10 @@ public class DefaultView extends UI {
 		String defaultValue = "-- Bitte auswählen --";
 		String test1 = TestVariants.RW.toString();
 		String test2 = TestVariants.SQL.toString();
+        String test3 = TestVariants.MATH.toString();
 
 		ComboBox box = new ComboBox("Testauswahl");
-		box.addItems(defaultValue, test1, test2);
+		box.addItems(defaultValue, test1, test2, test3);
 		box.addValueChangeListener(new Property.ValueChangeListener() {
 
 			boolean testSelected = false;
@@ -116,13 +118,18 @@ public class DefaultView extends UI {
 					start.setEnabled(true);
 
 				} else if (event.getProperty().getValue().equals(test2)) {
+                    manager = new DatamodTestView(test2);
+                    testTypeFolder = TestVariants.SQL.getFolderName();
+                    testSelected = true;
+                    start.setEnabled(true);
 
-					manager = new DatamodTestView(test2);
-					testTypeFolder = TestVariants.SQL.getFolderName();
-					testSelected = true;
-					start.setEnabled(true);
+                } else if (event.getProperty().getValue().equals(test3)) {
+                    manager = new MathTestView(test3);
+                    testTypeFolder = TestVariants.MATH.getFolderName();
+                    testSelected = true;
+                    start.setEnabled(true);
 
-				} else if (event.getProperty().getValue().equals(defaultValue)) {
+                } else if (event.getProperty().getValue().equals(defaultValue)) {
 					start.setEnabled(false);
 				}
 				if (testSelected) {
