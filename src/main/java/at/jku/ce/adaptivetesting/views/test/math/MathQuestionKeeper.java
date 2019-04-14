@@ -93,8 +93,6 @@ public class MathQuestionKeeper {
             String fileAsString = sb.toString().replaceAll("& ", "&amp; ");
             File image = checkImageAvailable(containingFolder, f.getName());
             if (fileAsString.contains(mathRootElement)) {
-
-                // SQL Question
                 questionInitializedInfo(f, successfullyLoaded, MathQuestion.class.getName());
                 MathQuestionXml question = (MathQuestionXml) mathUnmarshaller
                         .unmarshal(new StringReader(fileAsString));

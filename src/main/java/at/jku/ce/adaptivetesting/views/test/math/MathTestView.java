@@ -65,7 +65,7 @@ public class MathTestView extends TestView {
         gender.setFilteringMode(FilteringMode.CONTAINS);
         gender.setEnabled(true);
 
-        ComboBox experience = new ComboBox("Erfahrung mit SQL");
+        ComboBox experience = new ComboBox("Erfahrung mit Mathematik und Geometrie");
         String[] experienceItems = {defaultValue, "Anfänger", "Fortgeschritten", "Profi"};
         experience.addItems(experienceItems);
         experience.setWidth(15, Sizeable.Unit.PERCENTAGE);

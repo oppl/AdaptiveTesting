@@ -63,6 +63,12 @@ public class SimpleEngine implements IEngine {
 					-0.312789f, -0.104288f, 0.080893f, 0.267251f,
 					0.492996f, 0.991516f, 1.426546f, 2.145324f,
 					2.836668f};
+		} else if (quizName.equals(TestVariants.MATH.toString())) {
+			upperBounds = new float[]{
+					-1.026080f, -0.861475f, -0.618365f, -0.479589f,
+					-0.312789f, -0.104288f, 0.080893f, 0.267251f,
+					0.492996f, 0.991516f, 1.426546f, 2.145324f,
+					2.836668f};
 		}
 		Arrays.sort(upperBounds);
 		this.upperBounds = upperBounds;
@@ -338,6 +344,23 @@ public class SimpleEngine implements IEngine {
 					break;
 			}
 		}
+		if (student.getQuizName().equals(TestVariants.MATH.toString())) {
+			String studentExperience = student.getStudentExperience();
+			LogHelper.logInfo("Student experience: " + String.valueOf(studentExperience));
+			switch (studentExperience) {
+				default:
+				case "Anfänger":
+					question = getQuestion(setBag(0));
+					break;
+				case "Fortgeschritten":
+					question = getQuestion(setBag(1));
+					break;
+				case "Profi":
+					question = getQuestion(setBag(2));
+					break;
+			}
+		}
+
 		LogHelper.logInfo(String.valueOf("Difficulty of chosen question: " + question.getDifficulty()));
 		fireQuestionChangeListener(question);
 	}

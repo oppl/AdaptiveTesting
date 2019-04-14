@@ -2,6 +2,7 @@ package at.jku.ce.adaptivetesting.questions.math;
 
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
+import at.jku.ce.adaptivetesting.questions.math.js.MyComponent;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Image;
@@ -31,6 +32,23 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
         question = new HtmlLabel();
         setQuestionText(question, questionText);
         addComponent(question);
+
+        final MyComponent mycomponent = new MyComponent();
+
+        // Set the value from server-side
+        mycomponent.setValue("Server-side value");
+
+        // Process a value input by the user from the client-side
+        mycomponent.addValueChangeListener(
+                new MyComponent.ValueChangeListener() {
+                    @Override
+                    public void valueChange() {
+                        Notification.show("Value: " + mycomponent.getValue());
+                    }
+                });
+
+        addComponent(mycomponent);
+
 
         if (questionImage != null) addComponent(this.questionImage);
 
