@@ -1,6 +1,7 @@
 package at.jku.ce.adaptivetesting.questions.math;
 
 import at.jku.ce.adaptivetesting.core.IQuestion;
+import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 import at.jku.ce.adaptivetesting.questions.math.js.MyComponent;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
@@ -19,6 +20,8 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
     private Label question;
     private Image questionImage = null;
     private String id;
+    private final MyComponent mycomponent = new MyComponent();
+    private double resultEvaluation = 0.0d;
 
     public MathQuestion (Float difficulty, String questionText, Image questionImage, String id) {
         this(0f, "", null, "");
@@ -33,17 +36,22 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
         setQuestionText(question, questionText);
         addComponent(question);
 
-        final MyComponent mycomponent = new MyComponent();
 
-        // Set the value from server-side
-        mycomponent.setValue("Server-side value");
+        mycomponent.setHeight("40%");
+        mycomponent.setWidth("40%");
+        mycomponent.setSizeFull();
 
-        // Process a value input by the user from the client-side
+        // Set material ID
+        mycomponent.setValue(questionText);
+
+        // On value change
         mycomponent.addValueChangeListener(
                 new MyComponent.ValueChangeListener() {
                     @Override
                     public void valueChange() {
-                        Notification.show("Value: " + mycomponent.getValue());
+                        resultEvaluation = Double.parseDouble(mycomponent.getValue());
+                        LogHelper.logInfo("Loaded value from GeoGebra!: " + mycomponent.getValue());
+                        LogHelper.logInfo("Value changed to!: " + resultEvaluation);
                     }
                 });
 
@@ -53,6 +61,8 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
         if (questionImage != null) addComponent(this.questionImage);
 
         setSpacing(true);
+
+
     }
 
     @Override
@@ -121,7 +131,7 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
 
     @Override
     public double checkUserAnswer() {
-        return 0.0d;
+        return resultEvaluation;
     }
 
     @Override
