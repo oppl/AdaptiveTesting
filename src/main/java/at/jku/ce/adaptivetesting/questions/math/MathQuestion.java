@@ -20,16 +20,18 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
     private Label question;
     private Image questionImage = null;
     private String id;
+    private String materialNr;
     private final MyComponent mycomponent = new MyComponent();
     private double resultEvaluation = 0.0d;
 
-    public MathQuestion (Float difficulty, String questionText, Image questionImage, String id) {
-        this(0f, "", null, "");
+    public MathQuestion (Float difficulty, String questionText,  String materialNr, Image questionImage, String id) {
+        this(0f, "", "", null, "");
     }
 
-    public MathQuestion(float difficulty, String questionText, Image questionImage, String id) {
+    public MathQuestion(float difficulty, String questionText, String materialNr, Image questionImage, String id) {
         this.difficulty = difficulty;
         this.id = id;
+        this.materialNr = materialNr;
         this.questionImage = questionImage;
 
         question = new HtmlLabel();
@@ -42,7 +44,7 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
         mycomponent.setSizeFull();
 
         // Set material ID
-        mycomponent.setValue(questionText);
+        mycomponent.setValue(materialNr);
 
         // On value change
         mycomponent.addValueChangeListener(
@@ -142,7 +144,7 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
     @Override
     public XmlQuestionData<MathDataStorage> toXMLRepresentation() {
         return new MathQuestionXml(getSolution(), getQuestionText(),
-                getDifficulty());
+                getDifficulty(), materialNr);
     }
 
     @Override

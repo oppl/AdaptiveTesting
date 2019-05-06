@@ -7,6 +7,6 @@ public class MathXmlHelper {
     public static MathQuestion fromXml(MathQuestionXml xml, String id) {
         return new MathQuestion(
                 xml.getDifficulty(), xml.getQuestion()
-                .replace("\\n", " <br />"), null, id);
+                .replace("\\n", " <br />"), xml.getMaterialNr(), null, id);
     }
 }
