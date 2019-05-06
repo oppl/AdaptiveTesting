@@ -3,7 +3,7 @@ package at.jku.ce.adaptivetesting.questions.math;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
-import at.jku.ce.adaptivetesting.questions.math.js.MyComponent;
+import at.jku.ce.adaptivetesting.questions.math.js.GeoGebraComponent;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Image;
@@ -21,7 +21,7 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
     private Image questionImage = null;
     private String id;
     private String materialNr;
-    private final MyComponent mycomponent = new MyComponent();
+    private final GeoGebraComponent geogebraComponent = new GeoGebraComponent();
     private double resultEvaluation = 0.0d;
 
     public MathQuestion (Float difficulty, String questionText,  String materialNr, Image questionImage, String id) {
@@ -39,25 +39,26 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
         addComponent(question);
 
 
-        mycomponent.setHeight("40%");
-        mycomponent.setWidth("40%");
-        mycomponent.setSizeFull();
+        geogebraComponent.setHeight("40%");
+        geogebraComponent.setWidth("40%");
+        geogebraComponent.setSizeFull();
 
         // Set material ID
-        mycomponent.setValue(materialNr);
+        geogebraComponent.setValue(materialNr);
 
-        // On value change
-        mycomponent.addValueChangeListener(
-                new MyComponent.ValueChangeListener() {
+        // Add value change listener, on value change the result of the exercise evaluation
+        // is set to the value in the shared state of the GeoGebra component.
+        geogebraComponent.addValueChangeListener(
+                new GeoGebraComponent.ValueChangeListener() {
                     @Override
                     public void valueChange() {
-                        resultEvaluation = Double.parseDouble(mycomponent.getValue());
-                        LogHelper.logInfo("Loaded value from GeoGebra!: " + mycomponent.getValue());
+                        resultEvaluation = Double.parseDouble(geogebraComponent.getValue());
+                        LogHelper.logInfo("Loaded value from GeoGebra!: " + geogebraComponent.getValue());
                         LogHelper.logInfo("Value changed to!: " + resultEvaluation);
                     }
                 });
 
-        addComponent(mycomponent);
+        addComponent(geogebraComponent);
 
 
         if (questionImage != null) addComponent(this.questionImage);
