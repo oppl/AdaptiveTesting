@@ -39,8 +39,8 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
         addComponent(question);
 
 
-        geogebraComponent.setHeight("40%");
-        geogebraComponent.setWidth("40%");
+        //geogebraComponent.setHeight("40%");
+        //geogebraComponent.setWidth("40%");
         geogebraComponent.setSizeFull();
 
         // Set material ID

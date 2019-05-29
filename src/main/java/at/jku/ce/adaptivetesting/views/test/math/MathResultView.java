@@ -110,10 +110,10 @@ public class MathResultView extends VerticalLayout implements View, IResultView 
         addComponent(HtmlLabel.getCenteredLabel("Delta:  " + args.delta));
         storeResults(args);
 
-        Image image = new Image("", new FileResource(new File(imageFolder + "datamod_Kompetenzmodell.png")));
+        //Image image = new Image("", new FileResource(new File(imageFolder + "datamod_Kompetenzmodell.png")));
 
-        addComponent(image);
-        setComponentAlignment(image, Alignment.MIDDLE_CENTER);
+        //addComponent(image);
+        //setComponentAlignment(image, Alignment.MIDDLE_CENTER);
     }
 
     private void storeResults(ResultFiredArgs args) {

@@ -25,8 +25,8 @@ geogebraLibrary.GeoGebraComponent = function (element) {
             ggbExercise = new GGBApplet({
                 "id": 'geoApp',
                 "material_id": materialNr,
-                "width": 500,
-                "height": 300,
+                //"width": 900,
+                //"height": 900,
                 "borderColor": "#55FF00"
             }, true);
             ggbExercise.inject('applet_container');
@@ -36,7 +36,7 @@ geogebraLibrary.GeoGebraComponent = function (element) {
         }
     };
 
-    //Default implementation of the click fuction; Is overwritten in the JavaScript-Connector
+    //Default implementation of the click function; Is overwritten in the JavaScript-Connector
     this.click = function () {
         alert(geoApp.getExerciseFraction());
     };
@@ -44,7 +44,7 @@ geogebraLibrary.GeoGebraComponent = function (element) {
     var button = element.getElementsByTagName("input")[0];
     var self = this;
 
-    //Function click is asigned to the button
+    //Function click is assigned to the button
     button.onclick = function () {
         self.click();
     };

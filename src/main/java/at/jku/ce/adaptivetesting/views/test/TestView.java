@@ -24,6 +24,7 @@ import at.jku.ce.adaptivetesting.views.test.datamod.DatamodResultView;
 import at.jku.ce.adaptivetesting.views.def.DefaultView;
 import at.jku.ce.adaptivetesting.views.test.accounting.AccountingResultView;
 import at.jku.ce.adaptivetesting.views.Views;
+import at.jku.ce.adaptivetesting.views.test.math.MathResultView;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -108,9 +109,11 @@ public abstract class TestView extends VerticalLayout implements
 			});
 			commandRow.addComponent(queryDiagnosis);
 			setResultView(DatamodResultView.class);
-		} else {
+		} else if(quizName.equals(TestVariants.RW.toString())) {
 			setResultView(AccountingResultView.class);
-		}
+		} else if (quizName.equals(TestVariants.MATH.toString())) {
+            setResultView(MathResultView.class);
+        }
 		commandRow.addComponent(next);
 
 		southLayout.addComponent(helperRow,0,0);

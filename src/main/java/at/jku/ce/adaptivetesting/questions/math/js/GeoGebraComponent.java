@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * The necessary JavaScript for the usage of the GeoGebra-JS-API is
  * also loaded.
  */
-@JavaScript({"https://cdn.geogebra.org/apps/deployggb.js", "geogebra-integration.js", "geogebra-connector.js"})
+@JavaScript({"https://cdn.geogebra.org/apps/deployggb.js", "geogebra-integration2.js", "geogebra-connector.js"})
 public class GeoGebraComponent extends AbstractJavaScriptComponent {
 
     /**
