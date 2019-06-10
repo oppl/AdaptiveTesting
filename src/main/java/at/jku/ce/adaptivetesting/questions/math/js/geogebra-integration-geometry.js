@@ -1,5 +1,6 @@
 var geogebraLibrary = geogebraLibrary || {};
 
+// Integration script for geometric exercises
 geogebraLibrary.GeoGebraComponent = function (element) {
     element.innerHTML =
         "<div id='applet_container'></div>" +
@@ -179,7 +180,7 @@ geogebraLibrary.GeoGebraComponent = function (element) {
 
     // Default implementation of the click function; Is overwritten in the JavaScript-Connector
     this.click = function () {
-        alert(geoApp.getExerciseFraction());
+        alert("Click!");
     };
 
     var button = element.getElementsByTagName("input")[0];

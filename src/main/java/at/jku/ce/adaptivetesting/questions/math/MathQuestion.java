@@ -4,6 +4,7 @@ import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 import at.jku.ce.adaptivetesting.questions.math.js.GeoGebraComponent;
+import at.jku.ce.adaptivetesting.questions.math.js.GeoGebraMathComponent;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Image;
@@ -20,46 +21,72 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
     private Label question;
     private Image questionImage = null;
     private String id;
+    // The material number of the GeoGebra-App to be loaded
     private String materialNr;
-    private final GeoGebraComponent geogebraComponent = new GeoGebraComponent();
+    // This variable specifies the integration script to be used
+    // 1 = geometric exercises
+    // 2 = other mathematical exercises
+    private int questionType;
     private double resultEvaluation = 0.0d;
 
-    public MathQuestion (Float difficulty, String questionText,  String materialNr, Image questionImage, String id) {
-        this(0f, "", "", null, "");
+    public MathQuestion (Float difficulty, String questionText,  String materialNr, int questionType, Image questionImage, String id) {
+        this(0f, "", "", 0, null, "");
     }
 
-    public MathQuestion(float difficulty, String questionText, String materialNr, Image questionImage, String id) {
+    public MathQuestion(float difficulty, String questionText, String materialNr, int questionType, Image questionImage, String id) {
         this.difficulty = difficulty;
         this.id = id;
         this.materialNr = materialNr;
+        this.questionType = questionType;
         this.questionImage = questionImage;
 
         question = new HtmlLabel();
         setQuestionText(question, questionText);
         addComponent(question);
 
+        if(questionType == 1) {
 
-        //geogebraComponent.setHeight("40%");
-        //geogebraComponent.setWidth("40%");
-        geogebraComponent.setSizeFull();
+            GeoGebraComponent geogebraComponent = new GeoGebraComponent();
+            geogebraComponent.setSizeFull();
 
-        // Set material ID
-        geogebraComponent.setValue(materialNr);
+            // Set material ID
+            geogebraComponent.setValue(materialNr);
 
-        // Add value change listener, on value change the result of the exercise evaluation
-        // is set to the value in the shared state of the GeoGebra component.
-        geogebraComponent.addValueChangeListener(
-                new GeoGebraComponent.ValueChangeListener() {
-                    @Override
-                    public void valueChange() {
-                        resultEvaluation = Double.parseDouble(geogebraComponent.getValue());
-                        LogHelper.logInfo("Loaded value from GeoGebra!: " + geogebraComponent.getValue());
-                        LogHelper.logInfo("Value changed to!: " + resultEvaluation);
-                    }
-                });
+            // Add value change listener, on value change the result of the exercise evaluation
+            // is set to the value in the shared state of the GeoGebra component.
+            geogebraComponent.addValueChangeListener(
+                    new GeoGebraComponent.ValueChangeListener() {
+                        @Override
+                        public void valueChange() {
+                            resultEvaluation = Double.parseDouble(geogebraComponent.getValue());
+                            LogHelper.logInfo("Loaded value from GeoGebra!: " + geogebraComponent.getValue());
+                            LogHelper.logInfo("Value changed to!: " + resultEvaluation);
+                        }
+                    });
+            addComponent(geogebraComponent);
 
-        addComponent(geogebraComponent);
+        } else if(questionType == 2) {
 
+            GeoGebraMathComponent geogebraMathComponent = new GeoGebraMathComponent();
+            geogebraMathComponent.setSizeFull();
+
+            // Set material ID
+            geogebraMathComponent.setValue(materialNr);
+
+            // Add value change listener, on value change the result of the exercise evaluation
+            // is set to the value in the shared state of the GeoGebra component.
+            geogebraMathComponent.addValueChangeListener(
+                    new GeoGebraMathComponent.ValueChangeListener() {
+                        @Override
+                        public void valueChange() {
+                            resultEvaluation = Double.parseDouble(geogebraMathComponent.getValue());
+                            LogHelper.logInfo("Loaded value from GeoGebra!: " + geogebraMathComponent.getValue());
+                            LogHelper.logInfo("Value changed to!: " + resultEvaluation);
+                        }
+                    });
+            addComponent(geogebraMathComponent);
+            
+        }
 
         if (questionImage != null) addComponent(this.questionImage);
 
@@ -145,7 +172,7 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
     @Override
     public XmlQuestionData<MathDataStorage> toXMLRepresentation() {
         return new MathQuestionXml(getSolution(), getQuestionText(),
-                getDifficulty(), materialNr);
+                getDifficulty(), materialNr, questionType);
     }
 
     @Override

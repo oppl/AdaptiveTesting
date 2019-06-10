@@ -12,15 +12,19 @@ public class MathQuestionXml extends XmlQuestionData<MathDataStorage> {
     @XmlElement(name = "materialNr")
     private String materialNr;
 
+    @XmlElement(name = "questionType")
+    private int questionType;
+
     public MathQuestionXml() {
     }
 
-    public MathQuestionXml(MathDataStorage solution, String questionText, float difficulty, String materialNr) {
+    public MathQuestionXml(MathDataStorage solution, String questionText, float difficulty, String materialNr, int questionType) {
         super(solution, questionText, difficulty);
         if (materialNr == null || materialNr.length() == 0) {
             materialNr = "";
         }
         this.setMaterialNr(materialNr);
+        this.setQuestionType(questionType);
     }
 
     @Override
@@ -34,5 +38,13 @@ public class MathQuestionXml extends XmlQuestionData<MathDataStorage> {
 
     public void setMaterialNr(String materialNr) {
         this.materialNr = materialNr;
+    }
+
+    public int getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(int questionType) {
+        this.questionType = questionType;
     }
 }
