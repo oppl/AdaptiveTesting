@@ -3,10 +3,10 @@ var geogebraLibrary = geogebraLibrary || {};
 // Integration script for geometric exercises
 geogebraLibrary.GeoGebraComponent = function (element) {
     element.innerHTML =
-        "<div id='applet_container'></div>" +
+        "<div id='applet_container'></div>"; /* +
         "<div class='textinput'>Senden sie ihre Lösung ab, bevor Sie zur nächsten Frage wechseln (kann mehrmals benutzt werden): " +
         "<input type='button' value='Lösung abschicken'/>" +
-        "</div>";
+        "</div>"; */
 
     // Variable for the GeoGebra-Exercise
     var ggbExercise = null;
@@ -16,6 +16,8 @@ geogebraLibrary.GeoGebraComponent = function (element) {
     var completedTargets;
     var checkApi;
     var points = 0.0;
+
+    var self = this;
 
     // Called whenever the user creates an object in the GeoGebra-App
     function ggbObjectAdded(name) {
@@ -52,6 +54,7 @@ geogebraLibrary.GeoGebraComponent = function (element) {
                 }
 
             }
+            self.click();
             registerListeners(checkApi);
         } catch (e) {
             console.log(e);
@@ -100,11 +103,12 @@ geogebraLibrary.GeoGebraComponent = function (element) {
             var parameters = {
                 "id": "ggbApplet",
                 "width": 715,
-                "height": 489,
+                "height": 500,
+                "autoHeight" : true,
                 "showMenuBar": false,
                 "showAlgebraInput": false,
                 "showToolBar": true,
-                "customToolBar": "0 39 73 62 | 1 501 67 , 5 19 , 72 75 76 | 2 15 45 , 18 65 , 7 37 | 4 3 8 9 , 13 44 , 58 , 47 | 16 51 64 , 70 | 10 34 53 11 , 24  20 22 , 21 23 | 55 56 57 , 12 | 36 46 , 38 49  50 , 71  14  68 | 30 29 54 32 31 33 | 25 17 26 60 52 61 | 40 41 42 , 27 28 35 , 6",
+                //"customToolBar": "0 39 73 62 | 1 501 67 , 5 19 , 72 75 76 | 2 15 45 , 18 65 , 7 37 | 4 3 8 9 , 13 44 , 58 , 47 | 16 51 64 , 70 | 10 34 53 11 , 24  20 22 , 21 23 | 55 56 57 , 12 | 36 46 , 38 49  50 , 71  14  68 | 30 29 54 32 31 33 | 25 17 26 60 52 61 | 40 41 42 , 27 28 35 , 6",
                 "showToolBarHelp": false,
                 "showResetIcon": false,
                 "enableLabelDrags": false,
@@ -183,6 +187,7 @@ geogebraLibrary.GeoGebraComponent = function (element) {
         alert("Click!");
     };
 
+    /*
     var button = element.getElementsByTagName("input")[0];
     var self = this;
 
@@ -190,4 +195,5 @@ geogebraLibrary.GeoGebraComponent = function (element) {
     button.onclick = function () {
         self.click();
     };
+    */
 };

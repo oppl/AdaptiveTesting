@@ -7,10 +7,7 @@ import at.jku.ce.adaptivetesting.questions.math.js.GeoGebraComponent;
 import at.jku.ce.adaptivetesting.questions.math.js.GeoGebraMathComponent;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import com.vaadin.server.Page;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 
 import java.io.*;
@@ -47,7 +44,10 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
         if(questionType == 1) {
 
             GeoGebraComponent geogebraComponent = new GeoGebraComponent();
-            geogebraComponent.setSizeFull();
+            // geogebraComponent.setSizeFull();
+            geogebraComponent.setHeight("490");
+            // geogebraComponent.setHeight(75, Unit.PERCENTAGE);
+            // geogebraComponent.setWidth("715");
 
             // Set material ID
             geogebraComponent.setValue(materialNr);
@@ -64,11 +64,15 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
                         }
                     });
             addComponent(geogebraComponent);
+            this.setComponentAlignment(geogebraComponent, Alignment.MIDDLE_CENTER);
 
         } else if(questionType == 2) {
 
             GeoGebraMathComponent geogebraMathComponent = new GeoGebraMathComponent();
-            geogebraMathComponent.setSizeFull();
+            // geogebraMathComponent.setSizeFull();
+            geogebraMathComponent.setHeight("490");
+            // geogebraMathComponent.setHeight(75, Unit.PERCENTAGE);
+            // geogebraMathComponent.setWidth("715");
 
             // Set material ID
             geogebraMathComponent.setValue(materialNr);
@@ -85,7 +89,7 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
                         }
                     });
             addComponent(geogebraMathComponent);
-            
+            this.setComponentAlignment(geogebraMathComponent, Alignment.MIDDLE_CENTER);
         }
 
         if (questionImage != null) addComponent(this.questionImage);

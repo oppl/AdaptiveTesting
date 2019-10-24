@@ -3,10 +3,10 @@ var geogebraLibrary = geogebraLibrary || {};
 // Integration script for other mathematical exercises
 geogebraLibrary.GeoGebraMathComponent = function (element) {
     element.innerHTML =
-        "<div id='applet_container'></div>" +
+        "<div id='applet_container'></div>"; /* +
         "<div class='textinput'>Senden sie ihre Lösung ab, bevor Sie zur nächsten Frage wechseln (kann mehrmals benutzt werden): " +
         "<input type='button' value='Lösung abschicken'/>" +
-        "</div>";
+        "</div>"; */
 
     // Variable for the GeoGebra-Exercise
     var ggbExercise = null;
@@ -30,14 +30,20 @@ geogebraLibrary.GeoGebraMathComponent = function (element) {
         return points;
     };
 
+    var self = this;
+    function updateListener(objName) {
+        console.log("Value changed of: " + objName);
+        self.click();
+    }
+
     // Injects the Div "applet_container" with an GeoGebra-Applet with the given material number
     this.setValue = function (materialNr) {
         if (materialNr != null) {
             ggbExercise = new GGBApplet({
                 "id": 'ggbApplet',
                 "material_id": materialNr,
-                "width": 450,
-                "height": 450,
+                "width": 715,
+                "height": 500,
                 "appletOnLoad": function(api) {
                     // Initialize GeoGebra API
                     checkApi = api;
@@ -48,6 +54,7 @@ geogebraLibrary.GeoGebraMathComponent = function (element) {
                         i++;
                     }
                     noOfResults = i - 1;
+                    checkApi.registerUpdateListener(updateListener);
                 }
             }, true);
             ggbExercise.inject('applet_container');
@@ -61,6 +68,7 @@ geogebraLibrary.GeoGebraMathComponent = function (element) {
         alert("Click!");
     };
 
+    /*
     var button = element.getElementsByTagName("input")[0];
     var self = this;
 
@@ -68,4 +76,5 @@ geogebraLibrary.GeoGebraMathComponent = function (element) {
     button.onclick = function () {
         self.click();
     };
+    */
 };
