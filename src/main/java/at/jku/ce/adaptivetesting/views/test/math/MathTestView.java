@@ -106,7 +106,9 @@ public class MathTestView extends TestView {
     public void quizRules(Component[] components){
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.addComponent(new HtmlLabel("<h1>Anleitung</h1><br>" +
-                "Bitte führen Sie die geforderten geometrischen Konstruktion durch und drücken Sie auf dann auf den Button \"Lösung abschicken\", bevor Sie zur nächsten Frage wechseln. Bitte vergessen Sie dies nicht, da Ihre Bearbeitung sonst nicht bewertet werden kann." +
+                "Bitte beantworte die gestellten Aufgaben. Durch den Button \"Nächste Frage\" kommst " +
+                "du zur nächsten Aufgabe, deine Ergebnise werden automatisch ausgewertet. Bitte beachte, dass " +
+                "du nicht zu bereits bearbeiteten Fragen zurückgehen kannst! Klicke auf den Button um den Test zu starten." +
                 "<br>"));
 
 

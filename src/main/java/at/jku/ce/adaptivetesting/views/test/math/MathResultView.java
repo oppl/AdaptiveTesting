@@ -52,16 +52,17 @@ public class MathResultView extends VerticalLayout implements View, IResultView 
 
         // Create HTML table of the history
         Table table = new Table();
-        final String showResult = "Ergebnis";
+        // final String showResult = "Ergebnis";
         table.addContainerProperty("#", Integer.class, null);
         table.addContainerProperty("Schwierigkeitsgrad", Float.class, null);
         table.addContainerProperty("Resultat", String.class, null);
-        table.addContainerProperty(showResult, Button.class, null);
-        //List<HistoryEntry> entries = Lists.reverse(args.history);
+        // table.addContainerProperty(showResult, Button.class, null);
+        // List<HistoryEntry> entries = Lists.reverse(args.history);
         List<HistoryEntry> entries = new ArrayList<HistoryEntry>(args.history);
         Collections.reverse(entries);
         int nr = entries.size();
         for (HistoryEntry entry : entries) {
+            /*
             if (entry.question instanceof Component && entry.question != null) {
                 try {
                     Class<? extends AnswerStorage> dataStorageClass = entry.question.getSolution().getClass();
@@ -74,7 +75,6 @@ public class MathResultView extends VerticalLayout implements View, IResultView 
                             entry.question.getDifficulty(),
                             entry.question.getQuestionText(),
                             null,"");
-
                     MathQuestion mathQuestion = (MathQuestion)entry.question;
 
                     MathDataStorage userAnswer = mathQuestion.getUserAnswer();
@@ -91,7 +91,7 @@ public class MathResultView extends VerticalLayout implements View, IResultView 
                     LogHelper.logError(e.toString());
                 }
             }
-
+            */
             table.addItem(new Object[] { new Integer(nr), entry.question.getDifficulty(),
                     isCorrect(entry.points, entry.question.getMaxPoints())}, null);
             nr--;
@@ -108,6 +108,8 @@ public class MathResultView extends VerticalLayout implements View, IResultView 
         addComponent(HtmlLabel.getCenteredLabel("h3",
                 "Dein Kompetenzniveau ist: <b>" + args.skillLevel + "</b>"));
         addComponent(HtmlLabel.getCenteredLabel("Delta:  " + args.delta));
+        addComponent(HtmlLabel.getCenteredLabel("h3",
+                "<b>Vielen Dank fürs Mitmachen!\n</b>"));
         storeResults(args);
 
         //Image image = new Image("", new FileResource(new File(imageFolder + "datamod_Kompetenzmodell.png")));
