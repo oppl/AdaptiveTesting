@@ -3,9 +3,7 @@ package at.jku.ce.adaptivetesting.views.test.math;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
 import at.jku.ce.adaptivetesting.core.engine.TestVariants;
-import at.jku.ce.adaptivetesting.questions.math.MathDataStorage;
-import at.jku.ce.adaptivetesting.questions.math.MathQuestion;
-import at.jku.ce.adaptivetesting.questions.math.MathQuestionXml;
+import at.jku.ce.adaptivetesting.questions.math.*;
 import at.jku.ce.adaptivetesting.questions.math.util.MathXmlHelper;
 import at.jku.ce.adaptivetesting.views.def.DefaultView;
 import com.vaadin.server.FileResource;
@@ -24,12 +22,32 @@ import java.util.List;
 
 public class MathQuestionKeeper {
     private List<MathQuestion> mathList = new ArrayList<>();
+    private List<SimpleMathQuestion> simpleMathList = new ArrayList<>();
+    private List<MultipleChoiceMathQuestion> multiChoiceMathList = new ArrayList<>();
     private int size = 0;
 
     public List<MathQuestion> getMathList() throws Exception {
         List<MathQuestion> clone = new ArrayList<>();
         for (MathQuestion item : mathList){
             MathQuestion copy = item.cloneThroughSerialize(item);
+            clone.add(copy);
+        }
+        return clone;
+    }
+
+    public List<SimpleMathQuestion> getSimpleMathList() throws Exception {
+        List<SimpleMathQuestion> clone = new ArrayList<>();
+        for (SimpleMathQuestion item : simpleMathList){
+            SimpleMathQuestion copy = item.cloneThroughSerialize(item);
+            clone.add(copy);
+        }
+        return clone;
+    }
+
+    public List<MultipleChoiceMathQuestion> getMultiChoiceMathList() throws Exception {
+        List<MultipleChoiceMathQuestion> clone = new ArrayList<>();
+        for (MultipleChoiceMathQuestion item : multiChoiceMathList){
+            MultipleChoiceMathQuestion copy = item.cloneThroughSerialize(item);
             clone.add(copy);
         }
         return clone;
@@ -56,13 +74,27 @@ public class MathQuestionKeeper {
 
         JAXBContext mathJAXB = JAXBContext.newInstance(
                 MathQuestionXml.class, MathDataStorage.class);
+        JAXBContext simpleMathJAXB = JAXBContext.newInstance(
+                SimpleMathQuestionXml.class, SimpleMathDataStorage.class);
+        JAXBContext multiMathJAXB = JAXBContext.newInstance(
+                MultipleChoiceMathQuestionXml.class, MultipleChoiceMathDataStorage.class);
 
         Unmarshaller mathUnmarshaller = mathJAXB
                 .createUnmarshaller();
+        Unmarshaller simpleMathUnmarshaller = simpleMathJAXB
+                .createUnmarshaller();
+        Unmarshaller multiMathUnmarshaller = multiMathJAXB
+                .createUnmarshaller();
 
         mathList = new ArrayList<>();
+        simpleMathList = new ArrayList<>();
+        multiChoiceMathList = new ArrayList<>();
 
         String mathRootElement = MathQuestionXml.class.getAnnotation(
+                XmlRootElement.class).name();
+        String simpleMathRootElement = SimpleMathQuestionXml.class.getAnnotation(
+                XmlRootElement.class).name();
+        String multiMathRootElement = MultipleChoiceMathQuestionXml.class.getAnnotation(
                 XmlRootElement.class).name();
 
         File[] questions = containingFolder.listFiles(f -> f
@@ -99,6 +131,22 @@ public class MathQuestionKeeper {
                 MathQuestion mathq = MathXmlHelper.fromXml(question, f.getName());
                 if (image!=null) mathq.setQuestionImage(new Image("",new FileResource(image)));
                 mathList.add(mathq);
+                successfullyLoaded++;
+            } else if (fileAsString.contains(simpleMathRootElement)) {
+                questionInitializedInfo(f, successfullyLoaded, SimpleMathQuestion.class.getName());
+                SimpleMathQuestionXml question = (SimpleMathQuestionXml) simpleMathUnmarshaller
+                        .unmarshal(new StringReader(fileAsString));
+                SimpleMathQuestion mathq = MathXmlHelper.fromXml(question, f.getName());
+                if (image!=null) mathq.setQuestionImage(new Image("",new FileResource(image)));
+                simpleMathList.add(mathq);
+                successfullyLoaded++;
+            } else if (fileAsString.contains(multiMathRootElement)) {
+                questionInitializedInfo(f, successfullyLoaded, MultipleChoiceMathQuestion.class.getName());
+                MultipleChoiceMathQuestionXml question = (MultipleChoiceMathQuestionXml) multiMathUnmarshaller
+                        .unmarshal(new StringReader(fileAsString));
+                MultipleChoiceMathQuestion mathq = MathXmlHelper.fromXml(question, f.getName());
+                if (image!=null) mathq.setQuestionImage(new Image("",new FileResource(image)));
+                multiChoiceMathList.add(mathq);
                 successfullyLoaded++;
             }
             else {

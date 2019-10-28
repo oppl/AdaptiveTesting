@@ -1,6 +1,8 @@
 package at.jku.ce.adaptivetesting.views.test.math;
 
 import at.jku.ce.adaptivetesting.questions.math.MathQuestion;
+import at.jku.ce.adaptivetesting.questions.math.MultipleChoiceMathQuestion;
+import at.jku.ce.adaptivetesting.questions.math.SimpleMathQuestion;
 
 import java.util.List;
 
@@ -17,5 +19,13 @@ public class MathQuestionKeeperProvider {
 
     public List<MathQuestion> getMathList() throws Exception {
         return mathKeeper.getMathList();
+    }
+
+    public List<SimpleMathQuestion> getSimpleMathList() throws Exception {
+        return mathKeeper.getSimpleMathList();
+    }
+
+    public List<MultipleChoiceMathQuestion> getMultiChoiceMathList() throws Exception {
+        return mathKeeper.getMultiChoiceMathList();
     }
 }

@@ -4,6 +4,8 @@ import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.core.db.ConnectionProvider;
 import at.jku.ce.adaptivetesting.core.engine.StudentData;
 import at.jku.ce.adaptivetesting.questions.math.MathQuestion;
+import at.jku.ce.adaptivetesting.questions.math.MultipleChoiceMathQuestion;
+import at.jku.ce.adaptivetesting.questions.math.SimpleMathQuestion;
 import at.jku.ce.adaptivetesting.views.Views;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.views.test.TestView;
@@ -134,6 +136,14 @@ public class MathTestView extends TestView {
             List<MathQuestion> mathList = QuestionProvider.getMathList();
 
             mathList.forEach(q -> addQuestion(q));
+
+            List<SimpleMathQuestion> simpleMathList = QuestionProvider.getSimpleMathList();
+
+            simpleMathList.forEach(q -> addQuestion(q));
+
+            List<MultipleChoiceMathQuestion> multiMathList = QuestionProvider.getMultiChoiceMathList();
+
+            multiMathList.forEach(q -> addQuestion(q));
 
         } catch (JAXBException | IOException e1) {
             LogHelper.logThrowable(e1);
