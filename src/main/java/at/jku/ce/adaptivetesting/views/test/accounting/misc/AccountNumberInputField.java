@@ -17,12 +17,14 @@ public class AccountNumberInputField extends TextField implements
 	private final List<ValidValueChangedListener<Integer>> validValueChangedListeners = new ArrayList<>();
 	private int value = 0;
 	private String lastValue = "00";
-	private final String regex = "^[0-9]{0,4}$";
+	// private final String regex = "^[0-9]{0,4}$";
+	private final String regex = "^[0-9]{0,5}$";
 
 	public AccountNumberInputField() {
 		addTextChangeListener(this);
 		setTextChangeEventMode(TextChangeEventMode.LAZY);
-		setTextChangeTimeout(2000);
+		// setTextChangeTimeout(2000);
+		setTextChangeTimeout(500);
 	}
 
 	public void addListener(ValidValueChangedListener<Integer> listener) {
@@ -34,6 +36,11 @@ public class AccountNumberInputField extends TextField implements
 	}
 
 	public int getAccountNumber() {
+		if (Integer.toString(value).length() == 1) {
+			String temp = Integer.toString(value);
+			temp = temp + "0";
+			return Integer.parseInt(temp);
+		}
 
 		if (Integer.toString(value).length() > 2){
 
@@ -65,6 +72,9 @@ public class AccountNumberInputField extends TextField implements
 	public void textChange(TextChangeEvent event) {
 		String newInput = event.getText();
 		if (isValidNumber(newInput)) {
+			if (newInput.length() == 0){
+				newInput = "0";
+			}
 			value = Integer.parseInt(newInput);
 			lastValue = newInput;
 			fireValidValueChangedListener();
@@ -80,6 +90,7 @@ public class AccountNumberInputField extends TextField implements
 			return false;
 		}
 		// Ensure the number is valid
-		return (s.length() == 2 || s.length() == 4) && s.matches(regex);
+		// return (s.length() == 2 || s.length() == 4) && s.matches(regex);
+		return (s.length() <= 5) && s.matches(regex);
 	}
 }

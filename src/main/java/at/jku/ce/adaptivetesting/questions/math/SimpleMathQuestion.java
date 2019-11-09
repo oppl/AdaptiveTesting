@@ -40,12 +40,12 @@ public class SimpleMathQuestion extends VerticalLayout implements
         this.questionImage = questionImage;
         // Fill grid
         numberOfInputFields = solution.getAnswerElements().size();
-        inputGrid = new GridLayout(2, numberOfInputFields);
+        inputGrid = new GridLayout(1, numberOfInputFields);
 
         int i = 0;
         for (Map.Entry<String, String> entry : this.solution.getAnswerElements().entrySet()) {
-            inputGrid.addComponent(new Label(entry.getKey()), 0, i); // TODO : ? lösen
-            inputGrid.addComponent(new TextField(), 1, i);
+            // inputGrid.addComponent(new Label(entry.getKey()), 0, i); // TODO : ? lösen
+            inputGrid.addComponent(new TextField(entry.getKey()), 0, i);
             i++;
         }
         addComponent(question);
@@ -91,8 +91,9 @@ public class SimpleMathQuestion extends VerticalLayout implements
         HashMap<String,String> userAnswers = new HashMap<>();
         for (int i = 0; i < numberOfInputFields; i++){
             userAnswers.put(
-                    ((Label) inputGrid.getComponent(0, i)).getValue(),
-                    ((TextField) inputGrid.getComponent(1, i)).getValue()
+                    // ((Label) inputGrid.getComponent(0, i)).getValue(),
+                    ((TextField) inputGrid.getComponent(0, i)).getCaption(),
+                    ((TextField) inputGrid.getComponent(0, i)).getValue()
             );
         }
         dataStorage.setAnswerElements(userAnswers);

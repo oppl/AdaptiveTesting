@@ -151,9 +151,17 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
 
             if (userAnswer.contains(".")) {
                 userAnswerParts = userAnswer.split("\\.");
-                if (userAnswerParts[1].charAt(0) == '-') userAnswerParts[0] = "00";
-                if (userAnswerParts[1].length() > 2) userAnswerParts[1] = userAnswerParts[1].substring(0, 2);
-                userAnswer = userAnswerParts[0] + "," + userAnswerParts[1];
+
+                if (userAnswerParts.length != 0) {
+                    if (userAnswerParts.length == 1) {
+                        userAnswer = userAnswerParts[0];
+                    } else {
+                        if (userAnswerParts[1].charAt(0) == '-')
+                            userAnswerParts[0] = "00"; // TODO: leads to index out of bounds if answer is 4. e.g. for a answer choice see A13.xml
+                        if (userAnswerParts[1].length() > 2) userAnswerParts[1] = userAnswerParts[1].substring(0, 2);
+                        userAnswer = userAnswerParts[0] + "," + userAnswerParts[1];
+                    }
+                }
             }
             else {
                 userAnswerParts = new String[2];

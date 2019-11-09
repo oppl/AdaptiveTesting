@@ -38,7 +38,7 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
         this.questionImage = questionImage;
 
         question = new HtmlLabel();
-        setQuestionText(question, questionText);
+        setQuestionText(questionText);
         addComponent(question);
 
         if(questionType == 1) {
@@ -138,8 +138,8 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
         label.setValue(text);
     }
 
-    public void setQuestionText(Label label, String text) {
-        label.setValue("<p style=\"color:#0099ff\">" + text + "</p>");
+    public void setQuestionText(String questionText) {
+        question.setValue("<br />" + questionText + "<br />");
     }
 
     public void setDifficulty(float difficulty) {
