@@ -8,6 +8,7 @@ import com.vaadin.ui.*;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SimpleMathQuestion extends VerticalLayout implements
@@ -18,7 +19,7 @@ public class SimpleMathQuestion extends VerticalLayout implements
     private float difficulty = 0;
     private SimpleMathDataStorage solution;
     private Label question;
-    private Image questionImage = null;
+    private List<Image> questionImages;
     private GridLayout inputGrid;
     private int numberOfInputFields = 0;
 
@@ -31,13 +32,13 @@ public class SimpleMathQuestion extends VerticalLayout implements
         return id;
     }
 
-    public SimpleMathQuestion(SimpleMathDataStorage solution, float difficulty, String questionText, Image questionImage, String id) {
+    public SimpleMathQuestion(SimpleMathDataStorage solution, float difficulty, String questionText, List<Image> questionImages, String id) {
         this.difficulty = difficulty;
         this.solution = solution;
         this.id = id;
         this.question = new HtmlLabel();
         setQuestionText(questionText);
-        this.questionImage = questionImage;
+        this.questionImages = questionImages;
         // Fill grid
         numberOfInputFields = solution.getAnswerElements().size();
         inputGrid = new GridLayout(1, numberOfInputFields);
@@ -49,7 +50,11 @@ public class SimpleMathQuestion extends VerticalLayout implements
             i++;
         }
         addComponent(question);
-        if (questionImage != null) addComponent(this.questionImage);
+        if (questionImages != null) {
+            for (Image image : this.questionImages) {
+                addComponent(image);
+            }
+        }
         addComponent(inputGrid);
     }
 
@@ -145,12 +150,14 @@ public class SimpleMathQuestion extends VerticalLayout implements
         question.setValue("<br />" + questionText + "<br />");
     }
 
-    public void setQuestionImage(Image questionImage) {
-        if (questionImage == null) return;
-        this.questionImage = questionImage;
+    public void setQuestionImages(List<Image> questionImages) {
+        if (questionImages == null) return;
+        this.questionImages = questionImages;
         removeAllComponents();
         addComponent(question);
-        addComponent(this.questionImage);
+        for (Image image : this.questionImages) {
+            addComponent(image);
+        }
         addComponent(inputGrid);
     }
 

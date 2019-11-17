@@ -17,6 +17,6 @@ public class MathXmlHelper {
 
     public static MultipleChoiceMathQuestion fromXml(MultipleChoiceMathQuestionXml xml, String id) {
         return new MultipleChoiceMathQuestion(xml.getDataStorage(), xml.getDifficulty(),
-                xml.getQuestion().replace("\\n", " <br />"), null, id);
+                xml.getQuestion().replace("\\n", " <br />"), null, null, id);
     }
 }

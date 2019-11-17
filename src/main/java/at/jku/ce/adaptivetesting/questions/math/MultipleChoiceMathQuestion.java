@@ -4,14 +4,12 @@ import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Vector;
+import java.util.List;
 
 public class MultipleChoiceMathQuestion extends VerticalLayout implements
         IQuestion<MultipleChoiceMathDataStorage>, Cloneable {
@@ -21,21 +19,23 @@ public class MultipleChoiceMathQuestion extends VerticalLayout implements
     private float difficulty = 0;
     private Vector<CheckBox> answerSelector;
     private Label question;
-    private Image questionImage = null;
+    private List<Image> questionImages;
+    private List<Image> answerOptionImages;
 
     private String id;
 
     public MultipleChoiceMathQuestion(MultipleChoiceMathDataStorage solution, Float difficulty,
-                                  String questionText, Image questionImage, String id) {
+                                  String questionText, List<Image> questionImages, List<Image> answerOptionImages, String id) {
         this(solution, MultipleChoiceMathDataStorage.getEmptyDataStorage(), difficulty,
-                questionText, questionImage, id);
+                questionText, questionImages, answerOptionImages, id);
     }
 
     public MultipleChoiceMathQuestion(MultipleChoiceMathDataStorage solution,
-                                  MultipleChoiceMathDataStorage prefilled, float difficulty, String questionText, Image questionImage, String id) {
+                                  MultipleChoiceMathDataStorage prefilled, float difficulty, String questionText, List<Image> questionImages, List<Image> answerOptionImages, String id) {
         this.difficulty = difficulty;
         this.id = id;
-        this.questionImage = questionImage;
+        this.questionImages = questionImages;
+        this.answerOptionImages = answerOptionImages;
         answerSelector = new Vector<>();
 
         question = new HtmlLabel();
@@ -43,10 +43,22 @@ public class MultipleChoiceMathQuestion extends VerticalLayout implements
 
         this.solution = solution;
         addComponent(question);
-        if (questionImage != null) addComponent(this.questionImage);
+        if (this.questionImages != null) {
+            int i = 1;
+            for(Image image : this.questionImages) {
+                addComponent(image);
+                image.setCaption("<font size=\"2\">Abbildung " + i + "</font>");
+                image.setCaptionAsHtml(true);
+                i++;
+            }
+        }
 
         addComponent(new Label("Wähle die richtige(n) Option(en):"));
         HashMap<Integer,String> answerOptions = solution.getAnswerOptions();
+        GridLayout multipleChoiceAnswers = new GridLayout(2, answerOptions.size());
+        // multipleChoiceAnswers.setSizeFull();
+        // multipleChoiceAnswers.setSpacing(true);
+        int answerNumber = 0;
         for (Integer i: answerOptions.keySet()) {
             CheckBox checkBox = new CheckBox(answerOptions.get(i));
             checkBox.setData(i);
@@ -55,8 +67,15 @@ public class MultipleChoiceMathQuestion extends VerticalLayout implements
             }
             if (prefilled.getCorrectAnswers().size()!=0) checkBox.setEnabled(false);
             answerSelector.add(checkBox);
-            addComponent(checkBox);
+            multipleChoiceAnswers.addComponent(checkBox, 0, answerNumber);
+            multipleChoiceAnswers.setComponentAlignment(checkBox, Alignment.MIDDLE_LEFT);
+            if (answerOptionImages != null && answerNumber < this.answerOptionImages.size()){
+                multipleChoiceAnswers.addComponent(this.answerOptionImages.get(answerNumber), 1, answerNumber);
+                multipleChoiceAnswers.setComponentAlignment(answerOptionImages.get(answerNumber), Alignment.MIDDLE_CENTER);
+            }
+            answerNumber++;
         }
+        addComponent(multipleChoiceAnswers);
         setSpacing(true);
     }
 
@@ -164,17 +183,38 @@ public class MultipleChoiceMathQuestion extends VerticalLayout implements
         return 1d;
     }
 
-    public Image getQuestionImage() {
-        return questionImage;
+    public List<Image> getQuestionImages() {
+        return questionImages;
     }
 
-    public void setQuestionImage(Image questionImage) {
-        if (questionImage == null) return;
-        this.questionImage = questionImage;
+    public void setQuestionImages(List<Image> questionImages, List<Image> answerOptionImages) {
+        if (questionImages == null) return;
+        this.questionImages = questionImages;
+        this.answerOptionImages = answerOptionImages;
         removeAllComponents();
         addComponent(question);
-        addComponent(this.questionImage);
-        for (CheckBox checkBox: answerSelector) addComponent(checkBox);
+        int i = 1;
+        for (Image image : this.questionImages) {
+            addComponent(image);
+            image.setCaption("<font size=\"2\">Abbildung " + i + "</font>");
+            image.setCaptionAsHtml(true);
+            i++;
+        }
+
+        GridLayout multipleChoiceAnswers = new GridLayout(2, answerSelector.size());
+        // multipleChoiceAnswers.setSizeFull();
+        // multipleChoiceAnswers.setSpacing(true);
+        int answerNumber = 0;
+        for (CheckBox checkBox: answerSelector){
+            multipleChoiceAnswers.addComponent(checkBox, 0, answerNumber);
+            multipleChoiceAnswers.setComponentAlignment(checkBox, Alignment.MIDDLE_LEFT);
+            if(this.answerOptionImages != null && answerNumber < this.answerOptionImages.size()) {
+                multipleChoiceAnswers.addComponent(this.answerOptionImages.get(answerNumber), 1, answerNumber);
+                multipleChoiceAnswers.setComponentAlignment(answerOptionImages.get(answerNumber), Alignment.MIDDLE_CENTER);
+            }
+            answerNumber++;
+        }
+        addComponent(multipleChoiceAnswers);
     }
 
 }

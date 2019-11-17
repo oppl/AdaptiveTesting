@@ -18,6 +18,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MathQuestionKeeper {
@@ -123,8 +124,8 @@ public class MathQuestionKeeper {
                 }
             }
             String fileAsString = sb.toString().replaceAll("& ", "&amp; ");
-            File image = checkImageAvailable(containingFolder, f.getName());
             if (fileAsString.contains(mathRootElement)) {
+                File image = checkImageAvailable(containingFolder, f.getName());
                 questionInitializedInfo(f, successfullyLoaded, MathQuestion.class.getName());
                 MathQuestionXml question = (MathQuestionXml) mathUnmarshaller
                         .unmarshal(new StringReader(fileAsString));
@@ -133,19 +134,42 @@ public class MathQuestionKeeper {
                 mathList.add(mathq);
                 successfullyLoaded++;
             } else if (fileAsString.contains(simpleMathRootElement)) {
+                List<File> images = checkImagesAvailable(containingFolder, f.getName());
                 questionInitializedInfo(f, successfullyLoaded, SimpleMathQuestion.class.getName());
                 SimpleMathQuestionXml question = (SimpleMathQuestionXml) simpleMathUnmarshaller
                         .unmarshal(new StringReader(fileAsString));
                 SimpleMathQuestion mathq = MathXmlHelper.fromXml(question, f.getName());
-                if (image!=null) mathq.setQuestionImage(new Image("",new FileResource(image)));
+                if (images!=null){
+                    List<Image> questionImages = new LinkedList<Image>();
+                    for (File file : images){
+                        questionImages.add(new Image("",new FileResource(file)));
+                    }
+                    mathq.setQuestionImages(questionImages);
+                }
                 simpleMathList.add(mathq);
                 successfullyLoaded++;
             } else if (fileAsString.contains(multiMathRootElement)) {
+                List<File> images = checkImagesAvailable(containingFolder, f.getName());
+                List<File> answerOptionImages = checkAnswerOptionImagesAvailable(containingFolder, f.getName());
                 questionInitializedInfo(f, successfullyLoaded, MultipleChoiceMathQuestion.class.getName());
                 MultipleChoiceMathQuestionXml question = (MultipleChoiceMathQuestionXml) multiMathUnmarshaller
                         .unmarshal(new StringReader(fileAsString));
                 MultipleChoiceMathQuestion mathq = MathXmlHelper.fromXml(question, f.getName());
-                if (image!=null) mathq.setQuestionImage(new Image("",new FileResource(image)));
+                if (images!=null){
+                    List<Image> questionImages = new LinkedList<Image>();
+                    for (File file : images){
+                        questionImages.add(new Image("",new FileResource(file)));
+                    }
+                    if (answerOptionImages!=null){
+                        List<Image> answerImages = new LinkedList<Image>();
+                        for (File file : answerOptionImages){
+                            answerImages.add(new Image("",new FileResource(file)));
+                        }
+                        mathq.setQuestionImages(questionImages, answerImages);
+                    } else {
+                        mathq.setQuestionImages(questionImages, null);
+                    }
+                }
                 multiChoiceMathList.add(mathq);
                 successfullyLoaded++;
             }
@@ -190,6 +214,62 @@ public class MathQuestionKeeper {
                 return null;
             }
         }
+    }
+
+    private List<File> checkAnswerOptionImagesAvailable (File containingFolder, String fileName){
+        List<File> foundImages = new LinkedList<File>();
+        boolean foundFurtherImages = true;
+        int i = 1;
+        while (foundFurtherImages) {
+            String imageName = fileName.replace(".xml", ".png");
+            String[] parts = imageName.split("\\.");
+            parts[0] = parts[0] + "-Option" + i;
+            imageName = parts[0] + "." + parts[1];
+            File image = new File(containingFolder, imageName);
+            if (image.exists()) {
+                foundImages.add(image);
+            } else {
+                imageName = imageName.replace(".png", ".jpg");
+                image = new File(containingFolder, imageName);
+                if (image.exists()) {
+                    foundImages.add(image);
+                } else {
+                    foundFurtherImages = false;
+                }
+            }
+            i++;
+        }
+        return foundImages;
+    }
+
+    private List<File> checkImagesAvailable(File containingFolder, String fileName) {
+        List<File> foundImages = new LinkedList<File>();
+
+        File imageFile = checkImageAvailable(containingFolder,fileName);
+        if(imageFile != null) foundImages.add(imageFile);
+
+        boolean foundFurtherImages = true;
+        int i = 1;
+        while (foundFurtherImages) {
+            String imageName = fileName.replace(".xml", ".png");
+            String[] parts = imageName.split("\\.");
+            parts[0] = parts[0] + "-" + i;
+            imageName = parts[0] + "." + parts[1];
+            File image = new File(containingFolder, imageName);
+            if (image.exists()) {
+                foundImages.add(image);
+            } else {
+                imageName = imageName.replace(".png", ".jpg");
+                image = new File(containingFolder, imageName);
+                if (image.exists()) {
+                    foundImages.add(image);
+                } else {
+                    foundFurtherImages = false;
+                }
+            }
+            i++;
+        }
+        return foundImages;
     }
 
     private static void questionInitializedInfo(File file, int counter, String questionType) {
