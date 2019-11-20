@@ -14,6 +14,7 @@ import at.jku.ce.adaptivetesting.questions.accounting.*;
 import at.jku.ce.adaptivetesting.questions.accounting.util.AccountingDataProvider;
 import at.jku.ce.adaptivetesting.views.Views;
 import at.jku.ce.adaptivetesting.views.test.TestView;
+import at.jku.ce.adaptivetesting.views.test.accounting.misc.AccountingCalculator;
 import com.vaadin.server.*;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.*;
@@ -59,6 +60,7 @@ public class AccountingTestView extends TestView {
 			window.setWidth("60%");
 			window.setHeight("80%");
 			window.setResizable(false);
+			window.setDraggable(true);
 			window.addCloseListener(e1 -> openKontenplan.setEnabled(true));
 			getUI().addWindow(window);
 		});
@@ -80,6 +82,7 @@ public class AccountingTestView extends TestView {
 			window.setContent(vl);
 			window.center();
 			window.setResizable(false);
+			window.setDraggable(true);
 			getUI().addWindow(window);
 		});
 
@@ -101,15 +104,16 @@ public class AccountingTestView extends TestView {
 			window.setContent(vl);
 			window.center();
 			window.setResizable(false);
+			window.setDraggable(true);
 			getUI().addWindow(window);
 		});
 
 		//graphical Interface Taschenrechner
 		Button openCalculator = new Button("Taschenrechner");
 		openCalculator.addClickListener(e -> {
-			//AccountingCalculator AccountingCalculator = new AccountingCalculator();
-			//getUI().addWindow(AccountingCalculator.getWindow());
-			Notification.show("Zur Zeit nicht verfügbar:\nBitte eigenen Taschenrechner verwenden.");
+			AccountingCalculator AccountingCalculator = new AccountingCalculator();
+			getUI().addWindow(AccountingCalculator.getWindow());
+			// Notification.show("Zur Zeit nicht verfügbar:\nBitte eigenen Taschenrechner verwenden.");
 		});
 
 		addHelpButton(openKontenplan);
@@ -166,12 +170,28 @@ public class AccountingTestView extends TestView {
 		TextField gradeLastYearE = new TextField("Englisch");
 		TextField gradeLastYearM = new TextField("Mathematik");
 
+        GridLayout gradesLastYearGrid = new GridLayout(3,2);
+        gradesLastYearGrid.addComponent(gradeLastYearRW, 0, 0);
+        gradesLastYearGrid.addComponent(gradeLastYearBWL, 1, 0);
+        gradesLastYearGrid.addComponent(gradeLastYearD, 2, 0);
+        gradesLastYearGrid.addComponent(gradeLastYearE, 0, 1);
+        gradesLastYearGrid.addComponent(gradeLastYearM, 1, 1);
+        gradesLastYearGrid.setSpacing(true);
+
 		Label gradeLastTest = new Label("<p/>Welche Note hatten Sie auf die letzte Schularbeit aus ...", ContentMode.HTML);
 		TextField gradeLastTestRW = new TextField("Rechungswesen");
 		TextField gradeLastTestBWL = new TextField("BWL/BVW");
 		TextField gradeLastTestD = new TextField("Deutsch");
 		TextField gradeLastTestE = new TextField("Englisch");
 		TextField gradeLastTestM = new TextField("Mathematik");
+
+        GridLayout gradesLastTestGrid = new GridLayout(3,2);
+        gradesLastTestGrid.addComponent(gradeLastTestRW, 0, 0);
+        gradesLastTestGrid.addComponent(gradeLastTestBWL, 1, 0);
+        gradesLastTestGrid.addComponent(gradeLastTestD, 2, 0);
+        gradesLastTestGrid.addComponent(gradeLastTestE, 0, 1);
+        gradesLastTestGrid.addComponent(gradeLastTestM, 1, 1);
+        gradesLastTestGrid.setSpacing(true);
 
 		Label classNameLabel = new Label("<p/>Welche Klasse besuchen Sie?",ContentMode.HTML);
 		TextField className = new TextField("(z.B. 4A)");
@@ -180,6 +200,12 @@ public class AccountingTestView extends TestView {
 		TextField studentCodeC1 = new TextField("Tag und Monat der Geburt (DDMM), z.B. \"1008\" für Geburtstag am 10. August");
 		TextField studentCodeC2 = new TextField("Zwei Anfangsbuchstaben des Vornamens, z.B. \"St\" für \"Stefan\"");
 		TextField studentCodeC3 = new TextField("Zwei Anfangsbuchstaben des Vornamens der Mutter,, z.B. \"Jo\" für \"Johanna\"");
+
+        GridLayout studentCodes = new GridLayout(2,2);
+        studentCodes.addComponent(studentCodeC1, 0, 0);
+        studentCodes.addComponent(studentCodeC2, 1, 0);
+        studentCodes.addComponent(studentCodeC3, 0, 1);
+        studentCodes.setSpacing(true);
 
 		Label thankYou = new Label("<p/>Danke für die Angaben.<p/>", ContentMode.HTML);
 		Button cont = new Button("Weiter", e -> {
@@ -213,26 +239,29 @@ public class AccountingTestView extends TestView {
 		layout.addComponent(gender);
 
 		layout.addComponent(gradeLastYear);
-		layout.addComponent(gradeLastYearRW);
+        layout.addComponent(gradesLastYearGrid);
+		/*layout.addComponent(gradeLastYearRW);
 		layout.addComponent(gradeLastYearBWL);
 		layout.addComponent(gradeLastYearD);
 		layout.addComponent(gradeLastYearE);
-		layout.addComponent(gradeLastYearM);
+		layout.addComponent(gradeLastYearM);*/
 
 		layout.addComponent(gradeLastTest);
-		layout.addComponent(gradeLastTestRW);
+		layout.addComponent(gradesLastTestGrid);
+		/*layout.addComponent(gradeLastTestRW);
 		layout.addComponent(gradeLastTestBWL);
 		layout.addComponent(gradeLastTestD);
 		layout.addComponent(gradeLastTestE);
-		layout.addComponent(gradeLastTestM);
+		layout.addComponent(gradeLastTestM);*/
 
 		layout.addComponent(classNameLabel);
 		layout.addComponent(className);
 
 		layout.addComponent(studentCode);
-		layout.addComponent(studentCodeC1);
+		layout.addComponent(studentCodes);
+		/*layout.addComponent(studentCodeC1);
 		layout.addComponent(studentCodeC2);
-		layout.addComponent(studentCodeC3);
+		layout.addComponent(studentCodeC3);*/
 
 		layout.addComponent(thankYou);
 		layout.addComponent(cont);
