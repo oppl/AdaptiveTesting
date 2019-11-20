@@ -45,6 +45,10 @@ public class MultipleChoiceQuestion extends VerticalLayout implements
         addComponent(question);
         if (questionImage != null) addComponent(this.questionImage);
 
+        Label l = new Label("    ");
+        l.setVisible(true);
+        addComponent(l);
+
         addComponent(new Label("Wähle die richtige(n) Option(en):"));
         HashMap<Integer,String> answerOptions = solution.getAnswerOptions();
         for (Integer i: answerOptions.keySet()) {

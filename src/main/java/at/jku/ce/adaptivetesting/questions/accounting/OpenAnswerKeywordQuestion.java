@@ -64,6 +64,11 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
         this.solution = solution;
         addComponent(question);
         if (questionImage != null) addComponent(this.questionImage);
+
+        Label l = new Label("    ");
+        l.setVisible(true);
+        addComponent(l);
+
         addComponent(answer);
         setSpacing(true);
     }
