@@ -14,7 +14,7 @@ import at.jku.ce.adaptivetesting.questions.accounting.*;
 import at.jku.ce.adaptivetesting.questions.accounting.util.AccountingDataProvider;
 import at.jku.ce.adaptivetesting.views.Views;
 import at.jku.ce.adaptivetesting.views.test.TestView;
-import at.jku.ce.adaptivetesting.views.test.accounting.misc.AccountingCalculator;
+import at.jku.ce.adaptivetesting.views.test.accounting.misc.*;
 import com.vaadin.server.*;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.*;
@@ -45,81 +45,33 @@ public class AccountingTestView extends TestView {
 		});
 		addHelpButton(cancel);
 
-		//graphical Interface Kontenplan
-		Button openKontenplan = new Button("Kontenplan");
-		openKontenplan.addClickListener(e -> {
-			openKontenplan.setEnabled(false);
-			// Create Window with layout
-			Window window = new Window("Kontenplan");
-			GridLayout layout = new GridLayout(1, 1);
-			layout.addComponent(AccountingDataProvider.getInstance()
-					.toHtmlTable());
-			layout.setSizeFull();
-			window.setContent(layout);
-			window.center();
-			window.setWidth("60%");
-			window.setHeight("80%");
-			window.setResizable(false);
-			window.setDraggable(true);
-			window.addCloseListener(e1 -> openKontenplan.setEnabled(true));
-			getUI().addWindow(window);
-		});
+		BrowserWindowOpener kontenplanWindowOpener = new BrowserWindowOpener(AccountingKontenplan.class);
+		kontenplanWindowOpener.setFeatures("height=600,width=600,resizable");
+		kontenplanWindowOpener.setWindowName("_blank");
+		Button kontenplanWindowButton = new Button("Kontenplan");
+		kontenplanWindowOpener.extend(kontenplanWindowButton);
+		addHelpButton(kontenplanWindowButton);
 
-		//graphical Interface Unternehmensbeschreibung
-		Button openCompanyDescription = new Button("Unternehmensbeschreibung");
-		openCompanyDescription.addClickListener(e -> {
-			Window window = new Window("Unternehmensbeschreibung");
-			window.setWidth("80%");
-			window.setHeight("80%");
-			VerticalLayout vl = assembleCompanyDescription();
-			/*Button close = new Button("Schließen");
-			close.addClickListener( e1 -> {
-				window.close();
-			});*/
-			vl.setMargin(true);
-			vl.setSpacing(true);
-			//vl.addComponent(close);
-			window.setContent(vl);
-			window.center();
-			window.setResizable(false);
-			window.setDraggable(true);
-			getUI().addWindow(window);
-		});
+        BrowserWindowOpener companyDescriptionWindowOpener = new BrowserWindowOpener(AccountingCompanyDescription.class);
+        companyDescriptionWindowOpener.setFeatures("height=600,width=925,resizable");
+        companyDescriptionWindowOpener.setWindowName("_blank");
+        Button companyDescriptionWindowButton = new Button("Unternehmensbeschreibung");
+        companyDescriptionWindowOpener.extend(companyDescriptionWindowButton);
+        addHelpButton(companyDescriptionWindowButton);
 
-		//graphical Interface Personalverrechnungstabelle
-		Button openPersBilling = new Button("Personalverrechnungstabelle");
-		openPersBilling.addClickListener(e -> {
-			Window window = new Window("Personalverrechnungstabelle");
-			window.setWidth("80%");
-			window.setHeight("80%");
-			VerticalLayout vl = assemblePersBilling();
+        BrowserWindowOpener persBillingWindowOpener = new BrowserWindowOpener(AccountingPersBilling.class);
+        persBillingWindowOpener.setFeatures("height=600,width=600,resizable");
+        persBillingWindowOpener.setWindowName("_blank");
+        Button persBillingWindowButton = new Button("Personalverrechnungstabelle");
+        persBillingWindowOpener.extend(persBillingWindowButton);
+        addHelpButton(persBillingWindowButton);
 
-			/*Button close = new Button("Schließen");
-			close.addClickListener( e1 -> {
-				window.close();
-			});*/
-			vl.setMargin(true);
-			vl.setSpacing(true);
-			//vl.addComponent(close);
-			window.setContent(vl);
-			window.center();
-			window.setResizable(false);
-			window.setDraggable(true);
-			getUI().addWindow(window);
-		});
-
-		//graphical Interface Taschenrechner
-		Button openCalculator = new Button("Taschenrechner");
-		openCalculator.addClickListener(e -> {
-			AccountingCalculator AccountingCalculator = new AccountingCalculator();
-			getUI().addWindow(AccountingCalculator.getWindow());
-			// Notification.show("Zur Zeit nicht verfügbar:\nBitte eigenen Taschenrechner verwenden.");
-		});
-
-		addHelpButton(openKontenplan);
-		addHelpButton(openCompanyDescription);
-		addHelpButton(openPersBilling);
-		addHelpButton(openCalculator);
+        BrowserWindowOpener calculatorWindowOpener = new BrowserWindowOpener(AccountingCalculatorWindow.class);
+        calculatorWindowOpener.setFeatures("height=300,width=300,resizable");
+        calculatorWindowOpener.setWindowName("_blank");
+        Button calculatorWindowButton = new Button("Taschenrechner");
+        calculatorWindowOpener.extend(calculatorWindowButton);
+        addHelpButton(calculatorWindowButton);
 	}
 
 	//just a layout used for the Personalverrechnungstabelle.jpg

@@ -53,6 +53,10 @@ public class MultipleChoiceMathQuestion extends VerticalLayout implements
             }
         }
 
+        Label l = new Label("    ");
+        l.setVisible(true);
+        addComponent(l);
+
         addComponent(new Label("Wähle die richtige(n) Option(en):"));
         HashMap<Integer,String> answerOptions = solution.getAnswerOptions();
         GridLayout multipleChoiceAnswers = new GridLayout(2, answerOptions.size());
@@ -61,6 +65,7 @@ public class MultipleChoiceMathQuestion extends VerticalLayout implements
         int answerNumber = 0;
         for (Integer i: answerOptions.keySet()) {
             CheckBox checkBox = new CheckBox(answerOptions.get(i));
+            checkBox.setCaptionAsHtml(true);
             checkBox.setData(i);
             if (prefilled.getCorrectAnswers().contains(i)) {
                 checkBox.setValue(true);
@@ -200,6 +205,10 @@ public class MultipleChoiceMathQuestion extends VerticalLayout implements
             image.setCaptionAsHtml(true);
             i++;
         }
+
+        Label l = new Label("    ");
+        l.setVisible(true);
+        addComponent(l);
 
         GridLayout multipleChoiceAnswers = new GridLayout(2, answerSelector.size());
         // multipleChoiceAnswers.setSizeFull();

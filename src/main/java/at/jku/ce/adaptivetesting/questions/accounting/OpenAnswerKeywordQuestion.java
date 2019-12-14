@@ -10,6 +10,8 @@ import org.apache.commons.lang.StringUtils;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by oppl on 07/02/2017.
@@ -142,89 +144,133 @@ public class OpenAnswerKeywordQuestion extends VerticalLayout implements
             LogHelper.logInfo("No answer: The text input was empty");
             return 0.0d;
         }
-        boolean numberanswer = false;
-        String[] userAnswerParts;
-        try {
-            // convert TextNumbers into Double values
-            userAnswer = TextNumberToDouble (userAnswer);
-            // check if useranswer is a number
-            if(userAnswer.contains(",")) userAnswer = userAnswer.replaceAll(",", ".");
-            Double.valueOf(userAnswer);
+        boolean numberanswerfound = false;
 
-            if (userAnswer.charAt(0) != '+' && userAnswer.charAt(0) != '-')
-                userAnswer = "+" + userAnswer;
+        // Remove all white space
+        userAnswer = userAnswer.replaceAll("\\s","");
 
-            if (userAnswer.contains(".")) {
-                userAnswerParts = userAnswer.split("\\.");
+        // convert TextNumbers into Double values
+        userAnswer = TextNumberToDouble (userAnswer);
 
-                if (userAnswerParts.length != 0) {
-                    if (userAnswerParts.length == 1) {
-                        userAnswer = userAnswerParts[0];
+        String regexNumber_DotSep = "([0-9]{1,3}(((,[0-9]{3}){0,})|[0-9]{0,}))?(\\.[0-9]{1,2}){1}",
+                    regexNumber_ColonSep = 			  "([0-9]{1,3}(((\\.[0-9]{3}){0,})|[0-9]{0,}))?(,[0-9]{1,2}){1}";
+
+        Pattern regexNumber_DotSep_pattern = Pattern.compile(regexNumber_DotSep);
+        Matcher regexNumber_DotSep_matcher = regexNumber_DotSep_pattern.matcher(userAnswer);
+        if(regexNumber_DotSep_matcher.find()){
+            String old_number_part = regexNumber_DotSep_matcher.group(0);
+            String new_number_part = regexNumber_DotSep_matcher.group(0);
+            boolean digitsFollowing = false;
+            if (userAnswer.indexOf(old_number_part) + old_number_part.length() < userAnswer.length()) {
+                if (Character.isDigit(userAnswer.charAt(userAnswer.indexOf(old_number_part) + old_number_part.length()))) {
+                    digitsFollowing = true;
+                }
+            }
+            if(!digitsFollowing) {
+                int number_index = userAnswer.indexOf(old_number_part);
+                if (number_index > 0) {
+                    if (userAnswer.charAt(number_index - 1) != '+' && userAnswer.charAt(number_index - 1) != '-') {
+                        new_number_part = "+" + old_number_part;
                     } else {
-                        if (userAnswerParts[1].charAt(0) == '-')
-                            userAnswerParts[0] = "00"; // TODO: leads to index out of bounds if answer is 4. e.g. for a answer choice see A13.xml
-                        if (userAnswerParts[1].length() > 2) userAnswerParts[1] = userAnswerParts[1].substring(0, 2);
-                        userAnswer = userAnswerParts[0] + "," + userAnswerParts[1];
+                        old_number_part = userAnswer.charAt(number_index - 1) + old_number_part;
+                        new_number_part = old_number_part;
                     }
+                } else {
+                    new_number_part = "+" + old_number_part;
                 }
-            }
-            else {
-                userAnswerParts = new String[2];
-                userAnswer = userAnswer + ",00";
-            }
-            numberanswer = true;
-        } catch (NumberFormatException e) {
-            //LogHelper.logInfo("The input was not a number");
-            if(userAnswer.contains(" "))
-                userAnswer = userAnswer.replaceAll(" ", ",");
-            if(userAnswer.contains(";"))
-                userAnswer = userAnswer.replaceAll(";", ",");
-            if(userAnswer.contains("."))
-                userAnswer = userAnswer.replaceAll(".", ",");
-
-            userAnswerParts = userAnswer.split(",");
-            for (int i = 0; i < userAnswerParts.length; i++) {
-                try {
-                    userAnswerParts[i] = userAnswerParts[i].toLowerCase();
-                    userAnswerParts[i] = userAnswerParts[i].substring(0, 1).toUpperCase() +
-                            userAnswerParts[i].substring(1, userAnswerParts[i].length());
-                } catch (Exception ex) {
-                    userAnswerParts[i] = "_empty";
-                }
+                new_number_part = new_number_part.replace(",", "").replace('.', ',');
+                userAnswer = userAnswer.replace(old_number_part, new_number_part);
+                numberanswerfound = true;
             }
         }
 
-        for (String[] requriedKeyword: solution.getAnswers()) {
+        Pattern regexNumber_ColonSep_pattern = Pattern.compile(regexNumber_ColonSep);
+        Matcher regexNumber_ColonSep_matcher = regexNumber_ColonSep_pattern.matcher(userAnswer);
+        if(regexNumber_ColonSep_matcher.find() && !numberanswerfound){
+            String old_number_part = regexNumber_ColonSep_matcher.group(0);
+            String new_number_part = regexNumber_ColonSep_matcher.group(0);
+            boolean digitsFollowing = false;
+            if (userAnswer.indexOf(old_number_part) + old_number_part.length() < userAnswer.length()) {
+                if (Character.isDigit(userAnswer.charAt(userAnswer.lastIndexOf(old_number_part) + old_number_part.length()))) {
+                    digitsFollowing = true;
+                }
+            }
+            if(!digitsFollowing) {
+                int number_index = userAnswer.indexOf(old_number_part);
+                if (number_index > 0) {
+                    if (userAnswer.charAt(number_index - 1) != '+' && userAnswer.charAt(number_index - 1) != '-') {
+                        new_number_part = "+" + old_number_part;
+                    } else {
+                        old_number_part = userAnswer.charAt(number_index - 1) + old_number_part;
+                        new_number_part = old_number_part;
+                    }
+                } else {
+                    new_number_part = "+" + old_number_part;
+                }
+                new_number_part = new_number_part.replace(".", "");
+                userAnswer = userAnswer.replace(old_number_part, new_number_part);
+                numberanswerfound = true;
+            }
+        }
 
+        String regexNumber_DotSep_nondecimal = "([0-9]{1,3}(((,[0-9]{3}){0,})|[0-9]{0,}))",
+                regexNumber_ColonSep_nondecimal = 			  "([0-9]{1,3}(((\\.[0-9]{3}){0,})|[0-9]{0,}))";
+
+        Pattern regexNumber_DotSep_pattern_nondecimal = Pattern.compile(regexNumber_DotSep_nondecimal);
+        Matcher regexNumber_DotSep_matcher_nondecimal = regexNumber_DotSep_pattern_nondecimal.matcher(userAnswer);
+        if(regexNumber_DotSep_matcher_nondecimal.find() && !numberanswerfound && !userAnswer.contains(".")){
+            String old_number_part = regexNumber_DotSep_matcher_nondecimal.group(0);
+            String new_number_part = regexNumber_DotSep_matcher_nondecimal.group(0);
+            int number_index = userAnswer.indexOf(old_number_part);
+            if(number_index > 0){
+                if (userAnswer.charAt(number_index-1) != '+' && userAnswer.charAt(number_index-1) != '-') {
+                    new_number_part = "+" + old_number_part;
+                } else {
+                    old_number_part = userAnswer.charAt(number_index-1) + old_number_part;
+                    new_number_part = old_number_part;
+                }
+            } else {
+                new_number_part = "+" + old_number_part;
+            }
+            new_number_part = new_number_part.replace(",", "");
+            new_number_part = new_number_part + ",00";
+            userAnswer = userAnswer.replace(old_number_part, new_number_part);
+            numberanswerfound = true;
+        }
+        Pattern regexNumber_ColonSep_pattern_nondecimal = Pattern.compile(regexNumber_ColonSep_nondecimal);
+        Matcher regexNumber_ColonSep_matcher_nondecimal = regexNumber_ColonSep_pattern_nondecimal.matcher(userAnswer);
+        if(regexNumber_ColonSep_matcher_nondecimal.find() && !numberanswerfound && !userAnswer.contains(",")){
+            String old_number_part = regexNumber_ColonSep_matcher_nondecimal.group(0);
+            String new_number_part = regexNumber_ColonSep_matcher_nondecimal.group(0);
+            int number_index = userAnswer.indexOf(old_number_part);
+            if(number_index > 0){
+                if (userAnswer.charAt(number_index-1) != '+' && userAnswer.charAt(number_index-1) != '-') {
+                    new_number_part = "+" + old_number_part;
+                } else {
+                    old_number_part = userAnswer.charAt(number_index-1) + old_number_part;
+                    new_number_part = old_number_part;
+                }
+            } else {
+                new_number_part = "+" + old_number_part;
+            }
+            new_number_part = new_number_part.replace(".", "");
+            new_number_part = new_number_part + ",00";
+            userAnswer = userAnswer.replace(old_number_part, new_number_part);
+            numberanswerfound = true;
+        }
+        for (String[] requriedKeyword: solution.getAnswers()) {
             int nrOfKeywords = 0;
             for (int i = 0; i < requriedKeyword.length; i++) {
                 if (!requriedKeyword[i].equals("")) nrOfKeywords++;
             }
-            boolean[]variantFoundParts = new boolean[nrOfKeywords];
 
             boolean variantFound = false;
-            if (numberanswer) {
-                for (int k = 0; k < nrOfKeywords; k++) {
-                    // check if the userAnswer contains the variant
-                    if (StringUtils.equalsIgnoreCase(userAnswer, requriedKeyword[k]))
-                        variantFound = true;
-                }
-            } else {
-                int x = 0;
-                for (int i = 0; i < userAnswerParts.length; i++) {
-                    for (int j = 0; j < nrOfKeywords; j++) {
-                        if (StringUtils.equalsIgnoreCase(userAnswerParts[i],
-                                requriedKeyword[j].replaceAll(" ", ""))) {
-                            variantFoundParts[x] = true;
-                            x++;
-                            break;
-                        }
-                    }
-                }
-                for (int i = 0; i < variantFoundParts.length; i++) {
-                    variantFound = true && variantFoundParts[i];
-                }
+            for (int k = 0; k < nrOfKeywords; k++) {
+                // check if the userAnswer contains the variant
+                if (userAnswer.toLowerCase().contains(requriedKeyword[k].toLowerCase().replaceAll(" ", "")))
+                    variantFound = true;
             }
+
             if (!variantFound) {
                 LogHelper.logInfo("Incorrect answer");
                 return 0.0d;

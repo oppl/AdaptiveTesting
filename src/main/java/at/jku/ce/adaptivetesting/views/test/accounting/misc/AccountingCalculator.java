@@ -5,12 +5,13 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Created by Peter
  *
  */
-public class AccountingCalculator implements ClickListener {
+public class AccountingCalculator extends VerticalLayout implements ClickListener {
 
     private BigDecimal current = new BigDecimal(0.0);
     private BigDecimal stored = new BigDecimal(0.0);
@@ -23,23 +24,23 @@ public class AccountingCalculator implements ClickListener {
     private Window window;
 
     public AccountingCalculator() {
-        window = new Window("Taschenrechner");
+        /*window = new Window("Taschenrechner");
         window.setWidth("170px");
         window.setHeight("300px");
         window.center();
-        window.setResizable(true);
-        VerticalLayout v1 = new VerticalLayout();
-        v1.setSizeFull();
+        window.setResizable(true);*/
+        // VerticalLayout v1 = new VerticalLayout();
+        setSizeFull();
         GridLayout gl = new GridLayout(5, 5);
-        window.setContent(v1);
-        v1.addComponent(typedLabel);
+        // window.setContent(v1);
+        addComponent(typedLabel);
         typedLabel.setWidth("100%");
         typedLabel.setHeight("100%");
         typedLabel.setEnabled(false);
         typedLabel.setWordwrap(false);
-        v1.addComponent(gl);
-        v1.setComponentAlignment(gl, Alignment.BOTTOM_CENTER);
-        v1.setExpandRatio(typedLabel, 1);
+        addComponent(gl);
+        setComponentAlignment(gl, Alignment.BOTTOM_CENTER);
+        setExpandRatio(typedLabel, 1);
         gl.addComponent(display, 0, 0, 4, 0);
         String[] operations = new String[] {
                 "7", "8", "9", "/", "%",
@@ -119,7 +120,7 @@ public class AccountingCalculator implements ClickListener {
                 stored = stored.subtract(current);
                 break;
             case '/':
-                stored = stored.divide(current);
+                stored = stored.divide(current, 10, RoundingMode.HALF_UP);
                 break;
             case '*':
                 stored = stored.multiply(current);

@@ -46,7 +46,9 @@ public class SimpleMathQuestion extends VerticalLayout implements
         int i = 0;
         for (Map.Entry<String, String> entry : this.solution.getAnswerElements().entrySet()) {
             // inputGrid.addComponent(new Label(entry.getKey()), 0, i); // TODO : ? lösen
-            inputGrid.addComponent(new TextField(entry.getKey()), 0, i);
+            TextField f = new TextField(entry.getKey());
+            f.setCaptionAsHtml(true);
+            inputGrid.addComponent(f , 0, i);
             i++;
         }
         addComponent(question);
@@ -55,6 +57,11 @@ public class SimpleMathQuestion extends VerticalLayout implements
                 addComponent(image);
             }
         }
+
+        Label l = new Label("    ");
+        l.setVisible(true);
+        addComponent(l);
+
         addComponent(inputGrid);
     }
 
@@ -112,11 +119,24 @@ public class SimpleMathQuestion extends VerticalLayout implements
 
         double points = 0.0d;
 
+        for (Map.Entry<String, String> userAnswerElement : user.getAnswerElements().entrySet()) {
+            userAnswerElement.setValue(userAnswerElement.getValue().replaceAll("\\s",""));
+            userAnswerElement.setValue(userAnswerElement.getValue().replace('.','.'));
+        }
+
         for (Map.Entry<String, String> entry : solution.getAnswerElements().entrySet()) {
-            if(user.getAnswerElements().get(entry.getKey()).equals(entry.getValue())){
+            if (entry.getValue().contains(";")){
+                String[] answerParts = entry.getValue().split(";");
+                for (String answerPart : answerParts){
+                    if(user.getAnswerElements().get(entry.getKey()).toLowerCase().contains(answerPart.toLowerCase())){
+                        points = points + (1.0d / numberOfInputFields) / answerPart.length();
+                    }
+                }
+            } else if(user.getAnswerElements().get(entry.getKey()).toLowerCase().contains(entry.getValue().toLowerCase())){
                 points = points + (1.0d / numberOfInputFields);
             }
         }
+        LogHelper.logInfo("You achieved " + points + " points!");
         return points;
     }
 
@@ -158,6 +178,11 @@ public class SimpleMathQuestion extends VerticalLayout implements
         for (Image image : this.questionImages) {
             addComponent(image);
         }
+
+        Label l = new Label("    ");
+        l.setVisible(true);
+        addComponent(l);
+
         addComponent(inputGrid);
     }
 
