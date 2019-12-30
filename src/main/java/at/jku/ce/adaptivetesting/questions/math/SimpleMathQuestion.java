@@ -3,11 +3,13 @@ package at.jku.ce.adaptivetesting.questions.math;
 import at.jku.ce.adaptivetesting.core.IQuestion;
 import at.jku.ce.adaptivetesting.core.LogHelper;
 import at.jku.ce.adaptivetesting.questions.XmlQuestionData;
+import at.jku.ce.adaptivetesting.questions.accounting.util.ProfitPossibleAnswers;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import com.vaadin.ui.*;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +24,7 @@ public class SimpleMathQuestion extends VerticalLayout implements
     private List<Image> questionImages;
     private GridLayout inputGrid;
     private int numberOfInputFields = 0;
+    private ComboBox answerSelector;
 
     public SimpleMathQuestion() {
         this(SimpleMathDataStorage.getEmptyDataStorage(), 0f, "", null, "");
@@ -41,14 +44,31 @@ public class SimpleMathQuestion extends VerticalLayout implements
         this.questionImages = questionImages;
         // Fill grid
         numberOfInputFields = solution.getAnswerElements().size();
-        inputGrid = new GridLayout(1, numberOfInputFields);
+        inputGrid = new GridLayout(3, numberOfInputFields);
 
         int i = 0;
         for (Map.Entry<String, String> entry : this.solution.getAnswerElements().entrySet()) {
-            // inputGrid.addComponent(new Label(entry.getKey()), 0, i); // TODO : ? lösen
-            TextField f = new TextField(entry.getKey());
-            f.setCaptionAsHtml(true);
-            inputGrid.addComponent(f , 0, i);
+            if (solution.getQuestionType().equals("SelectionQuestion")){
+                inputGrid.addComponent(new Label(entry.getKey()), 0, i);
+                answerSelector = new ComboBox();
+                answerSelector.setCaptionAsHtml(true);
+                answerSelector.addItem("=");
+                answerSelector.addItem("<");
+                answerSelector.addItem(">");
+                answerSelector.addItem("<=" );
+                answerSelector.addItem(">=");
+                answerSelector.setInputPrompt("Wählen Sie aus");
+                answerSelector.setNullSelectionAllowed(false);
+                answerSelector.setTextInputAllowed(false);
+                answerSelector.setValue("=");
+                inputGrid.addComponent(answerSelector , 1, i);
+                inputGrid.addComponent(new TextField() , 2, i);
+            } else {
+                // inputGrid.addComponent(new Label(entry.getKey()), 0, i); // TODO : ? lösen
+                TextField f = new TextField(entry.getKey());
+                f.setCaptionAsHtml(true);
+                inputGrid.addComponent(f, 0, i);
+            }
             i++;
         }
         addComponent(question);
@@ -114,26 +134,57 @@ public class SimpleMathQuestion extends VerticalLayout implements
 
     @Override
     public double checkUserAnswer() {
-        LogHelper.logInfo("Questionfile: " + id);
-        SimpleMathDataStorage user = getUserAnswer(), solution = getSolution();
-
         double points = 0.0d;
+        LogHelper.logInfo("Questionfile: " + id);
+        SimpleMathDataStorage solution = getSolution();
 
-        for (Map.Entry<String, String> userAnswerElement : user.getAnswerElements().entrySet()) {
-            userAnswerElement.setValue(userAnswerElement.getValue().replaceAll("\\s",""));
-            userAnswerElement.setValue(userAnswerElement.getValue().replace('.','.'));
-        }
-
-        for (Map.Entry<String, String> entry : solution.getAnswerElements().entrySet()) {
-            if (entry.getValue().contains(";")){
-                String[] answerParts = entry.getValue().split(";");
-                for (String answerPart : answerParts){
-                    if(user.getAnswerElements().get(entry.getKey()).toLowerCase().contains(answerPart.toLowerCase())){
-                        points = points + (1.0d / numberOfInputFields) / answerPart.length();
-                    }
+        if (solution.getQuestionType().equals("SelectionQuestion")){
+            for (int i = 0; i < numberOfInputFields; i++) {
+                String entryText = ((Label) inputGrid.getComponent(0, i)).getValue();
+                String selectedValue = (String) ((ComboBox) inputGrid.getComponent(1, i)).getValue();
+                String enteredValue = ((TextField) inputGrid.getComponent(2, i)).getValue();
+                if (selectedValue.equals(solution.getCorrectSelection().get(i)) && enteredValue.toLowerCase().contains(solution.getAnswerElements().get(entryText).toLowerCase())) {
+                    points = points + 1.0d / numberOfInputFields;
                 }
-            } else if(user.getAnswerElements().get(entry.getKey()).toLowerCase().contains(entry.getValue().toLowerCase())){
-                points = points + (1.0d / numberOfInputFields);
+            }
+        } else {
+            SimpleMathDataStorage user = getUserAnswer();
+            for (Map.Entry<String, String> userAnswerElement : user.getAnswerElements().entrySet()) {
+                userAnswerElement.setValue(userAnswerElement.getValue().replaceAll("\\s", ""));
+                userAnswerElement.setValue(userAnswerElement.getValue().replace('.', ','));
+            }
+
+            for (Map.Entry<String, String> entry : solution.getAnswerElements().entrySet()) {
+                if (entry.getValue().startsWith("[")
+                        && entry.getValue().endsWith("]")
+                        && entry.getValue().contains(";")) {
+                    String values = entry.getValue().substring(1, entry.getValue().length() - 1);
+                    values = values.replace(',', '.');
+                    String[] v = values.split(";");
+                    double floor = Double.parseDouble(v[0]);
+                    double ceiling = Double.parseDouble(v[1]);
+                    String userAnswer = user.getAnswerElements().get(entry.getKey());
+                    if (userAnswer != null && userAnswer.length() != 0) {
+                        userAnswer = userAnswer.replace(',', '.');
+                        try {
+                            double userAnswerNumber = Double.parseDouble(userAnswer);
+                            if (userAnswerNumber >= floor && userAnswerNumber <= ceiling) {
+                                points = points + (1.0d / numberOfInputFields);
+                            }
+                        } catch (NumberFormatException e) {
+                            LogHelper.logInfo("Entered answer was not a number!");
+                        }
+                    }
+                } else if (entry.getValue().contains(";")) {
+                    String[] answerParts = entry.getValue().split(";");
+                    for (String answerPart : answerParts) {
+                        if (user.getAnswerElements().get(entry.getKey()).toLowerCase().contains(answerPart.toLowerCase())) {
+                            points = points + (1.0d / numberOfInputFields) / answerPart.length();
+                        }
+                    }
+                } else if (user.getAnswerElements().get(entry.getKey()).toLowerCase().contains(entry.getValue().toLowerCase())) {
+                    points = points + (1.0d / numberOfInputFields);
+                }
             }
         }
         LogHelper.logInfo("You achieved " + points + " points!");

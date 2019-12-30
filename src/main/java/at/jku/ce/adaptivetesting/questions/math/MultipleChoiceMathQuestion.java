@@ -59,11 +59,25 @@ public class MultipleChoiceMathQuestion extends VerticalLayout implements
 
         addComponent(new Label("Wähle die richtige(n) Option(en):"));
         HashMap<Integer,String> answerOptions = solution.getAnswerOptions();
-        GridLayout multipleChoiceAnswers = new GridLayout(2, answerOptions.size());
+        GridLayout multipleChoiceAnswers;
+        if(solution.getQuestionType().equals("FillIn") && answerOptions.size() == 6){
+            multipleChoiceAnswers = new GridLayout(2, answerOptions.size() + 2);
+        } else {
+            multipleChoiceAnswers = new GridLayout(2, answerOptions.size());
+        }
         // multipleChoiceAnswers.setSizeFull();
         // multipleChoiceAnswers.setSpacing(true);
         int answerNumber = 0;
+        int position = 0;
+        if(solution.getQuestionType().equals("FillIn") && answerOptions.size() == 6){
+            multipleChoiceAnswers.addComponent(new Label ("Lücke 1:"), 0, position);
+            position++;
+        }
         for (Integer i: answerOptions.keySet()) {
+            if(solution.getQuestionType().equals("FillIn") && answerOptions.size() == 6 && position == 4){
+                multipleChoiceAnswers.addComponent(new Label ("Lücke 2:"), 0, position);
+                position++;
+            }
             CheckBox checkBox = new CheckBox(answerOptions.get(i));
             checkBox.setCaptionAsHtml(true);
             checkBox.setData(i);
@@ -72,12 +86,13 @@ public class MultipleChoiceMathQuestion extends VerticalLayout implements
             }
             if (prefilled.getCorrectAnswers().size()!=0) checkBox.setEnabled(false);
             answerSelector.add(checkBox);
-            multipleChoiceAnswers.addComponent(checkBox, 0, answerNumber);
+            multipleChoiceAnswers.addComponent(checkBox, 0, position);
             multipleChoiceAnswers.setComponentAlignment(checkBox, Alignment.MIDDLE_LEFT);
             if (answerOptionImages != null && answerNumber < this.answerOptionImages.size()){
-                multipleChoiceAnswers.addComponent(this.answerOptionImages.get(answerNumber), 1, answerNumber);
-                multipleChoiceAnswers.setComponentAlignment(answerOptionImages.get(answerNumber), Alignment.MIDDLE_CENTER);
+                multipleChoiceAnswers.addComponent(this.answerOptionImages.get(answerNumber), 1, position);
+                multipleChoiceAnswers.setComponentAlignment(this.answerOptionImages.get(answerNumber), Alignment.MIDDLE_CENTER);
             }
+            position++;
             answerNumber++;
         }
         addComponent(multipleChoiceAnswers);
@@ -210,17 +225,32 @@ public class MultipleChoiceMathQuestion extends VerticalLayout implements
         l.setVisible(true);
         addComponent(l);
 
-        GridLayout multipleChoiceAnswers = new GridLayout(2, answerSelector.size());
+        GridLayout multipleChoiceAnswers;
+        if(solution.getQuestionType().equals("FillIn") && getUserAnswer().getAnswerOptions().size() == 6){
+            multipleChoiceAnswers = new GridLayout(2, getUserAnswer().getAnswerOptions().size() + 2);
+        } else {
+            multipleChoiceAnswers = new GridLayout(2, getUserAnswer().getAnswerOptions().size());
+        }
         // multipleChoiceAnswers.setSizeFull();
         // multipleChoiceAnswers.setSpacing(true);
         int answerNumber = 0;
+        int position = 0;
+        if(solution.getQuestionType().equals("FillIn") && getUserAnswer().getAnswerOptions().size() == 6){
+            multipleChoiceAnswers.addComponent(new Label ("Lücke 1:"), 0, position);
+            position++;
+        }
         for (CheckBox checkBox: answerSelector){
-            multipleChoiceAnswers.addComponent(checkBox, 0, answerNumber);
+            if(solution.getQuestionType().equals("FillIn") && getUserAnswer().getAnswerOptions().size() == 6 && position == 4){
+                multipleChoiceAnswers.addComponent(new Label ("Lücke 2:"), 0, position);
+                position++;
+            }
+            multipleChoiceAnswers.addComponent(checkBox, 0, position);
             multipleChoiceAnswers.setComponentAlignment(checkBox, Alignment.MIDDLE_LEFT);
             if(this.answerOptionImages != null && answerNumber < this.answerOptionImages.size()) {
-                multipleChoiceAnswers.addComponent(this.answerOptionImages.get(answerNumber), 1, answerNumber);
-                multipleChoiceAnswers.setComponentAlignment(answerOptionImages.get(answerNumber), Alignment.MIDDLE_CENTER);
+                multipleChoiceAnswers.addComponent(this.answerOptionImages.get(answerNumber), 1, position);
+                multipleChoiceAnswers.setComponentAlignment(this.answerOptionImages.get(answerNumber), Alignment.MIDDLE_CENTER);
             }
+            position++;
             answerNumber++;
         }
         addComponent(multipleChoiceAnswers);

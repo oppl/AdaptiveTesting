@@ -18,6 +18,9 @@ public class MultipleChoiceMathDataStorage extends AnswerStorage {
     @XmlElement(name = "correctAnswers")
     private Vector<Integer> correctAnswers = new Vector<>();
 
+    @XmlElement(name = "questionType")
+    private String questionType;
+
     public MultipleChoiceMathDataStorage() {
     }
 
@@ -39,6 +42,18 @@ public class MultipleChoiceMathDataStorage extends AnswerStorage {
 
     public void setCorrectAnswers(Vector<Integer> correctAnswers) {
         this.correctAnswers = correctAnswers;
+    }
+
+    public String getQuestionType (){
+        if(questionType == null || questionType.length() == 0){
+            return "";
+        } else {
+            return questionType;
+        }
+    }
+
+    public void setQuestionType (String questionType){
+        this.questionType = questionType;
     }
 
     @Override
