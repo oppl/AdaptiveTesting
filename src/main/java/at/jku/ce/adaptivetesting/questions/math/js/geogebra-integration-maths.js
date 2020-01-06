@@ -41,7 +41,8 @@ geogebraLibrary.GeoGebraMathComponent = function (element) {
         if (materialNr != null) {
             ggbExercise = new GGBApplet({
                 "id": 'ggbApplet',
-                "material_id": materialNr,
+                "ggbBase64": materialNr,
+                "showAlgebraInput": false,
                 "width": 715,
                 "height": 500,
                 "appletOnLoad": function(api) {

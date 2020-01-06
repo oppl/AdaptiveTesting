@@ -25,6 +25,8 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
     // 2 = other mathematical exercises
     private int questionType;
     private double resultEvaluation = 0.0d;
+    private GeoGebraComponent geogebraComponent;
+    private GeoGebraMathComponent geogebraMathComponent;
 
     public MathQuestion (Float difficulty, String questionText,  String materialNr, int questionType, Image questionImage, String id) {
         this(0f, "", "", 0, null, "");
@@ -43,7 +45,7 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
 
         if(questionType == 1) {
 
-            GeoGebraComponent geogebraComponent = new GeoGebraComponent();
+            geogebraComponent = new GeoGebraComponent();
             // geogebraComponent.setSizeFull();
             geogebraComponent.setHeight("490");
             // geogebraComponent.setHeight(75, Unit.PERCENTAGE);
@@ -68,7 +70,7 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
 
         } else if(questionType == 2) {
 
-            GeoGebraMathComponent geogebraMathComponent = new GeoGebraMathComponent();
+            geogebraMathComponent = new GeoGebraMathComponent();
             // geogebraMathComponent.setSizeFull();
             geogebraMathComponent.setHeight("490");
             // geogebraMathComponent.setHeight(75, Unit.PERCENTAGE);
@@ -194,6 +196,11 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
         removeAllComponents();
         addComponent(question);
         addComponent(this.questionImage);
+        if(this.geogebraComponent != null) {
+            addComponent(this.geogebraComponent);
+        } else if (this.geogebraMathComponent != null) {
+            addComponent(this.geogebraMathComponent);
+        }
     }
 
     // Custom Notification that stays on-screen until user presses it
