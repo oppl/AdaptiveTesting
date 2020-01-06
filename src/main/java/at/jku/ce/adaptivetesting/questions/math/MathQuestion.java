@@ -198,8 +198,10 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
         addComponent(this.questionImage);
         if(this.geogebraComponent != null) {
             addComponent(this.geogebraComponent);
+            this.setComponentAlignment(geogebraComponent, Alignment.MIDDLE_CENTER);
         } else if (this.geogebraMathComponent != null) {
             addComponent(this.geogebraMathComponent);
+            this.setComponentAlignment(geogebraMathComponent, Alignment.MIDDLE_CENTER);
         }
     }
 
