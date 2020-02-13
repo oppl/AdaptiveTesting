@@ -8,10 +8,7 @@ import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import com.vaadin.ui.*;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SimpleMathQuestion extends VerticalLayout implements
         IQuestion<SimpleMathDataStorage>, Cloneable {
@@ -27,7 +24,11 @@ public class SimpleMathQuestion extends VerticalLayout implements
     private ComboBox answerSelector;
 
     public SimpleMathQuestion() {
-        this(SimpleMathDataStorage.getEmptyDataStorage(), 0f, "", null, "");
+        this(SimpleMathDataStorage.getEmptyDataStorage(), SimpleMathDataStorage.getEmptyDataStorage(), 0f, "", null, "");
+    }
+
+    public SimpleMathQuestion(SimpleMathDataStorage solution, float difficulty, String questionText, List<Image> questionImages, String id) {
+        this(solution, SimpleMathDataStorage.getEmptyDataStorage(), difficulty, questionText, questionImages, id);
     }
 
     @Override
@@ -35,7 +36,7 @@ public class SimpleMathQuestion extends VerticalLayout implements
         return id;
     }
 
-    public SimpleMathQuestion(SimpleMathDataStorage solution, float difficulty, String questionText, List<Image> questionImages, String id) {
+    public SimpleMathQuestion(SimpleMathDataStorage solution, SimpleMathDataStorage prefilled, float difficulty, String questionText, List<Image> questionImages, String id) {
         this.difficulty = difficulty;
         this.solution = solution;
         this.id = id;
@@ -61,12 +62,23 @@ public class SimpleMathQuestion extends VerticalLayout implements
                 answerSelector.setNullSelectionAllowed(false);
                 answerSelector.setTextInputAllowed(false);
                 answerSelector.setValue("=");
-                inputGrid.addComponent(answerSelector , 1, i);
-                inputGrid.addComponent(new TextField() , 2, i);
+                if(prefilled.getAnswerElements().get(entry.getKey()) != null){
+                    TextField f = new TextField();
+                    f.setValue(prefilled.getAnswerElements().get(entry.getKey()));
+                    answerSelector.setValue(prefilled.getCorrectSelection().get(i));
+                    inputGrid.addComponent(answerSelector, 1, i);
+                    inputGrid.addComponent(f, 2, i);
+                } else {
+                    inputGrid.addComponent(answerSelector, 1, i);
+                    inputGrid.addComponent(new TextField(), 2, i);
+                }
             } else {
                 // inputGrid.addComponent(new Label(entry.getKey()), 0, i); // TODO : ? lösen
                 TextField f = new TextField(entry.getKey());
                 f.setCaptionAsHtml(true);
+                if(prefilled.getAnswerElements().get(entry.getKey()) != null){
+                    f.setValue(prefilled.getAnswerElements().get(entry.getKey()));
+                }
                 inputGrid.addComponent(f, 0, i);
             }
             i++;
@@ -75,6 +87,7 @@ public class SimpleMathQuestion extends VerticalLayout implements
         if (questionImages != null) {
             for (Image image : this.questionImages) {
                 addComponent(image);
+                setComponentAlignment(image, Alignment.MIDDLE_CENTER);
             }
         }
 
@@ -121,14 +134,28 @@ public class SimpleMathQuestion extends VerticalLayout implements
     public SimpleMathDataStorage getUserAnswer() {
         SimpleMathDataStorage dataStorage = new SimpleMathDataStorage();
         HashMap<String,String> userAnswers = new HashMap<>();
-        for (int i = 0; i < numberOfInputFields; i++){
-            userAnswers.put(
-                    // ((Label) inputGrid.getComponent(0, i)).getValue(),
-                    ((TextField) inputGrid.getComponent(0, i)).getCaption(),
-                    ((TextField) inputGrid.getComponent(0, i)).getValue()
-            );
+        Vector<String> correctSelection = new Vector<>();
+
+        if (solution.getQuestionType().equals("SelectionQuestion")){
+            for (int i = 0; i < numberOfInputFields; i++) {
+                userAnswers.put(
+                        // ((Label) inputGrid.getComponent(0, i)).getValue(),
+                        ((Label) inputGrid.getComponent(0, i)).getValue(),
+                        ((TextField) inputGrid.getComponent(2, i)).getValue()
+                );
+                correctSelection.add((String) ((ComboBox) inputGrid.getComponent(1, i)).getValue());
+            }
+        } else {
+            for (int i = 0; i < numberOfInputFields; i++) {
+                userAnswers.put(
+                        // ((Label) inputGrid.getComponent(0, i)).getValue(),
+                        ((TextField) inputGrid.getComponent(0, i)).getCaption(),
+                        ((TextField) inputGrid.getComponent(0, i)).getValue()
+                );
+            }
         }
         dataStorage.setAnswerElements(userAnswers);
+        dataStorage.setCorrectSelection(correctSelection);
         return dataStorage;
     }
 
@@ -228,6 +255,7 @@ public class SimpleMathQuestion extends VerticalLayout implements
         addComponent(question);
         for (Image image : this.questionImages) {
             addComponent(image);
+            setComponentAlignment(image, Alignment.MIDDLE_CENTER);
         }
 
         Label l = new Label("    ");

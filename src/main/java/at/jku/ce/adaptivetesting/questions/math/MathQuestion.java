@@ -72,7 +72,7 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
 
             geogebraMathComponent = new GeoGebraMathComponent();
             // geogebraMathComponent.setSizeFull();
-            geogebraMathComponent.setHeight("490");
+            geogebraMathComponent.setHeight("140");
             // geogebraMathComponent.setHeight(75, Unit.PERCENTAGE);
             // geogebraMathComponent.setWidth("715");
 
@@ -94,7 +94,10 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
             this.setComponentAlignment(geogebraMathComponent, Alignment.MIDDLE_CENTER);
         }
 
-        if (questionImage != null) addComponent(this.questionImage);
+        if (questionImage != null) {
+            addComponent(this.questionImage);
+            setComponentAlignment(this.questionImage, Alignment.MIDDLE_CENTER);
+        }
 
         setSpacing(true);
 
@@ -196,6 +199,8 @@ public class MathQuestion extends VerticalLayout implements IQuestion<MathDataSt
         removeAllComponents();
         addComponent(question);
         addComponent(this.questionImage);
+        setComponentAlignment(this.questionImage, Alignment.MIDDLE_CENTER);
+
         if(this.geogebraComponent != null) {
             addComponent(this.geogebraComponent);
             this.setComponentAlignment(geogebraComponent, Alignment.MIDDLE_CENTER);

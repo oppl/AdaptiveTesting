@@ -49,6 +49,7 @@ public class MultipleChoiceMathQuestion extends VerticalLayout implements
                 addComponent(image);
                 image.setCaption("<font size=\"2\">Abbildung " + i + "</font>");
                 image.setCaptionAsHtml(true);
+                setComponentAlignment(image, Alignment.MIDDLE_CENTER);
                 i++;
             }
         }
@@ -218,6 +219,7 @@ public class MultipleChoiceMathQuestion extends VerticalLayout implements
             addComponent(image);
             image.setCaption("<font size=\"2\">Abbildung " + i + "</font>");
             image.setCaptionAsHtml(true);
+            setComponentAlignment(image, Alignment.MIDDLE_CENTER);
             i++;
         }
 

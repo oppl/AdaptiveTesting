@@ -8,6 +8,8 @@ import at.jku.ce.adaptivetesting.core.engine.HistoryEntry;
 import at.jku.ce.adaptivetesting.core.engine.ResultFiredArgs;
 import at.jku.ce.adaptivetesting.questions.math.MathDataStorage;
 import at.jku.ce.adaptivetesting.questions.math.MathQuestion;
+import at.jku.ce.adaptivetesting.questions.math.MultipleChoiceMathQuestion;
+import at.jku.ce.adaptivetesting.questions.math.SimpleMathQuestion;
 import at.jku.ce.adaptivetesting.views.def.DefaultView;
 import at.jku.ce.adaptivetesting.views.html.HtmlLabel;
 import at.jku.ce.adaptivetesting.views.test.datamod.TableWindow;
@@ -15,6 +17,7 @@ import com.github.rcaller.exception.ExecutionException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.Sizeable;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 
@@ -53,47 +56,134 @@ public class MathResultView extends VerticalLayout implements View, IResultView 
         // Create HTML table of the history
         Table table = new Table();
         // final String showResult = "Ergebnis";
+        final String solution = "Korrekte Antwort", userAnswer = "Deine Antwort";
         table.addContainerProperty("#", Integer.class, null);
         table.addContainerProperty("Schwierigkeitsgrad", Float.class, null);
         table.addContainerProperty("Resultat", String.class, null);
+        table.addContainerProperty(userAnswer, Button.class, null);
+        table.addContainerProperty(solution, Button.class, null);
         // table.addContainerProperty(showResult, Button.class, null);
         // List<HistoryEntry> entries = Lists.reverse(args.history);
         List<HistoryEntry> entries = new ArrayList<HistoryEntry>(args.history);
         Collections.reverse(entries);
         int nr = entries.size();
         for (HistoryEntry entry : entries) {
-            /*
+            Button qAnswer = null, qSolution = null;
             if (entry.question instanceof Component && entry.question != null) {
                 try {
-                    Class<? extends AnswerStorage> dataStorageClass = entry.question.getSolution().getClass();
-                    Constructor<? extends IQuestion> constructor = entry.question.getClass().getConstructor(
-                            dataStorageClass, dataStorageClass, float.class, String.class, Image.class, String.class);
+                    Class<? extends AnswerStorage> dataStorageClass = entry.question
+                            .getSolution().getClass();
+                    Constructor<? extends IQuestion> constructor;
+                    Component iQuestionSolution;
+                    Component iQuestionUser;
 
-                    Component iQuestionSolution = (Component) constructor.newInstance(
-                            entry.question.getSolution(),
-                            entry.question.getUserAnswer(),
-                            entry.question.getDifficulty(),
-                            entry.question.getQuestionText(),
-                            null,"");
-                    MathQuestion mathQuestion = (MathQuestion)entry.question;
+                    if(entry.question instanceof MathQuestion) {
+                        constructor = entry.question
+                                .getClass()
+                                .getConstructor(
+                                        float.class, String.class, String.class, int.class, Image.class, String.class);
+                        iQuestionSolution = (Component) constructor
+                                .newInstance(entry.question.getDifficulty(),
+                                        entry.question.getQuestionText() + "\n\n\n\n Das Anzeigen der Lösung zu diesem Fragentyp ist leider nicht möglich.", "", 1, null, "");
+                        iQuestionUser = (Component) constructor
+                                .newInstance(entry.question.getDifficulty(),
+                                        entry.question.getQuestionText() + "\n\n\n\n Das Anzeigen der Benutzerantwort zu diesem Fragentyp ist leider nicht möglich.", "", 1, null, "");
+                    } else if(entry.question instanceof SimpleMathQuestion) {
+                        constructor = entry.question
+                                .getClass()
+                                .getConstructor(dataStorageClass, dataStorageClass,
+                                        float.class, String.class, List.class, String.class);
+                        iQuestionSolution = (Component) constructor
+                                .newInstance(entry.question.getSolution(),
+                                        entry.question.getSolution(),
+                                        entry.question.getDifficulty(),
+                                        entry.question.getQuestionText(),
+                                        null, "");
+                        iQuestionUser = (Component) constructor
+                                .newInstance(entry.question.getSolution(),
+                                        entry.question.getUserAnswer(),
+                                        entry.question.getDifficulty(),
+                                        entry.question.getQuestionText(), null, "");
+                    } else if (entry.question instanceof MultipleChoiceMathQuestion) {
+                        constructor = entry.question
+                                .getClass()
+                                .getConstructor(dataStorageClass, dataStorageClass,
+                                        float.class, String.class, List.class, List.class, String.class);
+                        iQuestionSolution = (Component) constructor
+                                .newInstance(entry.question.getSolution(),
+                                        entry.question.getSolution(),
+                                        entry.question.getDifficulty(),
+                                        entry.question.getQuestionText(),
+                                        null, null, "");
+                        iQuestionUser = (Component) constructor
+                                .newInstance(entry.question.getSolution(),
+                                        entry.question.getUserAnswer(),
+                                        entry.question.getDifficulty(),
+                                        entry.question.getQuestionText(), null, null, "");
+                    } else {
+                        iQuestionSolution = null;
+                        iQuestionUser = null;
+                    }
+                    // The following casts can not fail, because the question is
+                    // a component as well
 
-                    MathDataStorage userAnswer = mathQuestion.getUserAnswer();
-                    TableWindow userAnswerTableEmbedded = new TableWindow();
-                    userAnswerTableEmbedded.drawResultTable(userAnswer.getInfo());
 
-                    MathDataStorage solution = mathQuestion.getSolution();
-                    TableWindow answerTableEmbedded = new TableWindow();
-                    answerTableEmbedded.drawResultTable(solution.getInfo());
+                    // Create the 2 needed click listeners
+                    Button.ClickListener clickListenerSol = event -> {
+                        Window window = new Window(solution);
+                        event.getButton().setEnabled(false);
+                        window.addCloseListener(e -> event.getButton()
+                                .setEnabled(true));
+                        VerticalLayout vl = new VerticalLayout();
+                        vl.addComponent(iQuestionSolution);
+                        vl.setMargin(true);
+                        window.setContent(vl);
+                        window.center();
+                        window.setWidth("90%");
+                        window.setHeight("80%");
+                        if (iQuestionSolution instanceof Sizeable) {
+                            Sizeable sizeable = iQuestionSolution;
+                            sizeable.setSizeFull();
+                        }
+                        getUI().addWindow(window);
+                    };
 
+                    Button.ClickListener clickListenerUA = event -> {
+                        Window window = new Window(userAnswer);
+                        event.getButton().setEnabled(false);
+                        window.addCloseListener(e -> event.getButton()
+                                .setEnabled(true));
+                        VerticalLayout vl = new VerticalLayout();
+                        vl.addComponent(iQuestionUser);
+                        vl.setMargin(true);
+                        window.setContent(vl);
+                        window.center();
+                        window.setWidth("90%");
+                        window.setHeight("80%");
+                        if (iQuestionUser instanceof Sizeable) {
+                            Sizeable sizeable = iQuestionUser;
+                            sizeable.setSizeFull();
+                        }
+                        getUI().addWindow(window);
+                    };
 
+                    // Create the two buttons
+                    qAnswer = new Button(userAnswer, clickListenerUA);
+                    qSolution = new Button(solution, clickListenerSol);
 
                 } catch (Exception e) {
+                    // Ignore this line in the table
+					/*LogHelper
+					.logInfo("1 entry's solution/ user answer are missing on the final screen."
+							+ entry.question.getClass().getName()
+							+ " does not implement the constructors required by"
+							+ IQuestion.class.getName());*/
                     LogHelper.logError(e.toString());
                 }
             }
-            */
+
             table.addItem(new Object[] { new Integer(nr), entry.question.getDifficulty(),
-                    isCorrect(entry.points, entry.question.getMaxPoints())}, null);
+                    isCorrect(entry.points, entry.question.getMaxPoints()), qAnswer, qSolution}, null);
             nr--;
         }
         int size = table.size();

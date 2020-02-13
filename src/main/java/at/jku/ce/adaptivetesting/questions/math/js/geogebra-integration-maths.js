@@ -44,7 +44,7 @@ geogebraLibrary.GeoGebraMathComponent = function (element) {
                 "ggbBase64": materialNr,
                 "showAlgebraInput": false,
                 "width": 715,
-                "height": 500,
+                "height": 150,
                 "appletOnLoad": function(api) {
                     // Initialize GeoGebra API
                     checkApi = api;

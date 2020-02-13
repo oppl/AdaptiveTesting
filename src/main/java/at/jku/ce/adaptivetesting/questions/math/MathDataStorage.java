@@ -9,11 +9,11 @@ import javax.xml.bind.annotation.XmlElement;
 public class MathDataStorage extends AnswerStorage {
     private static final long serialVersionUID = -8179746363246548456L;
     @XmlElement(name = "info")
-    private String info = "";
+    private String info = "Das Anzeigen der Benutzerantwort und der Lösung ist für GeoGebra-Aufgaben leider nicht möglich.";
 
     public static MathDataStorage getEmptyDataStorage() {
         MathDataStorage ds = new MathDataStorage();
-        ds.setInfo("Beispieltext");
+        ds.setInfo("Das Anzeigen der Benutzerantwort und der Lösung ist für GeoGebra-Aufgaben leider nicht möglich.");
         return ds;
     }
 

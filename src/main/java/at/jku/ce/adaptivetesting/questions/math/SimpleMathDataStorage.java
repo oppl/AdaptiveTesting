@@ -62,8 +62,14 @@ public class SimpleMathDataStorage extends AnswerStorage {
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();
+        int i = 0;
         for (String s: answerElements.keySet()) {
-            buffer.append(s + ": " + answerElements.get(s));
+            if(correctSelection != null && correctSelection.size() > 0) {
+                buffer.append(s + " " + correctSelection.get(i) + " " + answerElements.get(s));
+            } else {
+                buffer.append(s + " " + answerElements.get(s));
+            }
+            i++;
         }
         return buffer.toString();
     }
