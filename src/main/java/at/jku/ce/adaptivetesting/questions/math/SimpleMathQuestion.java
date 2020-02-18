@@ -47,7 +47,7 @@ public class SimpleMathQuestion extends VerticalLayout implements
         numberOfInputFields = solution.getAnswerElements().size();
         inputGrid = new GridLayout(3, numberOfInputFields);
 
-        int i = 0;
+        int i = numberOfInputFields - 1;
         for (Map.Entry<String, String> entry : this.solution.getAnswerElements().entrySet()) {
             if (solution.getQuestionType().equals("SelectionQuestion")){
                 inputGrid.addComponent(new Label(entry.getKey()), 0, i);
@@ -68,9 +68,13 @@ public class SimpleMathQuestion extends VerticalLayout implements
                     answerSelector.setValue(prefilled.getCorrectSelection().get(i));
                     inputGrid.addComponent(answerSelector, 1, i);
                     inputGrid.addComponent(f, 2, i);
+                    inputGrid.setComponentAlignment(answerSelector, Alignment.MIDDLE_RIGHT);
+                    inputGrid.setSpacing(true);
                 } else {
                     inputGrid.addComponent(answerSelector, 1, i);
                     inputGrid.addComponent(new TextField(), 2, i);
+                    inputGrid.setComponentAlignment(answerSelector, Alignment.MIDDLE_RIGHT);
+                    inputGrid.setSpacing(true);
                 }
             } else {
                 // inputGrid.addComponent(new Label(entry.getKey()), 0, i); // TODO : ? lösen
@@ -81,7 +85,7 @@ public class SimpleMathQuestion extends VerticalLayout implements
                 }
                 inputGrid.addComponent(f, 0, i);
             }
-            i++;
+            i--;
         }
         addComponent(question);
         if (questionImages != null) {
@@ -89,6 +93,7 @@ public class SimpleMathQuestion extends VerticalLayout implements
                 addComponent(image);
                 setComponentAlignment(image, Alignment.MIDDLE_CENTER);
             }
+            setSpacing(true);
         }
 
         Label l = new Label("    ");

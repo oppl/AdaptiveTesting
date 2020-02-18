@@ -50,6 +50,7 @@ public class LicenceWindow extends Window {
 		vLayout.addComponent(new HtmlLabel("Reisisoft, 2014"));
 		vLayout.addComponent(new HtmlLabel(productData.getCompanyShort() + " - Institut für WIINF/CE, 2014-2018"));
 		vLayout.addComponent(new HtmlLabel("Peter Baumann, BSc, 2018"));
+		vLayout.addComponent(new HtmlLabel("Thomas Ernst Jost, BSc, 2019-2020"));
 	}
 
 	public void addLibraryLicence(HtmlLink library, HtmlLink licence) {

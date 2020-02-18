@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class MathQuestionXml extends XmlQuestionData<MathDataStorage> {
     private static final long serialVersionUID = -7011780466232381923L;
 
-    @XmlElement(name = "materialNr")
+    @XmlElement(name = "geogebraApplet")
     private String materialNr;
 
     @XmlElement(name = "questionType")
