@@ -94,7 +94,7 @@ public class MathTestView extends TestView {
             quizRules(components);
         });
 
-        layout.addComponent(HtmlLabel.getCenteredLabel("h1", "Fragen zu deiner Person"));// Title of the quiz
+        layout.addComponent(HtmlLabel.getCenteredLabel("h1", "Fragen zu Ihrer Person"));// Title of the quiz
         layout.addComponent(gender);
         layout.addComponent(experience);
         layout.addComponent(studentCode);
@@ -108,9 +108,9 @@ public class MathTestView extends TestView {
     public void quizRules(Component[] components){
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.addComponent(new HtmlLabel("<h1>Anleitung</h1><br>" +
-                "Bitte beantworte die gestellten Aufgaben. Durch den Button \"Nächste Frage\" kommst " +
-                "du zur nächsten Aufgabe, deine Ergebnise werden automatisch ausgewertet. Bitte beachte, dass " +
-                "du nicht zu bereits bearbeiteten Fragen zurückgehen kannst! Klicke auf den Button um den Test zu starten." +
+                "Bitte beantworte die gestellten Aufgaben. Durch den Button \"Nächste Frage\" kommen " +
+                "Sie zur nächsten Aufgabe, Ihre Ergebnise werden automatisch ausgewertet. Bitte beachten Sie, dass " +
+                "Sie nicht zu bereits bearbeiteten Fragen zurückgehen können! Klicken Sie auf den Button um den Test zu starten." +
                 "<br>"));
 
 

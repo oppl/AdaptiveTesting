@@ -6,6 +6,7 @@ package at.jku.ce.adaptivetesting.views.test.accounting.misc;
 import at.jku.ce.adaptivetesting.questions.accounting.util.AccountingDataProvider;
 import at.jku.ce.adaptivetesting.questions.accounting.util.AccountRecordData;
 
+import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Notification;
@@ -33,6 +34,7 @@ public class AccountingRecordInputFields extends GridLayout {
 		ddAccountNames.addItems((Object[]) AccountingDataProvider.getInstance()
 				.getAllAccountNames());
 		ddAccountNames.setWidth("20em");
+		ddAccountNames.setFilteringMode(FilteringMode.CONTAINS);
 		addComponent(ddAccountNames, 1, 0);
 		// Add Curreny field
 		currencyTextBox = new CurrencyTextBox();

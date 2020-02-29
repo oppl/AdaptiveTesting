@@ -155,7 +155,6 @@ public class AccountingDataProvider {
 		data.add(new String[] { "4410", "Kundenskonti" });
 		data.add(new String[] { "4500", "Bestandsveränderung" });
 		data.add(new String[] { "4580", "Aktivierte Eigenleistungen" });
-		data.add(new String[] { "4600", "Erlöse aus Abgang von Anlagen" });
 		data.add(new String[] { "4600", "Erlöse aus dem Abgang von Anlagen " });
 		data.add(new String[] { "4610", "Versicherungsentschädigung" });
 		data.add(new String[] { "4660", "Erträge aus Zuschreibung AV" });

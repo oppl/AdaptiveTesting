@@ -45,10 +45,10 @@ public class AccountingResultView extends VerticalLayout implements View, IResul
 		//addComponent(HtmlLabel.getCenteredLabel("h2", "Test abgeschlossen"));
 		addComponent(HtmlLabel.getCenteredLabel("Der Test wurde beendet, da "
 				+ (args.outOfQuestions ? "keine weiteren Fragen verfügbar sind."
-						: "dein Kompetenzniveau bestimmt wurde.")));
+						: "Ihr Kompetenzniveau bestimmt wurde.")));
 
 		addComponent(HtmlLabel
-				.getCenteredLabel("Im Folgenden siehst du die Fragen und die gegebenen Antworten in zeitlich absteigender Reihenfolge."));
+				.getCenteredLabel("Im Folgenden sehen Sie die Fragen und die gegebenen Antworten in zeitlich absteigender Reihenfolge."));
 		addComponent(HtmlLabel
 				.getCenteredLabel("Die Zahl in der ersten Spalte bezieht sich auf die Schwierigkeit der jeweiligen Frage.<br/>Negative Zahlen stehen für leichtere Fragen, positive Zahlen kennzeichnen schwierigere Fragen."));
 

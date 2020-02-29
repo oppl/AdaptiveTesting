@@ -44,11 +44,11 @@ public class MathResultView extends VerticalLayout implements View, IResultView 
         //addComponent(HtmlLabel.getCenteredLabel("h2", "Test abgeschlossen"));
         addComponent(HtmlLabel.getCenteredLabel("Der Test wurde beendet, da "
                 + (args.outOfQuestions ? "keine weiteren Fragen verfügbar sind."
-                : "dein Kompetenzniveau bestimmt wurde.")));
+                : "Ihr Kompetenzniveau bestimmt wurde.")));
 
         addComponent(HtmlLabel
-                .getCenteredLabel("Im Folgenden siehst du die Fragen und die von dir gegebenen Antworten in zeitlich absteigender Reihenfolge.<br>" +
-                        "Mit einem Klick auf den Button Ergebnis kannst du Detailinformationen zur jeweiligen Frage anzeigen."));
+                .getCenteredLabel("Im Folgenden sehen Sie die Fragen und die von Ihnen gegebenen Antworten in zeitlich absteigender Reihenfolge.<br>" +
+                        "Mit einem Klick auf den Button Ergebnis können Sie Detailinformationen zur jeweiligen Frage anzeigen."));
         addComponent(HtmlLabel
                 .getCenteredLabel("Die Zahl in der ersten Spalte bezieht sich dabei auf deren Schwierigkeitsgrad.<br/>" +
                         "Je größer sie ist, desto höher ist auch die Schwierigkeit der Frage.<br>"));

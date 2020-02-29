@@ -36,12 +36,13 @@ public class AccountNumberInputField extends TextField implements
 	}
 
 	public int getAccountNumber() {
+		/*
 		if (Integer.toString(value).length() == 1) {
 			String temp = Integer.toString(value);
 			temp = temp + "0";
 			return Integer.parseInt(temp);
 		}
-
+		*/
 		if (Integer.toString(value).length() > 2){
 
 			return changeValue(value);
@@ -74,6 +75,9 @@ public class AccountNumberInputField extends TextField implements
 		if (isValidNumber(newInput)) {
 			if (newInput.length() == 0){
 				newInput = "0";
+			}
+			if(newInput.startsWith("0") && (newInput.length() >= 3)){
+				newInput = newInput.substring(0, 2);
 			}
 			value = Integer.parseInt(newInput);
 			lastValue = newInput;

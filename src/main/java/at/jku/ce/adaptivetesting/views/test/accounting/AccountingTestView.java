@@ -148,7 +148,7 @@ public class AccountingTestView extends TestView {
 		Label classNameLabel = new Label("<p/>Welche Klasse besuchen Sie?",ContentMode.HTML);
 		TextField className = new TextField("(z.B. 4A)");
 
-		Label studentCode = new Label("<p/>Damit deine Antworten mit späteren Fragebogenergebnissen verknüpft werden können, ist es notwendig, einen anonymen Benutzernamen anzulegen. Erstelle deinen persönlichen Code nach folgendem Muster:",ContentMode.HTML);
+		Label studentCode = new Label("<p/>Damit Ihre Antworten mit späteren Fragebogenergebnissen verknüpft werden können, ist es notwendig, einen anonymen Benutzernamen anzulegen. Erstellen Sie Ihren persönlichen Code nach folgendem Muster:",ContentMode.HTML);
 		TextField studentCodeC1 = new TextField("Tag und Monat der Geburt (DDMM), z.B. \"1008\" für Geburtstag am 10. August");
 		TextField studentCodeC2 = new TextField("Zwei Anfangsbuchstaben des Vornamens, z.B. \"St\" für \"Stefan\"");
 		TextField studentCodeC3 = new TextField("Zwei Anfangsbuchstaben des Vornamens der Mutter,, z.B. \"Jo\" für \"Johanna\"");
@@ -186,7 +186,7 @@ public class AccountingTestView extends TestView {
 			displayCompanyInfo(components);
 		});
 
-		layout.addComponent(HtmlLabel.getCenteredLabel("h1", "Fragen zu deiner Person"));// Title of the quiz
+		layout.addComponent(HtmlLabel.getCenteredLabel("h1", "Fragen zu Ihrer Person"));// Title of the quiz
 
 		layout.addComponent(gender);
 
@@ -264,7 +264,7 @@ public class AccountingTestView extends TestView {
 				"<tr>" +
 				"<td colspan=\\\"4\\\"><strong><br>Sie sind als selbständiger " +
 				"Steuerberater und Buchhalter tätig.<br>" +
-				"Zu deinen Kunden gehören die unten angeführten Unternehmen.<br>" +
+				"Zu Ihren Kunden gehören die unten angeführten Unternehmen.<br>" +
 				"Für diese übernehmen Sie die Buchhaltung, d.h. Sie verbuchen die " +
 				"angeführten Geschäftsfälle aus deren Sicht.</strong></td>" +
 				"</tr>" +
