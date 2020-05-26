@@ -195,9 +195,59 @@ public class MathResultView extends VerticalLayout implements View, IResultView 
         addComponent(table);
         setComponentAlignment(table, Alignment.MIDDLE_CENTER);
 
-        addComponent(HtmlLabel.getCenteredLabel("h3",
+        addComponent(HtmlLabel.getCenteredLabel("h2",
                 "Dein Kompetenzniveau ist: <b>" + args.skillLevel + "</b>"));
         addComponent(HtmlLabel.getCenteredLabel("Delta:  " + args.delta));
+        if(args.skillLevel <= -2.4) {
+            addComponent(HtmlLabel.getCenteredLabel("h3",
+                    "<b>A: Werte bis -2,4:</b>"));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Aufgrund dieses Testergebnisses ist leider keine fundierte Aussage über die mathematischen Fähigkeiten möglich."));
+        }
+        if(args.skillLevel > -2.4 && args.skillLevel <= -0.679) {
+            addComponent(HtmlLabel.getCenteredLabel("h3",
+                    "<b>B: Werte über -2,4 bis -0,679:</b>"));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Das Testergebnis deutet darauf hin, dass du leichte Aufgaben lösen kannst."));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Leichte Aufgaben sind etwa Beispiele, die mit einem Schritt und vertrauten Verfahren bzw. Formeln gelöst oder begründet werden können. Mindestens 4 von 5 Schüler/innen haben diese Aufgaben bei der Zentralmatura korrekt gelöst."));
+        }
+        if(args.skillLevel > -0.679 && args.skillLevel <= -0.161) {
+            addComponent(HtmlLabel.getCenteredLabel("h3",
+                    "<b>C: Werte über -0,679 bis -0,161:</b>"));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Das Testergebnis deutet darauf hin, dass du leichte bis mittelschwere Aufgaben lösen kannst."));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Leichte Aufgaben sind etwa Beispiele, die mit einem Schritt und vertrauten Verfahren bzw. Formeln gelöst oder begründet werden können. Mindestens 4 von 5 Schüler/innen haben diese Aufgaben bei der Zentralmatura korrekt gelöst."));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Mittelschwere Aufgaben zeichnen sich dadurch aus, dass sie mit mehreren Schritten und vertrauten Verfahren bzw. Formeln gelöst oder begründet werden können. Etwas mehr als die Hälfte der Schüler/innen haben diese Aufgaben bei der Zentralmatura korrekt gelöst."));
+        }
+        if(args.skillLevel > -0.161 && args.skillLevel <= 0.425) {
+            addComponent(HtmlLabel.getCenteredLabel("h3",
+                    "<b>D: Werte über -0,161 bis 0,425:</b>"));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Das Testergebnis deutet darauf hin, dass du leichte, mittelschwere und schwere Aufgaben lösen kannst."));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Leichte Aufgaben sind etwa Beispiele, die mit einem Schritt und vertrauten Verfahren bzw. Formeln gelöst oder begründet werden können. Mindestens 4 von 5 Schüler/innen haben diese Aufgaben bei der Zentralmatura korrekt gelöst."));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Mittelschwere Aufgaben zeichnen sich dadurch aus, dass sie mit mehreren Schritten und vertrauten Verfahren bzw. Formeln gelöst oder begründet werden können. Etwas mehr als die Hälfte der Schüler/innen haben diese Aufgaben bei der Zentralmatura korrekt gelöst."));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Schwere Aufgaben sind etwa Beispiele, bei denen mehrere Schritte zur Lösung notwendig sind und vertraute Verfahren und Formeln leicht adaptiert werden müssen. Ungefähr 1 von 4 Schüler/innen konnte diese Aufgaben bei der Zentralmatura korrekt lösen."));
+        }
+        if(args.skillLevel > 0.425) {
+            addComponent(HtmlLabel.getCenteredLabel("h3",
+                    "<b>E: Werte über 0,425:</b>"));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Das Testergebnis deutet darauf hin, dass du leichte, mittelschwere, schwere und sehr schwere Aufgaben lösen kannst."));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Leichte Aufgaben sind etwa Beispiele, die mit einem Schritt und vertrauten Verfahren bzw. Formeln gelöst oder begründet werden können. Mindestens 4 von 5 Schüler/innen haben diese Aufgaben bei der Zentralmatura korrekt gelöst."));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Mittelschwere Aufgaben zeichnen sich dadurch aus, dass sie mit mehreren Schritten und vertrauten Verfahren bzw. Formeln gelöst oder begründet werden können. Etwas mehr als die Hälfte der Schüler/innen haben diese Aufgaben bei der Zentralmatura korrekt gelöst."));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Schwere Aufgaben sind etwa Beispiele, bei denen mehrere Schritte zur Lösung notwendig sind und vertraute Verfahren und Formeln leicht adaptiert werden müssen. Ungefähr 1 von 4 Schüler/innen konnte diese Aufgaben bei der Zentralmatura korrekt lösen."));
+            addComponent(HtmlLabel.getCenteredLabel(
+                    "Eine sehr schwere Aufgabe zeichnet sich durch die Notwendigkeit von mehreren Lösungsschritten mit Hilfe von adaptierten vertrauten Verfahren bzw. Formeln und einer höheren innermathematischen Reflexion und Rechenfertigkeit aus. Diese Art von Aufgaben werden nur von sehr wenigen Schüler/innen korrekt gelöst."));
+        }
         addComponent(HtmlLabel.getCenteredLabel("h3",
                 "<b>Vielen Dank fürs Mitmachen!\n</b>"));
         storeResults(args);

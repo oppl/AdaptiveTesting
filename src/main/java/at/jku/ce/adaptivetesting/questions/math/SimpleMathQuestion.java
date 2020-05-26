@@ -211,7 +211,7 @@ public class SimpleMathQuestion extends VerticalLayout implements
                     String[] answerParts = entry.getValue().split(";");
                     for (String answerPart : answerParts) {
                         if (user.getAnswerElements().get(entry.getKey()).toLowerCase().contains(answerPart.toLowerCase())) {
-                            points = points + (1.0d / numberOfInputFields) / answerPart.length();
+                            points = points + (1.0d / numberOfInputFields) / answerParts.length;
                         }
                     }
                 } else if (user.getAnswerElements().get(entry.getKey()).toLowerCase().contains(entry.getValue().toLowerCase())) {
