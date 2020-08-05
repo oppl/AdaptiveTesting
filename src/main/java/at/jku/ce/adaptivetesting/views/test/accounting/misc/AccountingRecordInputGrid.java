@@ -28,6 +28,9 @@ public abstract class AccountingRecordInputGrid extends SingleComponentLayout {
 		outer.setSizeFull();
 		addComponent(outer);
 		outer.addComponent(questionText);
+		Label l = new Label("    ");
+		l.setVisible(true);
+		outer.addComponent(l);
 		outer.addComponent(inner);
 		outer.setSpacing(true);
 		inner.addComponent(new Label("In den Eingabeboxen die vier Stellen der Kontonummer eingeben!"), 0,0);
@@ -66,6 +69,9 @@ public abstract class AccountingRecordInputGrid extends SingleComponentLayout {
 		outer.removeAllComponents();
 		outer.addComponent(questionText);
 		outer.addComponent(questionImage);
+		Label l = new Label("    ");
+		l.setVisible(true);
+		outer.addComponent(l);
 		outer.addComponent(inner);
 		removeAllComponents();
 		addComponent(outer);

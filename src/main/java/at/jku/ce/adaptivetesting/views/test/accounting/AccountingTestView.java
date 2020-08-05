@@ -14,6 +14,7 @@ import at.jku.ce.adaptivetesting.questions.accounting.*;
 import at.jku.ce.adaptivetesting.questions.accounting.util.AccountingDataProvider;
 import at.jku.ce.adaptivetesting.views.Views;
 import at.jku.ce.adaptivetesting.views.test.TestView;
+import at.jku.ce.adaptivetesting.views.test.accounting.misc.*;
 import com.vaadin.server.*;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.*;
@@ -44,78 +45,33 @@ public class AccountingTestView extends TestView {
 		});
 		addHelpButton(cancel);
 
-		//graphical Interface Kontenplan
-		Button openKontenplan = new Button("Kontenplan");
-		openKontenplan.addClickListener(e -> {
-			openKontenplan.setEnabled(false);
-			// Create Window with layout
-			Window window = new Window("Kontenplan");
-			GridLayout layout = new GridLayout(1, 1);
-			layout.addComponent(AccountingDataProvider.getInstance()
-					.toHtmlTable());
-			layout.setSizeFull();
-			window.setContent(layout);
-			window.center();
-			window.setWidth("60%");
-			window.setHeight("80%");
-			window.setResizable(false);
-			window.addCloseListener(e1 -> openKontenplan.setEnabled(true));
-			getUI().addWindow(window);
-		});
+		BrowserWindowOpener kontenplanWindowOpener = new BrowserWindowOpener(AccountingKontenplan.class);
+		kontenplanWindowOpener.setFeatures("height=600,width=600,resizable");
+		kontenplanWindowOpener.setWindowName("_blank");
+		Button kontenplanWindowButton = new Button("Kontenplan");
+		kontenplanWindowOpener.extend(kontenplanWindowButton);
+		addHelpButton(kontenplanWindowButton);
 
-		//graphical Interface Unternehmensbeschreibung
-		Button openCompanyDescription = new Button("Unternehmensbeschreibung");
-		openCompanyDescription.addClickListener(e -> {
-			Window window = new Window("Unternehmensbeschreibung");
-			window.setWidth("80%");
-			window.setHeight("80%");
-			VerticalLayout vl = assembleCompanyDescription();
-			/*Button close = new Button("Schließen");
-			close.addClickListener( e1 -> {
-				window.close();
-			});*/
-			vl.setMargin(true);
-			vl.setSpacing(true);
-			//vl.addComponent(close);
-			window.setContent(vl);
-			window.center();
-			window.setResizable(false);
-			getUI().addWindow(window);
-		});
+        BrowserWindowOpener companyDescriptionWindowOpener = new BrowserWindowOpener(AccountingCompanyDescription.class);
+        companyDescriptionWindowOpener.setFeatures("height=600,width=925,resizable");
+        companyDescriptionWindowOpener.setWindowName("_blank");
+        Button companyDescriptionWindowButton = new Button("Unternehmensbeschreibung");
+        companyDescriptionWindowOpener.extend(companyDescriptionWindowButton);
+        addHelpButton(companyDescriptionWindowButton);
 
-		//graphical Interface Personalverrechnungstabelle
-		Button openPersBilling = new Button("Personalverrechnungstabelle");
-		openPersBilling.addClickListener(e -> {
-			Window window = new Window("Personalverrechnungstabelle");
-			window.setWidth("80%");
-			window.setHeight("80%");
-			VerticalLayout vl = assemblePersBilling();
+        BrowserWindowOpener persBillingWindowOpener = new BrowserWindowOpener(AccountingPersBilling.class);
+        persBillingWindowOpener.setFeatures("height=600,width=600,resizable");
+        persBillingWindowOpener.setWindowName("_blank");
+        Button persBillingWindowButton = new Button("Personalverrechnungstabelle");
+        persBillingWindowOpener.extend(persBillingWindowButton);
+        addHelpButton(persBillingWindowButton);
 
-			/*Button close = new Button("Schließen");
-			close.addClickListener( e1 -> {
-				window.close();
-			});*/
-			vl.setMargin(true);
-			vl.setSpacing(true);
-			//vl.addComponent(close);
-			window.setContent(vl);
-			window.center();
-			window.setResizable(false);
-			getUI().addWindow(window);
-		});
-
-		//graphical Interface Taschenrechner
-		Button openCalculator = new Button("Taschenrechner");
-		openCalculator.addClickListener(e -> {
-			//AccountingCalculator AccountingCalculator = new AccountingCalculator();
-			//getUI().addWindow(AccountingCalculator.getWindow());
-			Notification.show("Zur Zeit nicht verfügbar:\nBitte eigenen Taschenrechner verwenden.");
-		});
-
-		addHelpButton(openKontenplan);
-		addHelpButton(openCompanyDescription);
-		addHelpButton(openPersBilling);
-		addHelpButton(openCalculator);
+        BrowserWindowOpener calculatorWindowOpener = new BrowserWindowOpener(AccountingCalculatorWindow.class);
+        calculatorWindowOpener.setFeatures("height=300,width=300,resizable");
+        calculatorWindowOpener.setWindowName("_blank");
+        Button calculatorWindowButton = new Button("Taschenrechner");
+        calculatorWindowOpener.extend(calculatorWindowButton);
+        addHelpButton(calculatorWindowButton);
 	}
 
 	//just a layout used for the Personalverrechnungstabelle.jpg
@@ -166,6 +122,14 @@ public class AccountingTestView extends TestView {
 		TextField gradeLastYearE = new TextField("Englisch");
 		TextField gradeLastYearM = new TextField("Mathematik");
 
+        GridLayout gradesLastYearGrid = new GridLayout(3,2);
+        gradesLastYearGrid.addComponent(gradeLastYearRW, 0, 0);
+        gradesLastYearGrid.addComponent(gradeLastYearBWL, 1, 0);
+        gradesLastYearGrid.addComponent(gradeLastYearD, 2, 0);
+        gradesLastYearGrid.addComponent(gradeLastYearE, 0, 1);
+        gradesLastYearGrid.addComponent(gradeLastYearM, 1, 1);
+        gradesLastYearGrid.setSpacing(true);
+
 		Label gradeLastTest = new Label("<p/>Welche Note hatten Sie auf die letzte Schularbeit aus ...", ContentMode.HTML);
 		TextField gradeLastTestRW = new TextField("Rechungswesen");
 		TextField gradeLastTestBWL = new TextField("BWL/BVW");
@@ -173,13 +137,27 @@ public class AccountingTestView extends TestView {
 		TextField gradeLastTestE = new TextField("Englisch");
 		TextField gradeLastTestM = new TextField("Mathematik");
 
+        GridLayout gradesLastTestGrid = new GridLayout(3,2);
+        gradesLastTestGrid.addComponent(gradeLastTestRW, 0, 0);
+        gradesLastTestGrid.addComponent(gradeLastTestBWL, 1, 0);
+        gradesLastTestGrid.addComponent(gradeLastTestD, 2, 0);
+        gradesLastTestGrid.addComponent(gradeLastTestE, 0, 1);
+        gradesLastTestGrid.addComponent(gradeLastTestM, 1, 1);
+        gradesLastTestGrid.setSpacing(true);
+
 		Label classNameLabel = new Label("<p/>Welche Klasse besuchen Sie?",ContentMode.HTML);
 		TextField className = new TextField("(z.B. 4A)");
 
-		Label studentCode = new Label("<p/>Damit deine Antworten mit späteren Fragebogenergebnissen verknüpft werden können, ist es notwendig, einen anonymen Benutzernamen anzulegen. Erstelle deinen persönlichen Code nach folgendem Muster:",ContentMode.HTML);
+		Label studentCode = new Label("<p/>Damit Ihre Antworten mit späteren Fragebogenergebnissen verknüpft werden können, ist es notwendig, einen anonymen Benutzernamen anzulegen. Erstellen Sie Ihren persönlichen Code nach folgendem Muster:",ContentMode.HTML);
 		TextField studentCodeC1 = new TextField("Tag und Monat der Geburt (DDMM), z.B. \"1008\" für Geburtstag am 10. August");
 		TextField studentCodeC2 = new TextField("Zwei Anfangsbuchstaben des Vornamens, z.B. \"St\" für \"Stefan\"");
 		TextField studentCodeC3 = new TextField("Zwei Anfangsbuchstaben des Vornamens der Mutter,, z.B. \"Jo\" für \"Johanna\"");
+
+        GridLayout studentCodes = new GridLayout(2,2);
+        studentCodes.addComponent(studentCodeC1, 0, 0);
+        studentCodes.addComponent(studentCodeC2, 1, 0);
+        studentCodes.addComponent(studentCodeC3, 0, 1);
+        studentCodes.setSpacing(true);
 
 		Label thankYou = new Label("<p/>Danke für die Angaben.<p/>", ContentMode.HTML);
 		Button cont = new Button("Weiter", e -> {
@@ -208,31 +186,34 @@ public class AccountingTestView extends TestView {
 			displayCompanyInfo(components);
 		});
 
-		layout.addComponent(HtmlLabel.getCenteredLabel("h1", "Fragen zu deiner Person"));// Title of the quiz
+		layout.addComponent(HtmlLabel.getCenteredLabel("h1", "Fragen zu Ihrer Person"));// Title of the quiz
 
 		layout.addComponent(gender);
 
 		layout.addComponent(gradeLastYear);
-		layout.addComponent(gradeLastYearRW);
+        layout.addComponent(gradesLastYearGrid);
+		/*layout.addComponent(gradeLastYearRW);
 		layout.addComponent(gradeLastYearBWL);
 		layout.addComponent(gradeLastYearD);
 		layout.addComponent(gradeLastYearE);
-		layout.addComponent(gradeLastYearM);
+		layout.addComponent(gradeLastYearM);*/
 
 		layout.addComponent(gradeLastTest);
-		layout.addComponent(gradeLastTestRW);
+		layout.addComponent(gradesLastTestGrid);
+		/*layout.addComponent(gradeLastTestRW);
 		layout.addComponent(gradeLastTestBWL);
 		layout.addComponent(gradeLastTestD);
 		layout.addComponent(gradeLastTestE);
-		layout.addComponent(gradeLastTestM);
+		layout.addComponent(gradeLastTestM);*/
 
 		layout.addComponent(classNameLabel);
 		layout.addComponent(className);
 
 		layout.addComponent(studentCode);
-		layout.addComponent(studentCodeC1);
+		layout.addComponent(studentCodes);
+		/*layout.addComponent(studentCodeC1);
 		layout.addComponent(studentCodeC2);
-		layout.addComponent(studentCodeC3);
+		layout.addComponent(studentCodeC3);*/
 
 		layout.addComponent(thankYou);
 		layout.addComponent(cont);
@@ -283,7 +264,7 @@ public class AccountingTestView extends TestView {
 				"<tr>" +
 				"<td colspan=\\\"4\\\"><strong><br>Sie sind als selbständiger " +
 				"Steuerberater und Buchhalter tätig.<br>" +
-				"Zu deinen Kunden gehören die unten angeführten Unternehmen.<br>" +
+				"Zu Ihren Kunden gehören die unten angeführten Unternehmen.<br>" +
 				"Für diese übernehmen Sie die Buchhaltung, d.h. Sie verbuchen die " +
 				"angeführten Geschäftsfälle aus deren Sicht.</strong></td>" +
 				"</tr>" +

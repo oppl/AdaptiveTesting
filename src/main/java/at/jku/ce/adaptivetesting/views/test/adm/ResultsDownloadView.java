@@ -203,6 +203,10 @@ public class ResultsDownloadView extends VerticalLayout implements View {
 
             Button download = new Button("Download");
 
+            download.addClickListener( e -> {
+                download.setCaption("Download abgeschlossen.");
+            });
+
             StreamResource resource = new StreamResource(new StreamResource.StreamSource() {
                 @Override
                 public InputStream getStream() {
@@ -216,8 +220,19 @@ public class ResultsDownloadView extends VerticalLayout implements View {
                             e1.printStackTrace();
                         }
                         if (attr == null) continue;
+                        if (fromDate.getValue().getHours() == 0 && fromDate.getValue().getMinutes() == 0){
+                            fromDate.getValue().setMinutes(1);
+                        }
+                        if (toDate.getValue().getHours() == 0 && toDate.getValue().getMinutes() == 0){
+                            toDate.getValue().setMinutes(1);
+                        }
                         Date currentFileDate = new Date(attr.lastModifiedTime().toMillis());
-                        if (currentFileDate.after(fromDate.getValue()) && !currentFileDate.after(toDate.getValue())) requestedFiles.add(result);
+                        if (currentFileDate.after(fromDate.getValue()) && !currentFileDate.after(toDate.getValue())) {
+                            // LogHelper.logInfo(currentFileDate.toString());
+                            // LogHelper.logInfo(fromDate.getConvertedValue().toString());
+                            // LogHelper.logInfo(toDate.getConvertedValue().toString());
+                            requestedFiles.add(result);
+                        }
                     }
                     try {
                         BufferedInputStream origin = null;
@@ -251,6 +266,7 @@ public class ResultsDownloadView extends VerticalLayout implements View {
             }, "result.zip");
             FileDownloader fd = new FileDownloader(resource);
             fd.extend(download);
+            download.setDisableOnClick(true);
 
             gLayout.addComponent(titleLabel,0,0,1,0);
 

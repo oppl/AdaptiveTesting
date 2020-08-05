@@ -6,8 +6,8 @@ package at.jku.ce.adaptivetesting.core;
 
 public class ProductData {
 	private final int mjVers = 1;
-	private final int minVers = 1;
-	private final int micVers = 2;
+	private final int minVers = 2;
+	private final int micVers = 0;
 	private final String company = "Johannes Kepler Universität";
 	private final String companyShort = "JKU";
 	private final String product = "Plattform für computerisiertes adaptives Testen (CAT)";
